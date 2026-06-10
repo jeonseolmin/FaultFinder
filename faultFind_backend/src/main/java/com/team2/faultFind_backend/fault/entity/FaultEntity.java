@@ -1,4 +1,4 @@
-package com.team2.legal_qna_backend.fault;
+package com.team2.faultFind_backend.fault.entity;
 
 import jakarta.persistence.*;
 import lombok.Builder;
