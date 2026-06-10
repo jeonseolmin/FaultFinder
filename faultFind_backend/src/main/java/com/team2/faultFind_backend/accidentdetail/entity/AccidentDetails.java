@@ -1,4 +1,4 @@
-package com.team2.faultFind_backend.accidentDetails.entity;
+package com.team2.faultFind_backend.accidentdetail.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

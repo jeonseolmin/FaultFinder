@@ -1,6 +1,6 @@
-package com.team2.faultFind_backend.accidentDetails.service;
+package com.team2.faultFind_backend.accidentdetail.service;
 
-import com.team2.faultFind_backend.accidentDetails.repository.AccidentDetailsRepository;
+import com.team2.faultFind_backend.accidentdetail.repository.AccidentDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
