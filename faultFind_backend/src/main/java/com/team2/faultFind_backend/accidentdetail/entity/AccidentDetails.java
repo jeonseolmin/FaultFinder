@@ -3,7 +3,7 @@ package com.team2.faultFind_backend.accidentdetail.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Table(name = "accident_cases_details")
+@Table(name = "accident_case_details")
 @Data
 @Entity
 public class AccidentDetails {
