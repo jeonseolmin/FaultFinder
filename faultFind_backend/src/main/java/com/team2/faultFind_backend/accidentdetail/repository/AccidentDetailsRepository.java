@@ -1,5 +1,5 @@
-package com.team2.faultFind_backend.accidentDetails.repository;
-import com.team2.faultFind_backend.accidentDetails.entity.AccidentDetails;
+package com.team2.faultFind_backend.accidentdetail.repository;
+import com.team2.faultFind_backend.accidentdetail.entity.AccidentDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

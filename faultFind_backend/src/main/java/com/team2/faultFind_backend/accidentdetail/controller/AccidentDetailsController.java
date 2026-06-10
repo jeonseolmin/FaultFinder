@@ -1,7 +1,7 @@
-package com.team2.faultFind_backend.accidentDetails.controller;
+package com.team2.faultFind_backend.accidentdetail.controller;
 
-import com.team2.faultFind_backend.accidentDetails.entity.AccidentDetails;
-import com.team2.faultFind_backend.accidentDetails.service.AccidentDetailsService;
+import com.team2.faultFind_backend.accidentdetail.entity.AccidentDetails;
+import com.team2.faultFind_backend.accidentdetail.service.AccidentDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
