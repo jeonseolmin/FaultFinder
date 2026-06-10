@@ -1,15 +1,15 @@
-package com.team2.legal_qna_backend.fault;
+package com.team2.faultFind_backend.fault.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name = "fault_modifiers" )
 @NoArgsConstructor
-public class FaultEntity {
+public class Fault {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class FaultEntity {
     private int changeValue;
 
     @Builder
-    public FaultEntity(String caseCode, String modifierName, int changeValue) {
+    public Fault(String caseCode, String modifierName, int changeValue) {
         this.caseCode = caseCode;
         this.modifierName = modifierName;
         this.changeValue = changeValue;
