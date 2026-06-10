@@ -14,13 +14,10 @@ public class Accident {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String caseCode;
 
     @Column(nullable = false)
     private String category;
-
-    @Column(name = "case_code", nullable = false, unique = true)
-    private String caseCode;
 
     @Column(nullable = false)
     private String title;

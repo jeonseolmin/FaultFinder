@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-public class LegalQnaBackendApplication {
+public class FaultFindBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LegalQnaBackendApplication.class, args);
+        SpringApplication.run( FaultFindBackendApplication.class, args);
     }
 
 }

@@ -1,6 +1,7 @@
 import pandas as pd
 import psycopg2
 import chardet
+import pyinstaller
 
 file_path = "data/fault_modifiers_raw.csv"
 with open(file_path, "rb") as f:
