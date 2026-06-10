@@ -1,4 +1,4 @@
-package com.team2.legal_qna_backend.accident;
+package com.team2.faultFind_backend.accident;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
