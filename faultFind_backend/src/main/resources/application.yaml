@@ -1,7 +1,7 @@
 spring:
   application:
     # 애플리케이션 이름
-    name: legal_qna_backend
+    name: fault_find_backend
 
   datasource:
     # PostgreSQL JDBC 드라이버
@@ -34,7 +34,8 @@ spring:
     exclude:
       # Spring Security 자동 설정 비활성화
       - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-
+  jwt:
+    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
 logging:
   level:
     # SQL 파라미터 바인딩 값 출력
