@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table (name = "accident_cases")
 @NoArgsConstructor
-public class AccidentEntity {
+public class Accident {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +38,7 @@ public class AccidentEntity {
     private int baseFaultB;
 
     @Builder
-    public AccidentEntity(String category, String caseCode, String title, String partyAName, String partyBName, int baseFaultA, int baseFaultB) {
+    public Accident(String category, String caseCode, String title, String partyAName, String partyBName, int baseFaultA, int baseFaultB) {
         this.category = category;
         this.caseCode = caseCode;
         this.title = title;

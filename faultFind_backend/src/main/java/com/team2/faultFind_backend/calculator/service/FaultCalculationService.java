@@ -1,9 +1,9 @@
 package com.team2.faultFind_backend.calculator.service;
 
-import com.team2.faultFind_backend.accident.entity.AccidentEntity;
+import com.team2.faultFind_backend.accident.entity.Accident;
 import com.team2.faultFind_backend.accident.service.AccidentService;
 import com.team2.faultFind_backend.calculator.dto.FaultResultDto;
-import com.team2.faultFind_backend.fault.entity.FaultEntity;
+import com.team2.faultFind_backend.fault.entity.Fault;
 import com.team2.faultFind_backend.fault.service.FaultService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,15 +28,15 @@ public class FaultCalculationService {
     public FaultResultDto calculate(String caseCode, List<Long> selectedModifierIds) {
 
         // 1. 기본 사고 정보 및 기본 과실 비율 가져오기
-        AccidentEntity accident = accidentService.getAccidentByCaseCode(caseCode);
+        Accident accident = accidentService.getAccidentByCaseCode(caseCode);
         int finalFaultA = accident.getBaseFaultA();
 
         // 2. 선택된 가감산 요소들이 있다면 가져와서 합산하기
         if (selectedModifierIds != null && !selectedModifierIds.isEmpty()) {
-            List<FaultEntity> selectedModifiers = faultService.getModifiersByIds(selectedModifierIds);
+            List<Fault> selectedModifiers = faultService.getModifiersByIds(selectedModifierIds);
 
             int totalChange = selectedModifiers.stream()
-                    .mapToInt(FaultEntity::getChangeValue)
+                    .mapToInt(Fault::getChangeValue)
                     .sum();
 
             finalFaultA += totalChange;
