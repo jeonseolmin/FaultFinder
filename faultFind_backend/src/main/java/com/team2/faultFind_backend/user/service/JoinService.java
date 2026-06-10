@@ -1,0 +1,33 @@
+package com.team2.faultFind_backend.user.service;
+
+import com.team2.faultFind_backend.user.dto.JoinDto;
+import com.team2.faultFind_backend.user.entity.User;
+import com.team2.faultFind_backend.user.entity.UserRole;
+import com.team2.faultFind_backend.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service @RequiredArgsConstructor @Transactional
+public class JoinService {
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    // 회원가입 서비스
+    public void signUp(JoinDto joinDto) {
+        // 이메일 중복 확인
+        boolean isExist = userRepository.existsByEmail(joinDto.getEmail());
+        if (isExist) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+        }
+        // 새로운 유저면 엔티티 만들고 저장
+        User data = User.builder()
+                .email(joinDto.getEmail())
+                .userName(joinDto.getUserName())
+                .password(bCryptPasswordEncoder.encode(joinDto.getPassword()))
+                .role(UserRole.ROLE_USER)
+                .build();
+        userRepository.save(data);
+    }
+}
