@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name = "fault_modifiers" )
 @NoArgsConstructor
 public class FaultEntity {
 
