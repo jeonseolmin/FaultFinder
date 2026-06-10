@@ -1,7 +1,10 @@
+<<<<<<< HEAD:faultFind_backend/src/main/java/com/team2/faultFind_backend/fault/FaultEntity.java
 package com.team2.faultFind_backend.fault;
+=======
+package com.team2.faultFind_backend.fault.entity;
+>>>>>>> 0af7a51220f8ecf975d9e1b4f71172e44d8c6f72:faultFind_backend/src/main/java/com/team2/faultFind_backend/fault/entity/FaultEntity.java
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
