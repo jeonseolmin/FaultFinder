@@ -1,7 +1,7 @@
 spring:
   application:
     # 애플리케이션 이름
-    name: legal_qna_backend
+    name: fault_find_backend
 
   datasource:
     # PostgreSQL JDBC 드라이버
