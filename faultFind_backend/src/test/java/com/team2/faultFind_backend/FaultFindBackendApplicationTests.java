@@ -1,10 +1,10 @@
-package com.team2.legal_qna_backend;
+package com.team2.faultFind_backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LegalQnaBackendApplicationTests {
+class FaultFindBackendApplicationTests {
 
 	@Test
 	void contextLoads() {
