@@ -14,6 +14,9 @@ public class AccidentDetails {
     @Column(name="case_code")
     private String caseCode;
 
+    @Column(name="accident_situation" )
+    private String accidentSituation;
+
     @Column(name="base_fault_explanation", columnDefinition = "TEXT")
     private String baseFaultExplanation;
 
