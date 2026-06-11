@@ -7,6 +7,10 @@ export default function App() {
   return (
    <>
     <Navbar/>
+    <main>
+      <QuickServices/>
+      <AiFaultRatio/>
+    </main>
    </>
   );
 }
