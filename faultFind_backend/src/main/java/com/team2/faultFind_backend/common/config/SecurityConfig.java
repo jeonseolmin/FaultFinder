@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     // 토큰 유틸리티를 가져온다.
-    private final JWTUtil jwtUtil;
+//    private final JWTUtil jwtUtil;
 
     public SecurityConfig(AuthenticationConfiguration authenticationConfiguration) {
         this.authenticationConfiguration = authenticationConfiguration;
