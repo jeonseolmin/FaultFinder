@@ -11,7 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Question {
+public class Question extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,10 +29,6 @@ public class Question {
 
     @Column(nullable = false, length = 20)
     private String status;
-
-    @CreatedDate
-    @Column(name = "created_at", updatable = false)
-    private BaseEntity createdAt;
 
     @Builder
     public Question(User user, String title, String content, String status) {
