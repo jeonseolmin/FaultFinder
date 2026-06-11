@@ -14,16 +14,17 @@ function AiFaultRatio() {
       */}
       <div className="grid grid-cols-1 xl:grid-cols-10 gap-6 items-start">
         {/*  [좌측 영역 - col-span-7] AI 과실비율 조회 (입력 + 결과)    */}
-        <div className="xl:col-span-7">
+        <div className="xl:col-span-7 w-full">
           {/* 섹션 타이틀 */}
           <h2 className="text-xl font-bold text-gray-800 mb-6">
             AI 과실비율 조회
           </h2>
 
           {/* 입력창과 결과창을 가로로 나란히 배치 (md:flex) */}
-          <div className="flex flex-col lg:flex-row gap-6">
+          <div className="flex flex-col lg:flex-row items-stretch gap-4 lg:gap-2">
+            
             {/* [좌측] 1. 사고 상황 입력 */}
-            <div className="flex-1 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between min-h-[400px]">
+            <div className="flex-1 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between min-h-[460px]">
               <div>
                 <div className="flex items-center gap-2 mb-4">
                   <span className="flex items-center justify-center w-5 h-5 bg-blue-600 text-white rounded-full text-xs font-bold">
@@ -63,12 +64,12 @@ function AiFaultRatio() {
               </div>
 
               {/* 분석하기 버튼 */}
-              <button className="w-full py-3.5 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-950 transition-colors">
+              <button className="w-full py-3.5 bg-blue-900 text-white font-bold rounded-xl hover:bg-blue-950 transition-colors mt-auto btn btn-primary">
                 AI 분석하기
               </button>
             </div>
             {/* 중간에 위치하는 화살표 (PC 화면에서만 표시) */}
-            <div className="hidden md:flex items-center justify-center text-gray-300 font-bold text-xl px-1">
+            <div className="hidden lg:flex items-center justify-center text-gray-300 font-bold text-xl px-2 self-center">
               ▶
             </div>
 
@@ -115,91 +116,74 @@ function AiFaultRatio() {
                   단, 안전운전 의무에 따른 일부 과실이 인정됩니다.
                 </p>
               </div>
-
-              {/* 하단 4개 링크 버튼들 */}
-              <div className="grid grid-cols-4 gap-1.5">
-                {[
-                  { label: "상세 분석 보기", icon: "📋" },
-                  { label: "관련 판례 보기", icon: "⚖️" },
-                  { label: "관련 법률 보기", icon: "📖" },
-                  { label: "보험처리 가이드", icon: "🚗" },
-                ].map((btn, index) => (
-                  <button
-                    key={index}
-                    className="flex flex-col items-center justify-center p-2 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors"
-                  >
-                    <span className="text-base mb-1">{btn.icon}</span>
-                    <span className="text-[10px] text-gray-600 font-medium tracking-tight text-center">
-                      {btn.label}
-                    </span>
-                  </button>
-                ))}
-              </div>
             </div>
           </div>
         </div>
 
-        {/* ============ 우측: 오늘의 법률 팁 & 무료 상담 신청 (1칸 차지) =========== */}
+        {/* ============ 커뮤니티 인기글 & 사고 유형 TOP 5 =========== */}
 
         <div className="xl:col-span-3 flex flex-col gap-6 w-full">
-          {/* 오늘의 법률 팁 */}
+          {/* 커뮤니티 인기글 */}
           <div>
             <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-1.5">
-              <span>💡</span> 오늘의 법률 팁
+              <span></span> 커뮤니티 인기글
+              <button className="w-full py-2 bg-gray-0 text-gray-700 text-xs font-semibold rounded-xl border border-gray-100 hover:bg-gray-100 transition-colors">
+                더보기
+              </button>
             </h2>
             <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm min-h-[220px] flex flex-col justify-between">
-              <h3 className="font-bold text-gray-900 mb-3 text-sm">
-                교통사고 발생 시 첫 단계
-              </h3>
+              
               <ol className="space-y-1.5 text-xs text-gray-600 list-decimal pl-4 leading-relaxed">
-                <li>사고 현장 안전 확보</li>
-                <li>경찰 신고 (112)</li>
-                <li>상대방 정보 확인</li>
-                <li>증거 확보 (사진, 블랙박스)</li>
-                <li>보험사에 사고 접수</li>
+                <span class="badge text-bg-primary">자유</span>
+                <span> 사고 처리 어떻게 해야 하나요?</span>
+                <br />
+                <span class="badge text-bg-primary">후기</span>
+                <span> 고속도로에서 정차중에 뒤에서 박았습니다.</span>
+                <br />
+                <span class="badge text-bg-primary">Q&A</span>
+                <span> 보험사 보상 거절 대응 방법</span>
+                <br />
+                <span class="badge text-bg-primary">자유</span>
+                <span> 블랙박스 영상 첨부 방법 알려주세요</span>
+                <br />
+                <span class="badge text-bg-primary">후기</span>
+                <span> 주차장 접촉사고 과실 후기</span>
               </ol>
-              <button className="w-full py-2 bg-gray-50 text-gray-700 text-xs font-semibold rounded-xl border border-gray-100 hover:bg-gray-100 transition-colors">
-                자세히 보기
-              </button>
+              
             </div>
           </div>
 
-          {/* [하단] 무료 상담 신청 */}
+          {/* 사고 유형 TOP 5 */}
           <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm min-h-[224px] flex flex-col justify-between">
             <h3 className="font-bold text-red-500 text-sm mb-0.5">
-              무료 상담 신청
+              사고 유형 TOP 5
+              <button className="w-full py-2 bg-gray-0 text-gray-700 text-xs font-semibold rounded-xl border border-gray-100 hover:bg-gray-100 transition-colors ">
+                더보기
+              </button>
             </h3>
-            <p className="text-[11px] text-gray-400 mb-4">
-              전문가와의 1:1 상담을 받아보세요.
-            </p>
-
-            {/* 3가지 상담 채널 아이콘 레이아웃 */}
-            <div className="grid grid-cols-3 gap-2 mb-4">
-              {[
-                { label: "전화 상담", icon: "📞", bgColor: "bg-red-50" },
-                { label: "카톡 상담", icon: "💬", bgColor: "bg-yellow-50" },
-                { label: "온라인 상담", icon: "✉️", bgColor: "bg-blue-50" },
-              ].map((item, index) => (
-                <button
-                  key={index}
-                  className="flex flex-col items-center p-2 rounded-xl hover:scale-105 transition-transform"
-                >
-                  <div
-                    className={`w-12 h-12 ${item.bgColor} rounded-full flex items-center justify-center text-base mb-1 shadow-inner`}
-                  >
-                    {item.icon}
-                  </div>
-                  <span className="text-[10px] font-semibold text-gray-700">
-                    {item.label}
-                  </span>
-                </button>
-              ))}
+            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm min-h-[220px] flex flex-col justify-between">
+              
+              <ol className="space-y-1.5 text-xs text-gray-600 list-decimal pl-4 leading-relaxed">
+                <span class="badge text-bg-primary">1</span>
+                <span> 신호 없는 교차로 사고</span>
+                <br />
+                <span class="badge text-bg-primary">2</span>
+                <span> 차선 변경 사고</span>
+                <br />
+                <span class="badge text-bg-primary">3</span>
+                <span> 주차장 접촉사고</span>
+                <br />
+                <span class="badge text-bg-primary">4</span>
+                <span> 후진 사고</span>
+                <br />
+                <span class="badge text-bg-primary">5</span>
+                <span> 보행자 사고</span>
+              </ol>
+              
             </div>
 
-            {/* 상담 신청하기 버튼 */}
-            <button className="w-full py-3 bg-blue-900 text-white font-bold text-sx rounded-xl hover:bg-blue-950 transition-colors shadow-sm">
-              상담 신청하기
-            </button>
+
+        
           </div>
         </div>
       </div>
