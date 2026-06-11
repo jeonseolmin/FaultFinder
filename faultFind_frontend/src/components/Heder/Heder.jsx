@@ -24,7 +24,7 @@ function Heder() {
       {/* 메인 콘텐츠 영역 (왼쪽 정렬) */}
       <main className="main-content">
         <h1 className="main-title">
-          교통사고, 정확한 법률 정보로 <br /> 바르게 해결하세요.
+          교통사고, 정확한 법률 정보로 <br /> 당신의 권리를 지키세요.
         </h1>
         <span className="Heder-slogan">
           사고 상황을 입력하면 과실비율부터 보상, 관련 법률까지 한 번에 확인 할

@@ -14,11 +14,10 @@ function Navbar() {
 
       {/* 메뉴 링크 영역 */}
       <ul className={`navbar-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-        <li><a href="/accident-type">사고유형</a></li>
-        <li><a href="/fault-ratio">과실비율조회</a></li>
-        <li><a href="/legal-info">법률정보</a></li>
-        <li><a href="/precedents">판례검색</a></li>
-        <li><a href="/counseling">상담신청</a></li>
+        <li><a href="/accidentguide">사고대처</a></li>
+        <li><a href="/accidentcase">사고유형</a></li>
+        <li><a href="/faultsearch">과실비율 조회</a></li>
+        <li><a href="/community">커뮤니티</a></li>
       </ul>
 
       {/* 회원가입/로그인 버튼 영역 */}

@@ -17,7 +17,7 @@
 }
 
 .navbar-logo a {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
   text-decoration: none;
   color: #333;
@@ -26,7 +26,7 @@
 }
 
 .navbar-slogan {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #718096;
   font-weight: 500;
   padding-left: 50px;
@@ -48,8 +48,8 @@
   justify-content: center;
   align-items: center;
   color: #4a5568;
-  font-weight: 500;
-  font-size: 17px;
+  font-weight: 600;
+  font-size: 16px;
   transition: color 0.2s;
 }
 
