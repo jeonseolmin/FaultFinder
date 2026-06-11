@@ -36,6 +36,7 @@ spring:
       - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
   jwt:
     secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
+    access-expiration: 3600000
 logging:
   level:
     # SQL 파라미터 바인딩 값 출력
