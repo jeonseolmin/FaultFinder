@@ -70,7 +70,7 @@ function QuickServices() {
           <button
             key={service.id}
             onClick={() => window.location.href = service.path}
-            className="flex flex-col items-center p-4 bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition-all duration-200 text-center group overflow-hidden"
+            className="flex flex-col items-center p-4 bg-white border border-gray-50 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition-all duration-200 text-center group overflow-hidden"
           >
             {/* 1. 차량 이미지 영역 */}
             <div className="w-full h-36 bg-gray-100 rounded-xl overflow-hidden mb-4">
