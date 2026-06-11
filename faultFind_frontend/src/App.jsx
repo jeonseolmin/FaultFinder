@@ -5,7 +5,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import QuickServices from './body/QuickServices.jsx';
 import AiFaultRatio from './body/AiFaultRatio.jsx';
-import CommunityPage from "./pages/CommunityPage.jsx";
+import CommunityPage from "./pages/Community/CommunityPage.jsx";
 
 export default function App() {
   return (
