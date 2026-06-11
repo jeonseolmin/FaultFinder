@@ -54,7 +54,7 @@
 }
 
 .navbar-menu li a:hover {
-  color: #3182ce; /* 호버 시 파란색 강조 */
+  color: #3182ce; 
 }
 
 /* 인증 버튼 스타일 */
