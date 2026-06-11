@@ -1,4 +1,4 @@
-package com.team2.faultFind_backend.common.security.jwt;
+package com.team2.faultFind_backend.common.security;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
