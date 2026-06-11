@@ -14,22 +14,22 @@ public class AccidentDetails {
     @Column(name="case_code")
     private String caseCode;
 
-    @Column(name="accident_situation" )
+    @Column(name="accident_situation" , columnDefinition = "TEXT")
     private String accidentSituation;
 
     @Column(name="base_fault_explanation", columnDefinition = "TEXT")
     private String baseFaultExplanation;
 
-    @Column(name="modifier_explanation")
+    @Column(name="modifier_explanation", columnDefinition = "TEXT")
     private String modifierExplanation;
 
-    @Column(name="usage_note")
+    @Column(name="usage_note", columnDefinition = "TEXT")
     private String usageNote;
 
-    @Column(name="legal_reference")
+    @Column(name="legal_reference", columnDefinition = "TEXT")
     private String legalReference;
 
-    @Column(name="precedent")
+    @Column(name="precedent", columnDefinition = "TEXT")
     private String precedent;
 
 }
