@@ -7,6 +7,8 @@ export default function LoginForm() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const navigate = useNavigate();
+
+
 // *************
 // 함수 정의 시작
 // *************
@@ -23,8 +25,16 @@ const handleLogin = async () => {
       }
     );
 
-    console.log(result);
-    console.log(result.data);
+    const token = result.headers.authorization;
+
+    console.log("token =", token);
+
+    localStorage.setItem(
+      "accessToken",
+      token
+    );
+
+    navigate("/");
 
   } catch(error){
 

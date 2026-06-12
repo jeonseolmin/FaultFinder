@@ -5,7 +5,7 @@ public class SecurityUrls {
     public static final String[] PUBLIC_URLS = {
             "/",
             "/login",
-            "/faultfinder/join",
+            "/faultfinder/signup",
             "/faultfinder/accidentguide",
             "/faultfinder/accidentcase",
             "/faultfinder/faultsearch",
