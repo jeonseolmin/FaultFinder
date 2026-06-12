@@ -1,4 +1,5 @@
 import React from 'react';
+import './PopularPostAndBest5.css';
 
 function PopularPostAndBest5() {
   const latestPosts = [
@@ -18,50 +19,51 @@ function PopularPostAndBest5() {
   ];
 
   return (
-    <div style={styles.container}>
+    <div className="container">
       {/* 커뮤니티 최신글 */}
-      <div style={styles.section}>
-        <div style={styles.header}>
-          <h2 style={styles.title}>커뮤니티 최신글</h2>
-          <button style={styles.moreBtn}>더보기 <span style={{fontSize:'10px'}}>❯</span></button>
+      <div className="section">
+        <div className="header">
+          <h2 className="title">커뮤니티 최신글 </h2>
+          <button className="moreBtn">더보기 <span className="moreBtn-arrow">❯</span>
+          </button>
         </div>
-        <ul style={styles.list}>
+        <ul className="list">
           {latestPosts.map((post) => (
-            <li key={post.id} style={styles.listItem}>
-              <div style={styles.leftContent}>
-                <span style={{...styles.tag, backgroundColor: post.tagBg, color: post.tagColor}}>
+            <li key={post.id} className="listItem">
+              <div className="leftContent">
+                <span className="tag" 
+                style={{ backgroundColor: post.tagBg, color: post.tagColor }}>
                   {post.tag}
                 </span>
-                <span style={styles.postTitle}>{post.title}</span>
+                <span className="postTitle">{post.title}</span>
               </div>
-              <span style={styles.date}>{post.date}</span>
+              <span className="date">{post.date}</span>
             </li>
           ))}
         </ul>
       </div>
 
       {/* 인기 사고사례 TOP 5 */}
-      <div style={styles.section}>
-        <div style={styles.header}>
-          <div style={{display:'flex', alignItems:'center', gap:'6px'}}>
-            <h2 style={styles.title}>인기 사고사례 TOP 5</h2>
-            <span style={{color: '#0052CC'}}>🏆</span>
+      <div className="section">
+        <div className="header">
+          <div className="header-icon-wrapper">
+            <h2 className="title">인기 사고사례 TOP 5</h2>
+            <span className="trophy-icon">🏆</span>
           </div>
-          <button style={styles.moreBtn}>더보기 <span style={{fontSize:'10px'}}>❯</span></button>
+          <button className="moreBtn">더보기 <span className="moreBtn-arrow">❯</span></button>
         </div>
-        <ul style={styles.list}>
+        <ul className="list">
           {topAccidents.map((accident) => (
-            <li key={accident.id} style={styles.listItem}>
-              <div style={styles.leftContent}>
-                <span style={{
-                  ...styles.rank, 
+            <li key={accident.id} className="listItem">
+              <div className="leftContent">
+                <span className="rank" style={{
                   backgroundColor: accident.rank <= 3 ? '#0052CC' : '#4A90E2'
                 }}>
                   {accident.rank}
                 </span>
-                <span style={styles.postTitle}>{accident.title}</span>
+                <span className="postTitle">{accident.title}</span>
               </div>
-              <span style={styles.typeTag}>{accident.type}</span>
+              <span className="typeTag">{accident.type}</span>
             </li>
           ))}
         </ul>
@@ -69,104 +71,5 @@ function PopularPostAndBest5() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: 'flex',
-    gap: '24px',
-    width: '100%',
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '20px',
-    boxSizing: 'border-box',
-  },
-  section: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    borderRadius: '12px',
-    padding: '24px',
-    border: '1px solid #f0f0f0',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-  },
-  header: {
-    display: 'flex',
-    justifyContent: 'between',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '16px',
-    borderBottom: '1px solid #f5f5f5',
-    paddingBottom: '12px',
-  },
-  title: {
-    fontSize: '18px',
-    fontWeight: 'bold',
-    color: '#1a1a1a',
-    margin: 0,
-  },
-  moreBtn: {
-    background: 'none',
-    border: 'none',
-    color: '#999999',
-    fontSize: '12px',
-    cursor: 'pointer',
-  },
-  list: {
-    listStyle: 'none',
-    padding: 0,
-    margin: 0,
-  },
-  listItem: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '12px 0',
-    borderBottom: '1px solid #f9f9f9',
-  },
-  leftContent: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    minWidth: 0, 
-  },
-  tag: {
-    padding: '2px 8px',
-    borderRadius: '4px',
-    fontSize: '12px',
-    fontWeight: '500',
-    whiteSpace: 'nowrap',
-  },
-  postTitle: {
-    fontSize: '14px',
-    color: '#333333',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-  date: {
-    fontSize: '13px',
-    color: '#999999',
-    marginLeft: '8px',
-  },
-  rank: {
-    width: '20px',
-    height: '20px',
-    borderRadius: '4px',
-    color: '#ffffff',
-    fontSize: '12px',
-    fontWeight: 'bold',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  typeTag: {
-    fontSize: '12px',
-    color: '#666666',
-    backgroundColor: '#f5f5f5',
-    padding: '2px 8px',
-    borderRadius: '4px',
-    marginLeft: '8px',
-    whiteSpace: 'nowrap',
-  }
-};
 
 export default PopularPostAndBest5;

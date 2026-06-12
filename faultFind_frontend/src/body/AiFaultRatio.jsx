@@ -119,69 +119,6 @@ function AiFaultRatio() {
             </div>
           </div>
         </div>
-
-        {/* ============ 커뮤니티 인기글 & 사고 유형 TOP 5 =========== */}
-
-        <div className="xl:col-span-3 flex flex-col gap-6 w-full">
-          {/* 커뮤니티 인기글 */}
-          <div>
-            <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-1.5">
-              <span></span> 커뮤니티 인기글
-              <button className="w-full py-2 bg-gray-0 text-gray-700 text-xs font-semibold rounded-xl border border-gray-100 hover:bg-gray-100 transition-colors">
-                더보기
-              </button>
-            </h2>
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm min-h-[220px] flex flex-col justify-between">
-              
-              <ol className="space-y-1.5 text-xs text-gray-600 list-decimal pl-4 leading-relaxed">
-                <span class="badge text-bg-primary">자유</span>
-                <span> 사고 처리 어떻게 해야 하나요?</span>
-                <br />
-                <span class="badge text-bg-primary">후기</span>
-                <span> 고속도로에서 정차중에 뒤에서 박았습니다.</span>
-                <br />
-                <span class="badge text-bg-primary">Q&A</span>
-                <span> 보험사 보상 거절 대응 방법</span>
-                <br />
-                <span class="badge text-bg-primary">자유</span>
-                <span> 블랙박스 영상 첨부 방법 알려주세요</span>
-                <br />
-                <span class="badge text-bg-primary">후기</span>
-                <span> 주차장 접촉사고 과실 후기</span>
-              </ol>
-              
-            </div>
-          </div>
-
-          {/* 사고 유형 TOP 5 */}
-          <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm min-h-[224px] flex flex-col justify-between">
-            <h3 className="font-bold text-red-500 text-sm mb-0.5">
-              사고 유형 TOP 5
-              <button className="w-full py-2 bg-gray-0 text-gray-700 text-xs font-semibold rounded-xl border border-gray-100 hover:bg-gray-100 transition-colors ">
-                더보기
-              </button>
-            </h3>
-            <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm min-h-[220px] flex flex-col justify-between">
-              
-              <ol className="space-y-1.5 text-xs text-gray-600 list-decimal pl-4 leading-relaxed">
-                <span class="badge text-bg-primary">1</span>
-                <span> 신호 없는 교차로 사고</span>
-                <br />
-                <span class="badge text-bg-primary">2</span>
-                <span> 차선 변경 사고</span>
-                <br />
-                <span class="badge text-bg-primary">3</span>
-                <span> 주차장 접촉사고</span>
-                <br />
-                <span class="badge text-bg-primary">4</span>
-                <span> 후진 사고</span>
-                <br />
-                <span class="badge text-bg-primary">5</span>
-                <span> 보행자 사고</span>
-              </ol>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );
