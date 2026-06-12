@@ -15,8 +15,7 @@ const navigate = useNavigate();
 // 함수 정의 시작
 // *************
 const handleLogin = async () => {
-  console.log("email =", email);
-  console.log("password =", password);
+
   try {
 
     const result = await axiosInstance.post("/faultfinder/login",
@@ -29,11 +28,9 @@ const handleLogin = async () => {
     const token = result.headers.authorization;
 
     console.log("token =", token);
+    console.log(result);
 
-    localStorage.setItem(
-      "accessToken",
-      token
-    );
+    localStorage.setItem("accessToken", token);
 
     navigate("/");
 
