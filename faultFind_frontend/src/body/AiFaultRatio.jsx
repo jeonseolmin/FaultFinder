@@ -107,6 +107,7 @@ function AiFaultRatio() {
         </div>
       </div>
     </div>
+    
   );
 }
 

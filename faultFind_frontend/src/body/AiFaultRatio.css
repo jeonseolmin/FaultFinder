@@ -3,7 +3,7 @@
 /* 전체 대레이아웃 (2단 분할 구조 대비) */
 .ai-fault-container {
   max-width: 80rem; /* 1280px (max-w-7xl) */
-  margin-left: auto;
+  margin-left: 100px;
   margin-right: auto;
   padding: 2rem 1rem; /* py-8 px-4 */
 }
@@ -21,7 +21,7 @@
 }
 
 .section-title {
-  font-size: 1.25rem; /* text-xl */
+  font-size: 1.55rem; /* text-xl */
   font-weight: 700; /* font-bold */
   color: #1f2937; /* text-gray-800 */
   margin-bottom: 1.5rem; /* mb-6 */
@@ -71,9 +71,11 @@
 }
 
 .card-title {
+  font-size: 1.125rem; /* text-lg */
   font-weight: 700; /* font-bold */
   color: #111827; /* text-gray-900 */
-  font-size: 0.875rem; /* text-sm */
+  font-size: 1.0rem; /* text-sm */
+  padding: 10px;
 }
 
 /* 1. 사고 상황 입력 영역 스타일 */
@@ -194,7 +196,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 12px solid #3b82f6; /* border-blue-500 */
+  border: 15px solid #3b82f6; /* border-blue-500 */
   border-right-color: #ef4444; /* border-r-red-500 */
   transform: rotate(45deg);
 }
