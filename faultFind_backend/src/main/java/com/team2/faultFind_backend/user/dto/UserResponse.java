@@ -1,12 +1,12 @@
 package com.team2.faultFind_backend.user.dto;
 
 
+import lombok.Builder;
 import lombok.Data;
 
-@Data
-public class JoinRequest {
+@Data @Builder
+public class UserResponse {
     private String email;
-    private String password;
     private String userName;
     private String nickName;
 }

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Navbar from "../Navbar";
 import "./Heder.css";
+import bgImage from "./Hader_BackGround.png";
 
 function Heder() {
   const [searchTerm, setSearchTerm] = useState("");
+
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -20,7 +21,17 @@ function Heder() {
   };
 
   return (
-    <div className="Heder">
+    <div className="Heder"
+    style={{ 
+        // 💡 2. import한 변수(bgImage)를 url에 넣어줍니다.
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+        minHeight: '10vh'
+      }}
+    >
       {/* 메인 콘텐츠 영역 (왼쪽 정렬) */}
       <main className="main-content">
         <h1 className="main-title">

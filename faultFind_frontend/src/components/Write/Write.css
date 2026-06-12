@@ -1,0 +1,82 @@
+.write-container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.write-header h2 {
+  font-size: 24px;
+  margin-bottom: 24px;
+  color: #111;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #333;
+}
+
+.write-form-group {
+  margin-bottom: 20px;
+}
+
+.write-form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.write-input, .write-select, .write-textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.write-textarea {
+  min-height: 350px;
+  resize: vertical;
+}
+
+.write-input:focus, .write-select:focus, .write-textarea:focus {
+  border-color: #1a56db;
+  outline: none;
+}
+
+.write-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.btn-cancel {
+  padding: 12px 24px;
+  background: #f1f3f5;
+  color: #555;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.btn-cancel:hover {
+  background: #e9ecef;
+}
+
+.btn-submit {
+  padding: 12px 32px;
+  background: #1a56db;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.btn-submit:hover {
+  background: #1546b8;
+}
