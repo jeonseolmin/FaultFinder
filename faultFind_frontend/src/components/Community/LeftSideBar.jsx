@@ -43,4 +43,3 @@ function LeftSidebar() {
   );
 }
 export default LeftSidebar;
-// 1
