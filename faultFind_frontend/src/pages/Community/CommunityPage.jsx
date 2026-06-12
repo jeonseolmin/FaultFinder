@@ -1,15 +1,16 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom'; // 🌟 주소를 읽기 위해 반드시 필요합니다!
+import { useLocation } from 'react-router-dom'; 
 
 import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
 import BoardList from '../../components/Community/BoardList.jsx';
 import RightSidebar from '../../components/Community/RightSideBar.jsx';
+// 🌟 우리가 만든 사고대처 컴포넌트를 불러옵니다! (경로는 실제 파일 위치에 맞게 맞춰주세요)
+import AccidentGuide from '../AccidentGuide/AccidentGuide.jsx'; 
 import '../../components/Community/Community.css'; 
 
 export default function CommunityPage() {
-  const location = useLocation(); // 현재 주소창의 URL을 가져옵니다.
+  const location = useLocation(); 
 
-  // 주소에 따라 사이드바에게 줄 키워드를 결정합니다.
   const getActiveTab = () => {
     switch (location.pathname) {
       case '/accidentguide': return 'action';
@@ -23,12 +24,23 @@ export default function CommunityPage() {
 
   const activeTab = getActiveTab();
 
+  // 🌟 핵심: 가운데 알맹이를 주소에 따라 다르게 리턴해주는 함수를 만듭니다.
+  const renderMainContent = () => {
+    if (location.pathname === '/accidentguide') {
+      return <AccidentGuide />; // 주소가 사고대처면 사고대처 화면을!
+    }
+    // 그 외(커뮤니티 등)는 기본적으로 게시판을 보여줍니다.
+    return <BoardList activeTab={activeTab} />; 
+  };
+
   return (
     <div className="community-page">
       <main className="main-container">
-        {/* 계산된 activeTab을 자식들에게 내려줍니다 */}
         <LeftSidebar activeTab={activeTab} />
-        <BoardList activeTab={activeTab} />
+        
+        {/* 🌟 꽉 막혀있던 <BoardList /> 대신, 방금 만든 함수를 넣어줍니다! */}
+        {renderMainContent()}
+        
         <RightSidebar />
       </main>
     </div>
