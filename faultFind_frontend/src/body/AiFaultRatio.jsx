@@ -179,11 +179,7 @@ function AiFaultRatio() {
                 <span class="badge text-bg-primary">5</span>
                 <span> 보행자 사고</span>
               </ol>
-              
             </div>
-
-
-        
           </div>
         </div>
       </div>

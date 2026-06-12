@@ -1,4 +1,5 @@
 import React from 'react';
+import './QuickServices.css';
 
 function QuickServices() {
   // 앞으로 항목이 늘어날 것을 대비해 배열 구조로 작성했습니다.
@@ -61,35 +62,19 @@ function QuickServices() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* 섹션 타이틀 */}
-      <h2 className="text-xl font-bold text-gray-800 mb-6">자주 찾는 서비스</h2>
-
-      {/* 서비스 카드 리스트 공간 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <h2 className="services-title-main">자주 찾는 서비스</h2>
+      <div className="services-grid">
         {services.map((service) => (
           <button
             key={service.id}
             onClick={() => window.location.href = service.path}
-            className="flex flex-col items-center p-4 bg-white border border-gray-50 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-500 transition-all duration-200 text-center group overflow-hidden"
+            className="service-card"
           >
-            {/* 1. 차량 이미지 영역 */}
-            <div className="w-full h-36 bg-gray-100 rounded-xl overflow-hidden mb-4">
-              <img 
-                src={service.imgSrc} 
-                alt={service.imgAlt} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-              />
+            <div className="service-icon-box">
+              <img src={service.imgSrc} alt={service.imgAlt} className="service-icon" />
             </div>
-            
-            {/* 2. 서비스 이름 */}
-            <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors mb-1">
-              {service.title}
-            </h3>
-            
-            {/* 3. 설명 텍스트 */}
-            <p className="text-sm text-gray-500 font-medium">
-              {service.desc}
-            </p>
+            <h3 className="service-title">{service.title}</h3>
+            <p className="service-desc">{service.desc}</p>
           </button>
         ))}
       </div>
