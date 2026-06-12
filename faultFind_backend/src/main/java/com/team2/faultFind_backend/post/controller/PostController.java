@@ -3,6 +3,7 @@ package com.team2.faultFind_backend.post.controller;
 import com.team2.faultFind_backend.post.dto.PostDto;
 import com.team2.faultFind_backend.post.entity.Post;
 import com.team2.faultFind_backend.post.service.PostService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,12 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/write")
-    public ResponseEntity<String> writePost(@RequestBody PostDto postDto) {
-        postService.createPost(postDto);
+    public ResponseEntity<String> writePost(@RequestBody PostDto postDto
+            , Authentication authentication) {
+
+        String loggedInUser = authentication.getName();
+        postService.createPost(postDto, loggedInUser);
+
         return ResponseEntity.ok("게시글이 성공적으로 등록되었습니다.");
     }
 

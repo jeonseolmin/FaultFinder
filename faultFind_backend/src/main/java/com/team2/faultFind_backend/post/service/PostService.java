@@ -14,11 +14,13 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public void createPost(PostDto postDto) {
+    public void createPost(PostDto postDto, String loggedInUser) {
         Post post = new Post();
         post.setCategory(postDto.getCategory());
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
+
+        post.setAuthor(loggedInUser);
 
         postRepository.save(post);
     }
