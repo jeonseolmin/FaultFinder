@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import axiosInstance from '../../api/axiosInstance';
 export default function BoardList({ activeTab }) {
   // DB에서 가져온 글 목록을 담을 그릇
   const [posts, setPosts] = useState([]);
@@ -10,7 +9,7 @@ export default function BoardList({ activeTab }) {
     const fetchPosts = async () => {
       try {
         // 스프링 부트(8080)에 "글 목록 좀 줘!" 라고 요청 (axios.get)
-        const response = await axios.get('http://localhost:8080/faultfinder/list');
+        const response = await  axiosInstance.get("/faultfinder/login/list");
         
         // 받아온 데이터를 상태(posts)에 집어넣음
         setPosts(response.data);
@@ -39,10 +38,12 @@ export default function BoardList({ activeTab }) {
           {/* 가져온 posts 배열의 개수만큼 표(tr)를 반복해서 그립니다 */}
           {posts.length > 0 ? (
             posts.map((post) => (
-              <tr key={post.id}>
+              <tr key={post.id}onClick={() => navigate(`/community/${post.id}`)} style={{ cursor: 'pointer' }}>
                 <td>{post.id}</td>
                 <td>{post.category === 'free' ? '자유게시판' : post.category}</td>
                 <td>{post.title}</td>
+                <td style={{ textAlign: 'left' }}>{post.title}</td>
+                <td>{post.author}</td>
                 {/* 시간 데이터 자르기 (예: 2026-06-12T14:00:00 -> 2026-06-12) */}
                 <td>{post.createdAt ? post.createdAt.split('T')[0] : ''}</td>
               </tr>

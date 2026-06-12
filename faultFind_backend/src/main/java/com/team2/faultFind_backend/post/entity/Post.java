@@ -24,5 +24,8 @@ public class Post {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private String author;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 }
