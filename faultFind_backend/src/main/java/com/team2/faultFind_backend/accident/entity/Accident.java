@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class Accident {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String caseCode;
 
     @Column(nullable = false)

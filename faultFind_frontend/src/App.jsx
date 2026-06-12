@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+
 import Navbar from './components/Navbar';
-// 메인 App 조합
+import QuickServices from './body/QuickServices.jsx';
+import AiFaultRatio from './body/AiFaultRatio.jsx';
+import CommunityPage from './pages/Community/CommunityPage.jsx';
+import Login from './pages/Login/Login.jsx';
+import Signup from './pages/Signup/Signup.jsx';
+
 export default function App() {
-  return (
-   <>
-    <Navbar/>
-   </>
-  );
+  return (
+    <>
+    </>
+  );
 }

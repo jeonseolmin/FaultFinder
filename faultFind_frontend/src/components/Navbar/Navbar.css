@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 10px 40px;
   background-color: #ffffff;
   border-bottom: 1px solid #e2e8f0;
 }
@@ -17,7 +17,7 @@
 }
 
 .navbar-logo a {
-  font-size: 1.5rem;
+  font-size: 30px;
   font-weight: bold;
   text-decoration: none;
   color: #333;
@@ -26,10 +26,10 @@
 }
 
 .navbar-slogan {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #718096;
   font-weight: 500;
-  padding-left: 50px;
+  padding-left: 60px;
 }
 
 /* 메뉴 스타일 */
@@ -48,13 +48,13 @@
   justify-content: center;
   align-items: center;
   color: #4a5568;
-  font-weight: 500;
-  font-size: 17px;
+  font-weight: 600;
+  font-size: 16px;
   transition: color 0.2s;
 }
 
 .navbar-menu li a:hover {
-  color: #3182ce; /* 호버 시 파란색 강조 */
+  color: #3182ce; 
 }
 
 /* 인증 버튼 스타일 */

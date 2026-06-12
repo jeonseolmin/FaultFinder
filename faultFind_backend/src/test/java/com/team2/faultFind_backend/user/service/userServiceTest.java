@@ -1,30 +1,29 @@
 package com.team2.faultFind_backend.user.service;
 
-import com.team2.faultFind_backend.user.dto.JoinDto;
+import com.team2.faultFind_backend.user.dto.JoinRequest;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class JoinServiceTest {
+class userServiceTest {
     @Autowired
-    private JoinService joinService;
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
     @Test
     void signUp() {
-        JoinDto dto = new JoinDto();
+        JoinRequest dto = new JoinRequest();
         dto.setEmail("test@test.com");
         dto.setUserName("test");
         dto.setPassword("1234");
 
-        joinService.signUp(dto);
+        userService.signUp(dto);
 
         User user =
                 userRepository.findByEmail("test@test.com")
