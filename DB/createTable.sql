@@ -12,7 +12,7 @@ CREATE TABLE fault_modifiers (
     id BIGSERIAL PRIMARY KEY,
     case_code VARCHAR(50) NOT NULL REFERENCES accident_cases(case_code),
     modifier_name TEXT NOT NULL,
-    change_value VARCHAR(50),
+    change_value INTEGER,
     UNIQUE (case_code, modifier_name)
 );
 

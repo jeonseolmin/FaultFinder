@@ -8,8 +8,8 @@ function Navbar() {
     <nav className="navbar">
       {/* 로고 영역 */}
       <div className="navbar-logo">
-        <a href="/">⚖️ 교통사고 법률정보</a>
-        <span className="navbar-slogan">정확한 정보로 현명한 선택을</span>
+        <a href="/FaultFinder">⚖️ FaultFinder</a>
+        <span className="navbar-slogan">교통사고 법률 정보 사이트</span>
       </div>
 
       {/* 메뉴 링크 영역 */}
