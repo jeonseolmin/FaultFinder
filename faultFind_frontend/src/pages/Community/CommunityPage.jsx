@@ -6,7 +6,7 @@ import BoardList from '../../components/community/BoardList';
 import RightSidebar from '../../components/community/RightSidebar';
 import '../../components/community/Community.css'; 
 
-export default function CommunityPage() {
+function CommunityPage() {
   return (
     <div className="community-page">
       <main className="main-container">
