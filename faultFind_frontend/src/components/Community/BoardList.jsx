@@ -1,34 +1,62 @@
-import React from 'react';
-
-// 👈 부모로부터 activeTab(현재 탭)을 받아옵니다.
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../api/axiosInstance';
 export default function BoardList({ activeTab }) {
-  
-  // 현재 탭에 맞춰서 제목과 설명을 반환해주는 함수
-  const getBoardInfo = () => {
-    switch(activeTab) {
-      case 'free': return { title: '자유게시판', desc: '교통사고와 관련된 다양한 의견을 공유해주세요.' };
-      case 'review': return { title: '사고 후기', desc: '생생한 교통사고 대처 경험담을 나누어주세요.' };
-      case 'qna': return { title: 'Q&A', desc: '사고 처리 과정에서 궁금한 점을 질문해보세요.' };
-      case 'notice': return { title: '공지사항', desc: '커뮤니티의 중요 안내사항을 확인하세요.' };
-      default: return { title: '자유게시판', desc: '교통사고와 관련된 다양한 의견을 공유해주세요.' };
-    }
-  };
+  // DB에서 가져온 글 목록을 담을 그릇
+  const [posts, setPosts] = useState([]);
 
-  const info = getBoardInfo();
+  // 🌟 컴포넌트가 화면에 나타날 때 딱 한 번 실행되는 함수
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        // 스프링 부트(8080)에 "글 목록 좀 줘!" 라고 요청 (axios.get)
+        const response = await  axiosInstance.get("/faultfinder/login/list");
+        
+        // 받아온 데이터를 상태(posts)에 집어넣음
+        setPosts(response.data);
+      } catch (error) {
+        console.error('글 목록을 불러오지 못했습니다:', error);
+      }
+    };
+
+    fetchPosts();
+  }, []); // 빈 배열을 넣어야 무한 반복을 막을 수 있습니다.
 
   return (
-    <section className="board-content">
-      <div className="board-header">
-        {/* 선택된 탭에 따라 제목과 설명이 바뀝니다! */}
-        <h2>{info.title}</h2>
-        <p>{info.desc}</p>
-      </div>
-
-      <div style={{ backgroundColor: '#f3f4f6', border: '2px dashed #d1d5db', borderRadius: '8px', padding: '40px', textAlign: 'center', color: '#9ca3af', marginTop: '20px' }}>
-        현재 보고 계신 게시판은 <strong>{info.title}</strong> 입니다.<br/><br/>
-        나중에 Spring Boot에서 데이터를 가져올 때, <br/>
-        선택된 탭 정보(`{activeTab}`)를 사용해 서로 다른 게시글 목록을 불러오게 됩니다.
-      </div>
-    </section>
+    <div className="board-list-container">
+      <h3>자유게시판</h3>
+      
+      <table className="board-table">
+        <thead>
+          <tr>
+            <th>번호</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* 가져온 posts 배열의 개수만큼 표(tr)를 반복해서 그립니다 */}
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <tr key={post.id}onClick={() => navigate(`/community/${post.id}`)} style={{ cursor: 'pointer' }}>
+                <td>{post.id}</td>
+                <td>{post.category === 'free' ? '자유게시판' : post.category}</td>
+                <td>{post.title}</td>
+                <td style={{ textAlign: 'left' }}>{post.title}</td>
+                <td>{post.author}</td>
+                {/* 시간 데이터 자르기 (예: 2026-06-12T14:00:00 -> 2026-06-12) */}
+                <td>{post.createdAt ? post.createdAt.split('T')[0] : ''}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4" style={{ textAlign: 'center', padding: '20px' }}>
+                아직 등록된 게시글이 없습니다.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }

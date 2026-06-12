@@ -2,7 +2,8 @@ package com.team2.faultFind_backend.user.service;
 
 import com.team2.faultFind_backend.common.security.dto.LoginRequest;
 import com.team2.faultFind_backend.common.security.jwt.JWTUtil;
-import com.team2.faultFind_backend.user.dto.JoinRequest;
+import com.team2.faultFind_backend.user.dto.UserRequest;
+import com.team2.faultFind_backend.user.dto.UserResponse;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.entity.UserRole;
 import com.team2.faultFind_backend.user.repository.UserRepository;
@@ -18,17 +19,17 @@ public class UserService {
     private final JWTUtil jwtUtil;
 
     // 회원가입 서비스
-    public void signUp(JoinRequest joinRequest) {
+    public void signUp(UserRequest userRequest) {
         // 이메일 중복 확인
-        boolean isExist = userRepository.existsByEmail(joinRequest.getEmail());
+        boolean isExist = userRepository.existsByEmail(userRequest.getEmail());
         if (isExist) {
             throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
         }
         // 새로운 유저면 엔티티 만들고 저장
         User data = User.builder()
-                .email(joinRequest.getEmail())
-                .userName(joinRequest.getUserName())
-                .password(bCryptPasswordEncoder.encode(joinRequest.getPassword()))
+                .email(userRequest.getEmail())
+                .userName(userRequest.getUserName())
+                .password(bCryptPasswordEncoder.encode(userRequest.getPassword()))
                 .role(UserRole.ROLE_USER)
                 .build();
         userRepository.save(data);
@@ -59,5 +60,18 @@ public class UserService {
                 user.getRole().name()
         );
 
+    }
+
+    public UserResponse getMyInfo(String email) {
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("사용자를 찾을 수 없습니다."));
+
+        return UserResponse.builder()
+                .email(user.getEmail())
+                .userName(user.getUserName())
+                .nickName(user.getNickName())
+                .build();
     }
 }

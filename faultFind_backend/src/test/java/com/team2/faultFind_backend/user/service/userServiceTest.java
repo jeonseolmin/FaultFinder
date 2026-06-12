@@ -1,6 +1,6 @@
 package com.team2.faultFind_backend.user.service;
 
-import com.team2.faultFind_backend.user.dto.JoinRequest;
+import com.team2.faultFind_backend.user.dto.UserRequest;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class userServiceTest {
     private UserRepository userRepository;
     @Test
     void signUp() {
-        JoinRequest dto = new JoinRequest();
+        UserRequest dto = new UserRequest();
         dto.setEmail("test@test.com");
         dto.setUserName("test");
         dto.setPassword("1234");

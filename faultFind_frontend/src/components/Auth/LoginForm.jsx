@@ -2,29 +2,37 @@ import React from 'react';
 import { useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import './Auth.css';
+import axiosInstance from '../../api/axiosInstance';
 import axios from 'axios';
+
 export default function LoginForm() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const navigate = useNavigate();
+
+
 // *************
 // 함수 정의 시작
 // *************
 const handleLogin = async () => {
-  console.log("email =", email);
-  console.log("password =", password);
+
   try {
 
-    const result = await axios.post(
-      "http://localhost:8080/faultfinder/login",
+    const result = await axiosInstance.post("/faultfinder/login",
       {
         email : email,
         password : password
       }
     );
 
+    const token = result.headers.authorization;
+
+    console.log("token =", token);
     console.log(result);
-    console.log(result.data);
+
+    localStorage.setItem("accessToken", token);
+
+    navigate("/");
 
   } catch(error){
 
