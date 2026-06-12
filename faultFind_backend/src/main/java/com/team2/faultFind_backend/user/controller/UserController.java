@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/join")
+    @PostMapping("/signup")
     public ResponseEntity<String> join(@RequestBody JoinRequest request){
         userService.signUp(request);
         return ResponseEntity.ok("회원가입 성공");

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom'; // 🌟 주소를 읽기 위해 반드시 필요합니다!
 
-import LeftSidebar from '../../components/Community/LeftSidebar.jsx';
+import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
 import BoardList from '../../components/Community/BoardList.jsx';
 import RightSidebar from '../../components/Community/RightSidebar.jsx';
 import '../../components/Community/Community.css'; 
