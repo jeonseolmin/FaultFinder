@@ -10,7 +10,7 @@ function Navbar() {
     <nav className="navbar">
       {/* 로고 영역 */}
       <div className="navbar-logo">
-        <a href="/FaultFinder">⚖️ FaultFinder</a>
+        <a href="/">⚖️ FaultFinder</a>
         <span className="navbar-slogan">교통사고 법률 정보 사이트</span>
       </div>
 
