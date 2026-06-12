@@ -3,13 +3,13 @@ import { useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import './Auth.css';
 import axiosInstance from '../../api/axiosInstance';
-import axios from 'axios';
+import { useAuth } from '../../context/AuthContent';
 
 export default function LoginForm() {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const navigate = useNavigate();
-
+const { login } = useAuth();
 
 // *************
 // 함수 정의 시작
@@ -24,13 +24,11 @@ const handleLogin = async () => {
         password : password
       }
     );
-
+    
+  
     const token = result.headers.authorization;
 
-    console.log("token =", token);
-    console.log(result);
-
-    localStorage.setItem("accessToken", token);
+    await login(token)
 
     navigate("/");
 

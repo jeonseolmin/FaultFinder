@@ -41,7 +41,8 @@ public class UserController {
     /*
      * GET Mapping 칸
      */
-    @GetMapping("/user/me")
+
+    @GetMapping("/users/me")
     public ResponseEntity<UserResponse> getMyInfo(Authentication authentication) {
         String email = authentication.getName();
         return ResponseEntity.ok(userService.getMyInfo(email));

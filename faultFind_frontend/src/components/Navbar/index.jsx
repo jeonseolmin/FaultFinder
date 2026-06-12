@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
-
+import { useAuth } from "../../context/AuthContent";
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [userInfo,setUserInfo] = useState({})
+  const { isLogin, userInfo,logout} = useAuth();
   const navigate = useNavigate();
-  const isLogin = !!localStorage.getItem("accessToken");
-  const userName = localStorage.getItem("userName");
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
@@ -37,7 +36,7 @@ function Navbar() {
       return;
     }
 
-    localStorage.removeItem("accessToken");
+    logout()
 
     navigate("/");
   };
@@ -74,7 +73,9 @@ function Navbar() {
       <div className="navbar-auth">
         {isLogin ? (
           <>
-            <span className="welcome-user">환영합니다 {userName}님</span>
+            <span className="welcome-user">
+              환영합니다 {userInfo?.userName}님
+            </span>
 
             <button className="btn-login" onClick={() => navigate("/mypage")}>
               마이페이지

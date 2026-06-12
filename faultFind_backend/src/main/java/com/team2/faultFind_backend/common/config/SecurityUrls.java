@@ -22,7 +22,7 @@ public class SecurityUrls {
             "/faultfinder/answer/**",
             "/faultfinder/write/**",
             "/faultfinder/list/**",
-            "/faultfinder/user/**"
+            "/faultfinder/users/**"
     };
 
     private SecurityUrls() {
