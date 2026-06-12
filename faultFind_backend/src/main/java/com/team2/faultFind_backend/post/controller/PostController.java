@@ -33,4 +33,24 @@ public class PostController {
         // 리액트가 "/list" 주소로 요청하면, 모든 글 목록을 던져줍니다.
         return ResponseEntity.ok(postService.getAllPosts());
     }
+
+    // 글 수정
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updatePost(@PathVariable Long id, @RequestBody PostDto postDto, Authentication authentication) {
+        postService.updatePost(id, postDto, authentication.getName());
+        return ResponseEntity.ok("게시글이 성공적으로 수정되었습니다.");
+    }
+
+    // 글 삭제
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id, Authentication authentication) {
+        postService.deletePost(id, authentication.getName());
+        return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
+    }
+
+    // 상세 보기
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> getPost(@PathVariable Long id) {
+        return ResponseEntity.ok(postService.getPost(id));
+    }
 }
