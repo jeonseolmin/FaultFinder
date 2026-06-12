@@ -4,22 +4,22 @@ public class SecurityUrls {
 
     public static final String[] PUBLIC_URLS = {
             "/",
-            "/login",
-            "/join",
-            "/accidentguide",
-            "/accidentcase",
-            "/faultsearch",
-            "/community"
+            "/faultfinder/login",
+            "/faultfinder/join",
+            "/faultfinder/accidentguide",
+            "/faultfinder/accidentcase",
+            "/faultfinder/faultsearch",
+            "/faultfinder/community"
     };
 
     public static final String[] ADMIN_URLS = {
-            "/admin/**"
+            "/faultfinder/admin/**"
     };
 
     public static final String[] USER_URLS = {
-            "/mypage/**",
-            "/question/**",
-            "/answer/**"
+            "/faultfinder/mypage/**",
+            "/faultfinder/question/**",
+            "/faultfinder/answer/**"
     };
 
     private SecurityUrls() {

@@ -2,6 +2,7 @@ package com.team2.faultFind_backend.common.config;
 import com.team2.faultFind_backend.common.security.jwt.JWTAuthenticationFilter;
 import com.team2.faultFind_backend.common.security.jwt.JWTUtil;
 import com.team2.faultFind_backend.common.security.jwt.LoginFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -49,6 +50,15 @@ public class SecurityConfig {
         http
                 .httpBasic((auth) -> auth.disable());
 
+        http
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        })
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                        })
+                );
 
         /*
             경로별 인가 작업
@@ -73,6 +83,7 @@ public class SecurityConfig {
                         ).hasRole("ADMIN")
 
                         // 그 외
+
                         .anyRequest().authenticated()
                 );
 
@@ -82,7 +93,7 @@ public class SecurityConfig {
                         jwtUtil
                 );
 
-        loginFilter.setFilterProcessesUrl("/login");
+        loginFilter.setFilterProcessesUrl("/faultfinder/login");
 
         http
                 .addFilterBefore(new JWTAuthenticationFilter(jwtUtil), LoginFilter.class);
