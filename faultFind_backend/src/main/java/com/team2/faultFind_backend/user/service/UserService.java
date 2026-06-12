@@ -1,5 +1,7 @@
 package com.team2.faultFind_backend.user.service;
 
+import com.team2.faultFind_backend.common.security.dto.LoginRequest;
+import com.team2.faultFind_backend.common.security.jwt.JWTUtil;
 import com.team2.faultFind_backend.user.dto.JoinRequest;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.entity.UserRole;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final JWTUtil jwtUtil;
 
     // 회원가입 서비스
     public void signUp(JoinRequest joinRequest) {
@@ -29,5 +32,32 @@ public class UserService {
                 .role(UserRole.ROLE_USER)
                 .build();
         userRepository.save(data);
+    }
+
+
+    // 로그인
+    public String login(LoginRequest loginRequest){
+        User user = userRepository
+                .findByEmail(loginRequest.getEmail())
+                .orElse(null);
+
+        if(user == null){
+            return null;
+        }
+
+        boolean matches = bCryptPasswordEncoder.matches(
+                loginRequest.getPassword(),
+                user.getPassword()
+        );
+
+        if(!matches){
+            return null;
+        }
+
+        return jwtUtil.createJwt(
+                user.getEmail(),
+                user.getRole().name()
+        );
+
     }
 }

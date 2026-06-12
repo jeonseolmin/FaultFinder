@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import './Navbar.css';
+import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const navigate = useNavigate();
+  
   return (
     <nav className="navbar">
       {/* 로고 영역 */}
@@ -22,8 +24,18 @@ function Navbar() {
 
       {/* 회원가입/로그인 버튼 영역 */}
       <div className="navbar-auth">
-        <button className="btn-login">로그인</button>
-        <button className="btn-signup">회원가입</button>
+        <button
+        className="btn-login"
+        onClick={() => navigate('/login')}
+        >
+          로그인
+        </button>
+        <button
+          className="btn-signup"
+          onClick={() => navigate('/signup')}
+        >
+          회원가입
+        </button>
       </div>
     </nav>
   );
