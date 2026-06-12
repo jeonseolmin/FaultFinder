@@ -1,0 +1,92 @@
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  /* 무조건 2열로 배치 */
+  gap: 16px;
+}
+
+/* 미디어 쿼리: 화면 가로폭이 최소 1024px 이상일 때 */
+@media (min-width: 1024px) {
+  .services-grid { grid-template-columns: repeat(6, 1fr); } /* 6개를 한줄로 정렬 */
+}
+/* 자주 찾는 서비스 */
+.services-title-main {
+  font-size: 22px;
+  font-weight: bold;      
+  font-weight: 700;
+  margin-top: 15px;    
+  color: #1f2937;      
+  margin-bottom: 20px;  
+  margin-top: 20px;
+}
+
+/* 카드 기본 스타일 */
+.service-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #e5f1f3;
+  border: 1px solid #d3d4d8;
+  border-radius: 36px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.service-card:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-color: #2563eb;
+  transform: translateY(-4px);
+}
+
+/* 아이콘 박스 */
+.service-icon-box {
+  width: 64px;
+  height: 64px;
+  background-color: #e5f1f3;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  transition: background-color 0.2s ease;
+}
+
+.service-card:hover .service-icon-box {
+  background-color: #eff6ff;
+}
+
+/* 아이콘 이미지 크기 제한 */
+.service-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+.service-card:hover .service-icon {
+  transform: scale(1.05);
+}
+
+/* 텍스트 스타일 */
+.service-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+  word-break: keep-all;
+  transition: color 0.2s ease;
+}
+
+.service-card:hover .service-title {
+  color: #2563eb;
+}
+
+.service-desc {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-weight: 500;
+  word-break: keep-all;
+}
