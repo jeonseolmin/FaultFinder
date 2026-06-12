@@ -19,7 +19,9 @@ public class SecurityUrls {
     public static final String[] USER_URLS = {
             "/faultfinder/mypage/**",
             "/faultfinder/question/**",
-            "/faultfinder/answer/**"
+            "/faultfinder/answer/**",
+            "/faultfinder/write/**",
+            "/faultfinder/list/**"
     };
 
     private SecurityUrls() {
