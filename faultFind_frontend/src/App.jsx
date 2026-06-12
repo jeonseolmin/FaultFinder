@@ -11,6 +11,21 @@ import Signup from './pages/Signup/Signup.jsx';
 export default function App() {
   return (
     <>
+      <Navbar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <main>
+              <QuickServices />
+              <AiFaultRatio />
+            </main>
+          }
+        />
+        <Route path="/community" element={<CommunityPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
     </>
   );
 }
