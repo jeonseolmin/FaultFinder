@@ -9,8 +9,8 @@ import Login from './pages/Login/Login.jsx';
 import Signup from './pages/Signup/Signup.jsx';
 
 export default function App() {
-  return (
-    <>
-    </>
-  );
+return (
+<>
+</>
+);
 }
