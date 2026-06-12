@@ -20,10 +20,10 @@ function PopularPostAndBest5() {
 
   return (
     <div className="container">
-      {/* 커뮤니티 최신글 */}
+      {/* 커뮤니티 인기글 */}
       <div className="section">
         <div className="header">
-          <h2 className="title">커뮤니티 최신글 </h2>
+          <h2 className="title">커뮤니티 인기글 </h2>
           <button className="moreBtn">더보기 <span className="moreBtn-arrow">❯</span>
           </button>
         </div>
@@ -50,7 +50,6 @@ function PopularPostAndBest5() {
             <h2 className="title">인기 사고사례 TOP 5</h2>
             <span className="trophy-icon">🏆</span>
           </div>
-          <button className="moreBtn">더보기 <span className="moreBtn-arrow">❯</span></button>
         </div>
         <ul className="list">
           {topAccidents.map((accident) => (
@@ -68,6 +67,33 @@ function PopularPostAndBest5() {
           ))}
         </ul>
       </div>
+
+      
+      {/* 인기 사고사례 TOP 5 */}
+      <div className="section">
+        <div className="header">
+          <div className="header-icon-wrapper">
+            <h2 className="title">인기 사고사례 TOP 5</h2>
+            <span className="trophy-icon">🏆</span>
+          </div>
+        </div>
+        <ul className="list">
+          {topAccidents.map((accident) => (
+            <li key={accident.id} className="listItem">
+              <div className="leftContent">
+                <span className="rank" style={{
+                  backgroundColor: accident.rank <= 3 ? '#0052CC' : '#4A90E2'
+                }}>
+                  {accident.rank}
+                </span>
+                <span className="postTitle">{accident.title}</span>
+              </div>
+              <span className="typeTag">{accident.type}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
     </div>
   );
 }

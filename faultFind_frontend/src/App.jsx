@@ -10,6 +10,7 @@ import Signup from './pages/Signup/Signup.jsx';
 import WritePage from './pages/Write/WritePage.jsx';
 import PostDetail from './pages/Detail/PostDetail.jsx';
 import PostEdit from './pages/Edit/PostEdit.jsx';
+import AccidentGuide from './pages/AccidentGuide/AccidentGuide.jsx';
 
 export default function App() {
   return (
@@ -20,7 +21,7 @@ export default function App() {
         <Route path="/" element={<main><QuickServices /><AiFaultRatio /></main>} />
         
         <Route path="/community" element={<CommunityPage />} />
-        <Route path="/accidentguide" element={<CommunityPage />} />
+        <Route path="/accidentguide" element={<AccidentGuide />} />
         <Route path="/accidentcase" element={<CommunityPage />} />
         <Route path="/faultsearch" element={<CommunityPage />} />
         
