@@ -3,26 +3,34 @@ package com.team2.faultFind_backend.common.config;
 public class SecurityUrls {
 
     public static final String[] PUBLIC_URLS = {
-            "/",
-            "/login",
-            "/faultfinder/signup",
-            "/faultfinder/accidentguide",
-            "/faultfinder/accidentcase",
-            "/faultfinder/faultsearch",
-            "/faultfinder/community"
+            "/api",
+            "/api/auth/**",
+            "/api/auth/login",
+            "/api/signup",
+            "/api/accident-guide",
+            "/api/accident-case",
+            "/api/fault-search",
+            "/api/community"
     };
 
     public static final String[] ADMIN_URLS = {
-            "/faultfinder/admin/**"
+            "/api/admin/**"
     };
 
     public static final String[] USER_URLS = {
-            "/faultfinder/mypage/**",
-            "/faultfinder/question/**",
-            "/faultfinder/answer/**",
-            "/faultfinder/write/**",
-            "/faultfinder/list/**",
-            "/faultfinder/users/**"
+            "/api/users/",
+            "/api/users/**",
+
+            "/api/mypage",
+            "/api/mypage/**",
+
+            "/api/question",
+            "/api/question/**",
+
+            "/api/answer",
+            "/api/answer/**",
+
+            "/api/community/**",
     };
 
     private SecurityUrls() {

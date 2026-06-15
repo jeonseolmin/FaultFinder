@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance';
 export default function BoardList({ activeTab }) {
   // DB에서 가져온 글 목록을 담을 그릇
@@ -9,7 +10,7 @@ export default function BoardList({ activeTab }) {
     const fetchPosts = async () => {
       try {
         // 스프링 부트(8080)에 "글 목록 좀 줘!" 라고 요청 (axios.get)
-        const response = await  axiosInstance.get("/faultfinder/login/list");
+        const response = await  axiosInstance.get("/api/community");
         
         // 받아온 데이터를 상태(posts)에 집어넣음
         setPosts(response.data);
