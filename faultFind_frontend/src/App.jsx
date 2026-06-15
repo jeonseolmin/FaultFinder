@@ -9,10 +9,10 @@ import WritePage from './pages/Write/WritePage.jsx';
 import PostDetail from './pages/Detail/PostDetail.jsx';
 import PostEdit from './pages/Edit/PostEdit.jsx';
 import AccidentGuide from './pages/AccidentGuide/AccidentGuide.jsx';
-import PopularPostAndBest5 from './body/PopularPostAndBest5.jsx';
+import PopularPostAndBest5 from './components/Body_PopularPostAndBest5/PopularPostAndBest5.jsx';
 import Heder from './components/Heder/Heder.jsx';
-import QuickServices from './body/QuickServices.jsx';
-import AiFaultRatio from './body/AiFaultRatio.jsx';
+import QuickServices from './components/Body_QuickServices/QuickServices.jsx';
+import AiFaultRatio from './components/Body_AiFaultRatio/AiFaultRatio.jsx';
 import AccidentType from './pages/AccidentType/AccidentType.jsx';
 import AccidentTypeDetail from './pages/AccidentType/AccidentTypeDetail.jsx';
 
@@ -24,7 +24,7 @@ export default function App() {
       <Navbar/>
       <Heder/>
       <Routes>
-        <Route path="/" element={<main><QuickServices /><AiFaultRatio /></main>} />
+        <Route path="/" element={<main><QuickServices /><AiFaultRatio /><PopularPostAndBest5/></main>} />
         
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/accidentguide" element={<AccidentGuide />} />
