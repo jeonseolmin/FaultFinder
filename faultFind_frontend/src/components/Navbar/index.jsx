@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Navbar.css";
+import { FaUserTie } from "react-icons/fa";
 import { useNavigate,Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContent";
 
@@ -58,8 +59,8 @@ function Navbar() {
       <div className="navbar-auth">
         {isLogin ? (
           <>
-            <span className="welcome-user">
-              환영합니다 {userInfo?.userName}님
+            <span className="user">
+              <FaUserTie className="user-icon"/> {userInfo?.userName}님
             </span>
 
             <button className="btn-login" onClick={() => navigate("/mypage")}>
