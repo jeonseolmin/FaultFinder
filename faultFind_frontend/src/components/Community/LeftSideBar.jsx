@@ -64,21 +64,21 @@ export default function LeftSidebar({ activeTab }) {
       {/* 🌟 onClick을 전부 지우고 a 태그의 href로 깔끔하게 교체했습니다 */}
       <div className="sidebar-menu">
         <Link
-          to="/accidentguide"
+          to="/guides"
           className={`menu-item ${activeTab === "action" ? "active" : ""}`}
           style={{ textDecoration: "none" }}
         >
           <span className="icon">🚨</span> 사고대처
         </Link>
         <Link
-          to="/accidentcase"
+          to="/cases"
           className={`menu-item ${activeTab === "type" ? "active" : ""}`}
           style={{ textDecoration: "none" }}
         >
           <span className="icon">🚗</span> 사고유형
         </Link>
         <Link
-          to="/faultsearch"
+          to="/fault-ratios"
           className={`menu-item ${activeTab === "ratio" ? "active" : ""}`}
           style={{ textDecoration: "none" }}
         >
