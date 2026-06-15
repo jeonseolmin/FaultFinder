@@ -1,30 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../api/axiosInstance";
 import { useAuth } from "../../context/AuthContent";
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isLogin, userInfo,logout} = useAuth();
+  const { isLogin, userInfo, logout } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) return;
-
-    axiosInstance
-      .get("/faultfinder/users/me")
-      .then((res) => {
-        console.log("현재 로그인 유저:", res.data);
-        setUserInfo(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("accessToken");
-        setUserInfo(null);
-      });
-  }, []);
 
   // *************
   // 함수 정의 시작
@@ -36,7 +17,7 @@ function Navbar() {
       return;
     }
 
-    logout()
+    logout();
 
     navigate("/");
   };
