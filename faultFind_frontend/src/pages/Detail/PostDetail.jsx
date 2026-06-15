@@ -1,87 +1,124 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import '../../components/Write/Write.css'; // 디자인은 기존 글쓰기 폼을 재활용합니다
+import axiosInstance from '../../api/axiosInstance';
+import './PostDetail.css';
 
 export default function PostDetail() {
-  const { id } = useParams(); // 주소창에 있는 글 번호(id)를 가져옵니다
+  const { id } = useParams(); // 주소창에서 게시글 ID 추출
   const navigate = useNavigate();
-  const [post, setPost] = useState(null);
 
-  // 화면이 켜질 때 백엔드에서 글 내용 가져오기
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false); // 수정 모드 전환 상태
+  const [editTitle, setEditTitle] = useState('');
+  const [editContent, setEditContent] = useState('');
+
+  // 토큰이나 로컬스토리지에 저장해 둔 현재 로그인 유저의 식별자(ID 또는 이름)
+  // (로그인 시점에 저장해 두었던 키값을 꺼내옵니다)
+  const currentUsername = localStorage.getItem("email") || localStorage.getItem("username");
+
   useEffect(() => {
-    const fetchPost = async () => {
+    const fetchPostDetail = async () => {
       try {
-        // 🌟 백엔드 주소 규칙에 맞춰 /faultfinder/ 로 수정
-        const response = await axios.get(`http://localhost:8080/faultfinder/${id}`);
+        setLoading(true);
+        const response = await axiosInstance.get(`/api/community/${id}`);
         setPost(response.data);
+        setEditTitle(response.data.title);
+        setEditContent(response.data.content);
       } catch (error) {
-        console.error("글을 불러오지 못했습니다.", error);
-        alert("글을 불러오는데 실패했습니다.");
+        console.error("게시글을 불러오는데 실패했습니다.", error);
+        alert("존재하지 않거나 삭제된 게시글입니다.");
+        navigate(-1);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchPost();
+    fetchPostDetail();
   }, [id]);
 
-  // 🌟 글 삭제 버튼을 눌렀을 때 실행될 함수
+  // 게시글 삭제 함수
   const handleDelete = async () => {
-    if (!window.confirm("정말 이 글을 삭제하시겠습니까?")) return;
-
+    if (!window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) return;
     try {
-      const token = localStorage.getItem('token');
-      // 🌟 삭제 요청 주소도 /faultfinder/ 로 수정
-      await axios.delete(`http://localhost:8080/faultfinder/delete/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      
-      alert("글이 삭제되었습니다.");
+      await axiosInstance.delete(`/api/posts/${id}`);
+      alert("게시글이 삭제되었습니다.");
       navigate('/community'); // 삭제 후 목록으로 이동
-      
     } catch (error) {
-      console.error("삭제 실패:", error);
+      console.error("삭제 실패", error);
       alert("삭제 권한이 없거나 오류가 발생했습니다.");
     }
   };
 
-  // 데이터를 불러오는 중일 때 보여줄 화면
-  if (!post) return <div style={{ textAlign: 'center', padding: '50px' }}>로딩 중...</div>;
+  // 게시글 수정 저장 함수
+  const handleUpdate = async () => {
+    try {
+      await axiosInstance.put(`/api/posts/${id}`, {
+        title: editTitle,
+        content: editContent
+      });
+      alert("게시글이 수정되었습니다.");
+      setPost({ ...post, title: editTitle, content: editContent });
+      setIsEditMode(false);
+    } catch (error) {
+      console.error("수정 실패", error);
+      alert("수정 권한이 없거나 오류가 발생했습니다.");
+    }
+  };
+
+  if (loading) return <div className="loading-box">로딩 중...</div>;
+  if (!post) return null;
+
+  // 🌟 현재 로그인한 사람과 글쓴이가 같은지 판단하는 스위치
+  const isAuthor = post.author === currentUsername;
 
   return (
-    <div className="write-container">
-      <div className="write-header">
-        <h2>{post.title}</h2>
-        <div style={{ display: 'flex', justifyContent: 'space-between', color: '#666', marginTop: '10px' }}>
-          <span>작성자: {post.author}</span>
-          <span>작성일: {post.createdAt ? post.createdAt.split('T')[0] : ''}</span>
+    <div className="post-detail-container">
+      {/* 수정 모드가 아닐 때 (일반 상세 보기) */}
+      {!isEditMode ? (
+        <>
+          <div className="detail-header">
+            <h2>{post.title}</h2>
+            <div className="post-meta">
+              <span>작성자: {post.author}</span> | <span>{post.createdDate}</span>
+            </div>
+          </div>
+          <div className="detail-content">
+            <p>{post.content}</p>
+          </div>
+
+          <div className="detail-actions">
+            <button onClick={() => navigate(-1)} className="btn-back">목록으로</button>
+            
+            {/* 글쓴이 본인일 때만 수정/삭제 버튼을 렌더링합니다 */}
+            {isAuthor && (
+              <div className="author-buttons">
+                <button onClick={() => setIsEditMode(true)} className="btn-edit">수정</button>
+                <button onClick={handleDelete} className="btn-delete">삭제</button>
+              </div>
+            )}
+          </div>
+        </>
+      ) : (
+        /* 수정 모드일 때 (폼 화면으로 변경) */
+        <div className="edit-form">
+          <h3>게시글 수정</h3>
+          <input 
+            type="text" 
+            className="edit-title-input"
+            value={editTitle} 
+            onChange={(e) => setEditTitle(e.target.value)} 
+          />
+          <textarea 
+            className="edit-content-textarea"
+            value={editContent} 
+            onChange={(e) => setEditContent(e.target.value)}
+          />
+          <div className="edit-actions">
+            <button onClick={handleUpdate} className="btn-save">저장</button>
+            <button onClick={() => setIsEditMode(false)} className="btn-cancel">취소</button>
+          </div>
         </div>
-      </div>
-      
-      {/* 글 내용 출력 영역 */}
-      <div className="write-form-group" style={{ minHeight: '300px', padding: '20px', backgroundColor: '#f9f9f9', borderRadius: '8px', marginTop: '20px', whiteSpace: 'pre-wrap' }}>
-        {post.content}
-      </div>
-      
-      <div className="write-actions" style={{ marginTop: '30px' }}>
-        <button onClick={() => navigate('/community')} className="btn-cancel">목록으로</button>
-        
-        <div style={{ display: 'flex', gap: '10px' }}>
-          {/* 🌟 수정 버튼 클릭 시 수정 페이지(/community/edit/글번호)로 이동하게 추가! */}
-          <button 
-            onClick={() => navigate(`/community/edit/${id}`)} 
-            className="btn-submit" 
-            style={{ backgroundColor: '#28a745' }}
-          >
-            수정
-          </button>
-          <button 
-            onClick={handleDelete} 
-            className="btn-submit" 
-            style={{ backgroundColor: '#dc3545' }}
-          >
-            삭제
-          </button>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -1,30 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Navbar.css";
-import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../api/axiosInstance";
+import { FaUserTie } from "react-icons/fa";
+import { useNavigate,Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContent";
+
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isLogin, userInfo,logout} = useAuth();
+  const { isLogin, userInfo, logout } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-
-    if (!token) return;
-
-    axiosInstance
-      .get("/faultfinder/users/me")
-      .then((res) => {
-        console.log("현재 로그인 유저:", res.data);
-        setUserInfo(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        localStorage.removeItem("accessToken");
-        setUserInfo(null);
-      });
-  }, []);
 
   // *************
   // 함수 정의 시작
@@ -36,7 +19,7 @@ function Navbar() {
       return;
     }
 
-    logout()
+    logout();
 
     navigate("/");
   };
@@ -56,16 +39,19 @@ function Navbar() {
       {/* 메뉴 링크 영역 */}
       <ul className={`navbar-menu ${isMobileMenuOpen ? "active" : ""}`}>
         <li>
-          <a href="/accidentguide">사고대처</a>
+          <Link to="/guides">사고대처</Link>
         </li>
+
         <li>
-          <a href="/accidentcase">사고유형</a>
+          <Link to="/cases">사고유형</Link>
         </li>
+
         <li>
-          <a href="/faultsearch">과실비율 조회</a>
+          <Link to="/fault-ratios">과실비율 조회</Link>
         </li>
+
         <li>
-          <a href="/community">커뮤니티</a>
+          <Link to="/community">커뮤니티</Link>
         </li>
       </ul>
 
@@ -73,8 +59,8 @@ function Navbar() {
       <div className="navbar-auth">
         {isLogin ? (
           <>
-            <span className="welcome-user">
-              환영합니다 {userInfo?.userName}님
+            <span className="user">
+              <FaUserTie className="user-icon"/> {userInfo?.userName}님
             </span>
 
             <button className="btn-login" onClick={() => navigate("/mypage")}>

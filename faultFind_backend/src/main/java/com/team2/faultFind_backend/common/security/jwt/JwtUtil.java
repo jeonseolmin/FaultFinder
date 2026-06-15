@@ -12,8 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 @Component @RequiredArgsConstructor
-public class JWTUtil {
-    private final JWTProperties jwtProperties;
+public class JwtUtil {
+    private final JwtProperties jwtProperties;
     private SecretKey secretKey;
 
     @PostConstruct

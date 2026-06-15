@@ -13,9 +13,9 @@ export default function CommunityPage() {
 
   const getActiveTab = () => {
     switch (location.pathname) {
-      case '/accidentguide': return 'action';
-      case '/accidentcase': return 'type';
-      case '/faultsearch': return 'ratio';
+      case '/guides': return 'action';
+      case '/cases': return 'type';
+      case '/fault-ratios': return 'ratio';
       case '/community':
       default:
         return 'community';
@@ -26,7 +26,7 @@ export default function CommunityPage() {
 
   // 🌟 핵심: 가운데 알맹이를 주소에 따라 다르게 리턴해주는 함수를 만듭니다.
   const renderMainContent = () => {
-    if (location.pathname === '/accidentguide') {
+    if (location.pathname === '/guides') {
       return <AccidentGuide />; // 주소가 사고대처면 사고대처 화면을!
     }
     // 그 외(커뮤니티 등)는 기본적으로 게시판을 보여줍니다.

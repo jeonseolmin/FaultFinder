@@ -26,4 +26,10 @@ public class AccidentController {
     public ResponseEntity<Accident> getAccidentByCaseCode(@PathVariable String caseCode) {
         return ResponseEntity.ok(accidentService.getAccidentByCaseCode(caseCode));
     }
+
+    // 카테고리별 사고 목록 조회
+    @GetMapping("/category")
+    public ResponseEntity<List<Accident>> getAccidentsByCategory(@RequestParam String category) {
+        return ResponseEntity.ok(accidentService.getAccidentsByCategory(category));
+    }
 }

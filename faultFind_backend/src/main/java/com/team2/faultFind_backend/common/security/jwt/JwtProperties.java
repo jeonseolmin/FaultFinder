@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 
 @Component @Getter
-public class JWTProperties {
+public class JwtProperties {
     private final String secret;
     private final Long accessExpiration;
 
-    public JWTProperties(
+    public JwtProperties(
             @Value("${spring.jwt.secret}") String secret,
             @Value("${spring.jwt.access-expiration}") Long accessExpiration
     ) {

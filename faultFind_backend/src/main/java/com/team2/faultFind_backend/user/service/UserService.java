@@ -1,9 +1,10 @@
 package com.team2.faultFind_backend.user.service;
 
 import com.team2.faultFind_backend.common.security.dto.LoginRequest;
-import com.team2.faultFind_backend.common.security.jwt.JWTUtil;
+import com.team2.faultFind_backend.common.security.jwt.JwtUtil;
 import com.team2.faultFind_backend.user.dto.UserRequest;
 import com.team2.faultFind_backend.user.dto.UserResponse;
+import com.team2.faultFind_backend.user.entity.ProviderType;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.entity.UserRole;
 import com.team2.faultFind_backend.user.repository.UserRepository;
@@ -16,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final JWTUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
     // 회원가입 서비스
     public void signUp(UserRequest userRequest) {
@@ -31,6 +32,8 @@ public class UserService {
                 .userName(userRequest.getUserName())
                 .password(bCryptPasswordEncoder.encode(userRequest.getPassword()))
                 .role(UserRole.ROLE_USER)
+                .provider(ProviderType.LOCAL)
+                .providerId(null)
                 .build();
         userRepository.save(data);
     }

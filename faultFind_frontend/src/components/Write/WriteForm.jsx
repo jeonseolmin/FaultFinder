@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import './Write.css';
 
 export default function WriteForm() {
@@ -33,14 +33,7 @@ export default function WriteForm() {
     }
 
     try {
-      const token = localStorage.getItem('token');
-      // 🌟 스프링 부트 서버(기본 포트 8080)로 데이터 전송!
-      // (스프링 부트 포트가 다르다면 8080을 변경해주세요)
-      const response = await axios.post('http://localhost:8080/faultfinder/write', formData, {
-        headers: {
-          Authorization: `Bearer ${token}` // JWT 표준 규격 (Bearer 띄어쓰기 주의!)
-        }
-      });
+      const response = await  axiosInstance.post("/api/community",formData);
       
       alert(response.data); // "게시글이 성공적으로 등록되었습니다." 알림
       

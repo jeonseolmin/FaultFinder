@@ -1,18 +1,21 @@
 /* 기본 네비게이션 바 스타일 */
 .navbar {
+  font-family: 'Pretendard';
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 40px;
   background-color: #ffffff;
   border-bottom: 1px solid #e2e8f0;
+
+  min-width: 1200px;
 }
 
 .navbar-logo {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
-  gap: 4px; 
+  align-items: flex-start;
+  gap: 4px;
   margin: auto;
 }
 
@@ -54,7 +57,7 @@
 }
 
 .navbar-menu li a:hover {
-  color: #3182ce; 
+  color: #3182ce;
 }
 
 /* 인증 버튼 스타일 */
@@ -65,8 +68,19 @@
   padding-left: 40px;
 }
 
+.user-icon{
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+}
+
+.user {
+  padding: 10px 16px;
+  
+}
+
 .navbar-auth button {
-  padding: 0.5rem 1rem;
+  padding: 9px 16px;
   border-radius: 4px;
   border: 1px solid #cbd5e0;
   background-color: white;

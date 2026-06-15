@@ -1,7 +1,10 @@
 package com.team2.faultFind_backend.common.config;
-import com.team2.faultFind_backend.common.security.jwt.JWTAuthenticationFilter;
-import com.team2.faultFind_backend.common.security.jwt.JWTUtil;
+import com.team2.faultFind_backend.common.security.jwt.JwtAuthenticationFilter;
+import com.team2.faultFind_backend.common.security.jwt.JwtUtil;
 import com.team2.faultFind_backend.common.security.jwt.LoginFilter;
+import com.team2.faultFind_backend.common.security.oauth.handler.OAuth2FailureHandler;
+import com.team2.faultFind_backend.common.security.oauth.handler.*;
+import com.team2.faultFind_backend.common.security.oauth.service.CustomOAuth2UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,11 +24,18 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
-    private final JWTUtil jwtUtil;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
+    private final OAuth2FailureHandler oAuth2FailureHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final JwtUtil jwtUtil;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil,OAuth2SuccessHandler oAuth2SuccessHandler,OAuth2FailureHandler oAuth2FailureHandler,CustomOAuth2UserService customOAuth2UserService) {
         this.authenticationConfiguration = authenticationConfiguration;
+        this.oAuth2SuccessHandler = oAuth2SuccessHandler;
+        this.oAuth2FailureHandler = oAuth2FailureHandler;
+        this.customOAuth2UserService = customOAuth2UserService;
         this.jwtUtil = jwtUtil;
+
     }
 
     @Bean
@@ -50,15 +60,15 @@ public class SecurityConfig {
         http
                 .httpBasic((auth) -> auth.disable());
 
-        http
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                        })
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                        })
-                );
+//        http
+//                .exceptionHandling(exception -> exception
+//                        .authenticationEntryPoint((request, response, authException) -> {
+//                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//                        })
+//                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+//                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+//                        })
+//                );
 
         /*
             경로별 인가 작업
@@ -86,6 +96,14 @@ public class SecurityConfig {
 
                         .anyRequest().authenticated()
                 );
+        http
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOAuth2UserService)
+                        )
+                        .successHandler(oAuth2SuccessHandler)
+                        .failureHandler(oAuth2FailureHandler)
+                );
 
         LoginFilter loginFilter =
                 new LoginFilter(
@@ -96,7 +114,10 @@ public class SecurityConfig {
         loginFilter.setFilterProcessesUrl("/faultfinder/login");
 
         http
-                .addFilterBefore(new JWTAuthenticationFilter(jwtUtil), LoginFilter.class);
+                .addFilterBefore(
+                        new JwtAuthenticationFilter(jwtUtil),
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
         http
                 .addFilterAt(
@@ -111,7 +132,6 @@ public class SecurityConfig {
         // cors 설정
         http
                 .cors(cors -> cors.configurationSource(request -> {
-
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(
                             List.of("http://localhost:3000")

@@ -1,0 +1,97 @@
+/* 태그 버튼 (Pill Button) 스타일 */
+.tag-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.tag-btn {
+  padding: 8px 18px;
+  border: 1px solid #cbd5e1;
+  background-color: #fff;
+  color: #475569;
+  border-radius: 20px; 
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tag-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.tag-btn.active {
+  background-color: #1a56db;
+  color: #fff;
+  border-color: #1a56db;
+  box-shadow: 0 4px 6px rgba(26, 86, 219, 0.15);
+}
+
+/* 아코디언 카드 */
+.scenario-card {
+  padding: 0; 
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.scenario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 24px;
+  cursor: pointer;
+  background-color: #fff;
+  transition: background-color 0.2s;
+}
+
+.scenario-header:hover {
+  background-color: #f8fafc;
+}
+
+.scenario-header h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #1e293b;
+}
+
+.toggle-icon {
+  font-size: 14px;
+  color: #94a3b8;
+  transition: transform 0.3s ease;
+}
+
+.toggle-icon.open {
+  transform: rotate(180deg);
+}
+
+/* 아코디언 펼쳐졌을 때 내용 영역 */
+.scenario-body {
+  padding: 20px 24px;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.party-info p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #475569;
+}
+
+.scenario-ratio {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1a56db;
+  background-color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}

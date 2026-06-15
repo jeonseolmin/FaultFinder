@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./Heder.css";
-import bgImage from "./Hader_BackGround.png";
+import "./Header.css";
+import bgImage from "../../images/header-bg.png";
 
-function Heder() {
+function Header() {
   const [searchTerm, setSearchTerm] = useState("");
 
 
@@ -21,7 +21,7 @@ function Heder() {
   };
 
   return (
-    <div className="Heder"
+    <div className="header"
     style={{ 
         // 💡 2. import한 변수(bgImage)를 url에 넣어줍니다.
         backgroundImage: `url(${bgImage})`,
@@ -37,7 +37,7 @@ function Heder() {
         <h1 className="main-title">
           교통사고, 정확한 법률 정보로 <br /> 당신의 권리를 지키세요.
         </h1>
-        <span className="Heder-slogan">
+        <span className="header-slogan">
           사고 상황을 입력하면 과실비율부터 보상, 관련 법률까지 한 번에 확인 할
           수 있습니다.
         </span>
@@ -66,4 +66,4 @@ function Heder() {
   );
 }
 
-export default Heder;
+export default Header;
