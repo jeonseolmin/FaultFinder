@@ -23,7 +23,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         // JWT 생성
 
         response.sendRedirect(
-                "http://localhost:3000/oauth-success?token=..."
+                "http://localhost:3000"
         );
     }
 }
