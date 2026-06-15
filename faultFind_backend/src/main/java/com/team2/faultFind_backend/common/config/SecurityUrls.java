@@ -6,10 +6,16 @@ public class SecurityUrls {
             "/api",
             "/api/auth/**",
             "/api/auth/login",
+
             "/api/signup",
-            "/api/accident-guide",
-            "/api/accident-case",
-            "/api/fault-search",
+
+            "/api/accident-guides",
+            "/api/accident-guides/**",
+
+            "/api/accident-cases",
+            "/api/accident-cases/**",
+
+            "/api/fault-ratios",
             "/api/community"
     };
 

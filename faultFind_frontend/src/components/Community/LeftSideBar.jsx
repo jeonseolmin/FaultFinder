@@ -106,7 +106,7 @@ export default function LeftSidebar({ activeTab }) {
       </div>
 
       <Link
-        to="/write"
+        to="/community/write"
         className="btn-write"
         style={{
           textDecoration: "none",
