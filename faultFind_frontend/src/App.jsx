@@ -35,7 +35,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
 
-        <Route path="/write" element={<WritePage />} />
+        <Route path="/community/write" element={<WritePage />} />
         <Route path="/community/:id" element={<PostDetail />} />
         <Route path="/community/edit/:id" element={<PostEdit />} />
       </Routes>
