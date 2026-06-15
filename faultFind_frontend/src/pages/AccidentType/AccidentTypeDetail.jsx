@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 
 import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
 import RightSidebar from '../../components/Community/RightSideBar.jsx';
@@ -36,8 +36,7 @@ export default function AccidentTypeDetail() {
         const dbCategory = getDbCategoryName(typeId);
         
         // 슬래시(/)가 포함된 문자열을 안전하게 보내기 위해 주소를 쿼리 스트링(?category=) 구조로 변경합니다.
-        const response = await axios.get(`http://localhost:8080/api/accidents/category?category=${encodeURIComponent(dbCategory)}`);
-        
+        const response = await axiosInstance.get(`/api/accidents/category?category=${encodeURIComponent(dbCategory)}`);
         // 받아온 데이터를 상태값에 저장합니다.
         setCases(response.data);
       } catch (error) {
