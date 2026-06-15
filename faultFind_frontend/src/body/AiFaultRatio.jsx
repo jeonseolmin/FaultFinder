@@ -105,6 +105,65 @@ function AiFaultRatio() {
 
           </div>
         </div>
+
+        {/* 우측 영역 : 사고 대처 가이드 */}
+        <div className="right-section">
+          <h2 className="section-title">사고 체크리스트</h2>
+          
+          <div className="guide-card">
+            <ul className="guide-list">
+              <li>
+                <span className="guide-num">01</span>
+                <div className="guide-content">
+                  <h4>부상자 확인 및 안전 확보</h4>
+                  <p>부상 여부 확인 후 안전한 장소로 이동</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">02</span>
+                <div className="guide-content">
+                  <h4>119 및 경찰 신고</h4>
+                  <p>필요 시 119 신고 후 경찰(112)에 신고</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">03</span>
+                <div className="guide-content">
+                  <h4>현장 보존</h4>
+                  <p>사고 현장을 보존하고 차량 이동 최소화</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">04</span>
+                <div className="guide-content">
+                  <h4>증거 사진 촬영</h4>
+                  <p>사고 현장, 차량 파손 부위, 도로 상황 등 촬영</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">05</span>
+                <div className="guide-content">
+                  <h4>증상대방 정보 확인</h4>
+                  <p>목격자 확보</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">06</span>
+                <div className="guide-content">
+                  <h4>목격자 확보</h4>
+                  <p>목격자가 있다면 연락처 확보</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">07</span>
+                <div className="guide-content">
+                  <h4>보험사 접수</h4>
+                  <p>보험사에 사고 접수 및 보상 상담 진행</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     

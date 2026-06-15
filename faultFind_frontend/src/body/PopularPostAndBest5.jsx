@@ -43,11 +43,11 @@ function PopularPostAndBest5() {
         </ul>
       </div>
 
-      {/* 인기 사고사례 TOP 5 */}
+      {/* 사고 유형 TOP 5 */}
       <div className="section">
         <div className="header">
           <div className="header-icon-wrapper">
-            <h2 className="title">인기 사고사례 TOP 5</h2>
+            <h2 className="title">사고 유형 TOP 5</h2>
             <span className="trophy-icon">🏆</span>
           </div>
         </div>
@@ -69,30 +69,50 @@ function PopularPostAndBest5() {
       </div>
 
       
-      {/* 인기 사고사례 TOP 5 */}
-      <div className="section">
-        <div className="header">
-          <div className="header-icon-wrapper">
-            <h2 className="title">인기 사고사례 TOP 5</h2>
-            <span className="trophy-icon">🏆</span>
+      {/* 우측 영역 : 긴급 연락망 */}
+        <div className="right-section">
+          
+          <h2 className="section-title">긴급 연락망</h2>
+          
+          <div className="guide-card">
+            <ul className="guide-list">
+              <li>
+                <span className="guide-num">🚓</span>
+                <div className="guide-content">
+                  <h4>112</h4>
+                  <p>경찰 사고 신고 및 출동</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">🚑</span>
+                <div className="guide-content">
+                  <h4>119</h4>
+                  <p>긴급구조(119) 부상자 발생 시 신고</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">🏢</span>
+                <div className="guide-content">
+                  <h4>1577-0990</h4>
+                  <p>도로교통공단 교통사고 상담</p>
+                </div>
+              </li>
+              <li>
+                <span className="guide-num">🚙</span>
+                <div className="guide-content">
+                  <h4>02-3072-8631</h4>
+                  <p>손해 보험 협회 자동차 보험 상담</p>
+                </div>
+              </li>
+              <div class="alert alert-primary" role="alert">
+                 📞   모든 사고는 신속하고 정확하게!
+                <br></br>
+                위급 상황 시 112 또는 119로
+                즉시 연락하세요.
+              </div>
+            </ul>
           </div>
         </div>
-        <ul className="list">
-          {topAccidents.map((accident) => (
-            <li key={accident.id} className="listItem">
-              <div className="leftContent">
-                <span className="rank" style={{
-                  backgroundColor: accident.rank <= 3 ? '#0052CC' : '#4A90E2'
-                }}>
-                  {accident.rank}
-                </span>
-                <span className="postTitle">{accident.title}</span>
-              </div>
-              <span className="typeTag">{accident.type}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
       
     </div>
   );

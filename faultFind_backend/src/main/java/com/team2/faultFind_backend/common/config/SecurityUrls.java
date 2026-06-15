@@ -15,6 +15,8 @@ public class SecurityUrls {
             "/api/accident-cases",
             "/api/accident-cases/**",
 
+            "/api/accidents/**",
+
             "/api/fault-ratios",
             "/api/community"
     };
