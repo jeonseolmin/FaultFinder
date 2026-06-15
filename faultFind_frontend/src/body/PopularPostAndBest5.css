@@ -1,6 +1,7 @@
 .container {
+  font-family: 'Pretendard';
   display: flex;
-  gap: 24px;
+  gap: 35px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -27,7 +28,7 @@
 }
 
 .title {
-  font-size: 18px;
+  font-size: 1.55rem;
   font-weight: bold;
   color: #1a1a1a;
   margin: 0;
@@ -75,7 +76,8 @@
 }
 
 .postTitle {
-  font-size: 14px;
+  font-size: 1rem;
+  font-weight: bold;
   color: #333333;
   white-space: nowrap;
   overflow: hidden;

@@ -11,9 +11,11 @@
 }
 /* 자주 찾는 서비스 */
 .services-title-main {
+
   font-size: 22px;
   font-weight: bold;      
   font-weight: 700;
+  font-family: 'Pretendard';
   margin-top: 15px;    
   color: #1f2937;      
   margin-bottom: 20px;  
@@ -22,6 +24,7 @@
 
 /* 카드 기본 스타일 */
 .service-card {
+  font-family: 'Pretendard';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,7 +75,7 @@
 
 /* 텍스트 스타일 */
 .service-title {
-  font-size: 1rem;
+  font-size: 1.30rem;
   font-weight: 700;
   color: #111827;
   margin-bottom: 4px;
@@ -85,8 +88,10 @@
 }
 
 .service-desc {
+  font-family: 'Pretendard';
   font-size: 0.75rem;
   color: #9ca3af;
   font-weight: 500;
   word-break: keep-all;
 }
+

@@ -1,5 +1,6 @@
 /* 기본 네비게이션 바 스타일 */
 .navbar {
+  font-family: 'Pretendard';
   display: flex;
   justify-content: space-between;
   align-items: center;
