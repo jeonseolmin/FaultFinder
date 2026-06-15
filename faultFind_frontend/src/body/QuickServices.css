@@ -1,4 +1,7 @@
-
+body {
+    min-width: 1200px;
+    overflow-x: auto;
+}
 .services-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);  /* 무조건 2열로 배치 */

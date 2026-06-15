@@ -27,10 +27,10 @@ export default function App() {
         <Route path="/" element={<main><QuickServices /><AiFaultRatio /></main>} />
         
         <Route path="/community" element={<CommunityPage />} />
-        <Route path="/accidentguide" element={<AccidentGuide />} />
-        <Route path="/accidentcase" element={<AccidentType />} />
-        <Route path="/accidentcase/:typeId" element={<AccidentTypeDetail />} />
-        <Route path="/faultsearch" element={<CommunityPage />} />
+        <Route path="/guides" element={<AccidentGuide />} />
+        <Route path="/cases" element={<AccidentType />} />
+        <Route path="/cases/:typeId" element={<AccidentTypeDetail />} />
+        <Route path="/fault-ratios" element={<CommunityPage />} />
         
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
