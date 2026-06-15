@@ -26,4 +26,9 @@ public class AccidentService {
         return accidentRepository.findByCaseCode(caseCode)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사고 코드입니다: " + caseCode));
     }
+
+    // 서비스 인터페이스(또는 클래스)에 메서드 추가
+    public List<Accident> getAccidentsByCategory(String category) {
+        return accidentRepository.findByCategory(category);
+    }
 }

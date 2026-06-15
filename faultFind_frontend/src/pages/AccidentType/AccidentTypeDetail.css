@@ -1,0 +1,90 @@
+.type-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Pretendard', sans-serif;
+  color: #333;
+}
+
+/* 상단 타이틀 영역 */
+.detail-header {
+  margin-bottom: 24px;
+}
+
+.detail-header h2 {
+  font-size: 28px;
+  color: #1a2b4c;
+  margin: 0 0 10px 0;
+}
+
+/* 요청하신 안내 문구 박스 */
+.info-notice-box {
+  background-color: #f8fafc;
+  border-left: 4px solid #1a56db;
+  padding: 20px 24px;
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 30px;
+}
+
+.info-notice-box p {
+  margin: 0 0 8px 0;
+  color: #334155;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.info-notice-box p:last-child {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.info-notice-box .highlight {
+  font-weight: bold;
+  color: #1a56db;
+}
+
+/* 상세 상황 리스트 (임시 UI) */
+.scenario-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scenario-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.scenario-card:hover {
+  border-color: #1a56db;
+  box-shadow: 0 4px 12px rgba(26, 86, 219, 0.05);
+}
+
+.scenario-info h4 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #1e293b;
+}
+
+.scenario-info p {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.scenario-ratio {
+  background: #eff6ff;
+  color: #1a56db;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 16px;
+}

@@ -1,50 +1,41 @@
-import React from 'react';
-import { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
-import './Auth.css';
-import axiosInstance from '../../api/axiosInstance';
-import axios from 'axios';
+import React from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./Auth.css";
+import axiosInstance from "../../api/axiosInstance";
+import { useAuth } from "../../context/AuthContent";
 
 export default function LoginForm() {
-const [email, setEmail] = useState('');
-const [password, setPassword] = useState('');
-const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
+  // *************
+  // 함수 정의 시작
+  // *************
+  const handleLogin = async () => {
+    try {
+      const result = await axiosInstance.post("/api/auth/login", {
+        email: email,
+        password: password,
+      });
 
-// *************
-// 함수 정의 시작
-// *************
-const handleLogin = async () => {
+      const token = result.data;
+  
+      await login(token);
+      console.log(localStorage.getItem("accessToken"));
+      navigate("/");
+      
+    } catch (error) {
+      console.log(error);
 
-  try {
-
-    const result = await axiosInstance.post("/faultfinder/login",
-      {
-        email : email,
-        password : password
-      }
-    );
-
-    const token = result.headers.authorization;
-
-    console.log("token =", token);
-    console.log(result);
-
-    localStorage.setItem("accessToken", token);
-
-    navigate("/");
-
-  } catch(error){
-
-    console.log(error);
-
-    alert("로그인 실패");
-
-  }
-}
-// ***********
-// 함수 정의 끝
-// ***********
+      alert("로그인 실패");
+    }
+  };
+  // ***********
+  // 함수 정의 끝
+  // ***********
 
   return (
     <div className="auth-container">
@@ -57,27 +48,29 @@ const handleLogin = async () => {
         <form>
           <div className="input-group">
             <label htmlFor="email">이메일</label>
-            <input 
-            type="email"
-            id="email" 
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="이메일을 입력하세요" 
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="이메일을 입력하세요"
             />
           </div>
-          
+
           <div className="input-group">
             <label htmlFor="password">비밀번호</label>
-            <input 
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호를 입력하세요" />
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호를 입력하세요"
+            />
           </div>
 
-          
-          <button type="button" className="btn-submit" onClick={handleLogin} >로그인</button>
+          <button type="button" className="btn-submit" onClick={handleLogin}>
+            로그인
+          </button>
         </form>
 
         <div className="auth-links">
