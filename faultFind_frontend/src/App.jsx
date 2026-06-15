@@ -24,7 +24,7 @@ export default function App() {
   return (
     <>
       <Navbar />
-       {showHeader && <Header />}
+      {showHeader && <Header />}
       <Routes>
         <Route
           path="/"
