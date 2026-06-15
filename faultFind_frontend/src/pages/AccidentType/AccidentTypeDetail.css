@@ -1,90 +1,97 @@
-.type-detail-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Pretendard', sans-serif;
-  color: #333;
-}
-
-/* 상단 타이틀 영역 */
-.detail-header {
+/* 태그 버튼 (Pill Button) 스타일 */
+.tag-filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-bottom: 24px;
 }
 
-.detail-header h2 {
-  font-size: 28px;
-  color: #1a2b4c;
-  margin: 0 0 10px 0;
+.tag-btn {
+  padding: 8px 18px;
+  border: 1px solid #cbd5e1;
+  background-color: #fff;
+  color: #475569;
+  border-radius: 20px; 
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/* 요청하신 안내 문구 박스 */
-.info-notice-box {
-  background-color: #f8fafc;
-  border-left: 4px solid #1a56db;
-  padding: 20px 24px;
-  border-radius: 0 8px 8px 0;
-  margin-bottom: 30px;
+.tag-btn:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
 }
 
-.info-notice-box p {
-  margin: 0 0 8px 0;
-  color: #334155;
-  font-size: 15px;
-  line-height: 1.5;
+.tag-btn.active {
+  background-color: #1a56db;
+  color: #fff;
+  border-color: #1a56db;
+  box-shadow: 0 4px 6px rgba(26, 86, 219, 0.15);
 }
 
-.info-notice-box p:last-child {
-  margin: 0;
-  color: #64748b;
-  font-size: 13px;
-}
-
-.info-notice-box .highlight {
-  font-weight: bold;
-  color: #1a56db;
-}
-
-/* 상세 상황 리스트 (임시 UI) */
-.scenario-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
+/* 아코디언 카드 */
 .scenario-card {
+  padding: 0; 
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background-color: #fff;
+}
+
+.scenario-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  padding: 18px 24px;
   cursor: pointer;
-  transition: all 0.2s;
+  background-color: #fff;
+  transition: background-color 0.2s;
 }
 
-.scenario-card:hover {
-  border-color: #1a56db;
-  box-shadow: 0 4px 12px rgba(26, 86, 219, 0.05);
+.scenario-header:hover {
+  background-color: #f8fafc;
 }
 
-.scenario-info h4 {
-  margin: 0 0 8px 0;
-  font-size: 18px;
+.scenario-header h4 {
+  margin: 0;
+  font-size: 16px;
   color: #1e293b;
 }
 
-.scenario-info p {
-  margin: 0;
+.toggle-icon {
   font-size: 14px;
-  color: #64748b;
+  color: #94a3b8;
+  transition: transform 0.3s ease;
+}
+
+.toggle-icon.open {
+  transform: rotate(180deg);
+}
+
+/* 아코디언 펼쳐졌을 때 내용 영역 */
+.scenario-body {
+  padding: 20px 24px;
+  background-color: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.party-info p {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #475569;
 }
 
 .scenario-ratio {
-  background: #eff6ff;
-  color: #1a56db;
-  padding: 8px 16px;
-  border-radius: 20px;
+  font-size: 18px;
   font-weight: bold;
-  font-size: 16px;
+  color: #1a56db;
+  background-color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
 }
