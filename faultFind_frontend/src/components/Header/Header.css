@@ -2,7 +2,7 @@ body {
     min-width: 1200px;
     overflow-x: auto;
 }
-.Heder {
+.header {
   font-family: 'Pretendard';
   width: 100%;
   background-color: #fff;
@@ -32,7 +32,7 @@ body {
 }
 
 /* 슬로건 */
-.Heder-slogan {
+.header-slogan {
   font-size: 13px;
   color: #666;
   margin-bottom: 20px;  /* 검색창과의 간격 */

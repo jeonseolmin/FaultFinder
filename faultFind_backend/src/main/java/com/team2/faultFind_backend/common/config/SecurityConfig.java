@@ -1,6 +1,6 @@
 package com.team2.faultFind_backend.common.config;
-import com.team2.faultFind_backend.common.security.jwt.JWTAuthenticationFilter;
-import com.team2.faultFind_backend.common.security.jwt.JWTUtil;
+import com.team2.faultFind_backend.common.security.jwt.JwtAuthenticationFilter;
+import com.team2.faultFind_backend.common.security.jwt.JwtUtil;
 import com.team2.faultFind_backend.common.security.jwt.LoginFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
@@ -21,9 +21,9 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
-    private final JWTUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) {
         this.authenticationConfiguration = authenticationConfiguration;
         this.jwtUtil = jwtUtil;
     }
@@ -96,7 +96,7 @@ public class SecurityConfig {
         loginFilter.setFilterProcessesUrl("/faultfinder/login");
 
         http
-                .addFilterBefore(new JWTAuthenticationFilter(jwtUtil), LoginFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtUtil), LoginFilter.class);
 
         http
                 .addFilterAt(
