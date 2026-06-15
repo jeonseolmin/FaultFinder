@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // 🌟 useNavigate 훅 불러오기
 import axiosInstance from '../../api/axiosInstance';
-export default function BoardList({ activeTab }) {
-  // DB에서 가져온 글 목록을 담을 그릇
-  const [posts, setPosts] = useState([]);
 
-  // 🌟 컴포넌트가 화면에 나타날 때 딱 한 번 실행되는 함수
+
+export default function BoardList({ activeTab }) {
+  const [posts, setPosts] = useState([]);
+  
+  // 🌟 컴포넌트 내부에서 navigate 함수 선언 (이 부분이 있어야 onClick에서 쓸 수 있습니다!)
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // 스프링 부트(8080)에 "글 목록 좀 줘!" 라고 요청 (axios.get)
-        const response = await  axiosInstance.get("/api/community");
-        
-        // 받아온 데이터를 상태(posts)에 집어넣음
+        const response = await axiosInstance.get("/api/community");
         setPosts(response.data);
       } catch (error) {
         console.error('글 목록을 불러오지 못했습니다:', error);
@@ -20,38 +20,48 @@ export default function BoardList({ activeTab }) {
     };
 
     fetchPosts();
-  }, []); // 빈 배열을 넣어야 무한 반복을 막을 수 있습니다.
+  }, []);
 
   return (
     <div className="board-list-container">
-      <h3>자유게시판</h3>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+        <h3>자유게시판</h3>
+        {/* 🌟 나중에 글쓰기 기능이 생기면 활성화할 수 있도록 버튼 미리 배치 */}
+        {/* <button onClick={() => navigate('/community/write')} className="btn-write">✍️ 글쓰기</button> */}
+      </div>
       
       <table className="board-table">
         <thead>
           <tr>
-            <th>번호</th>
-            <th>카테고리</th>
-            <th>제목</th>
-            <th>작성일</th>
+            <th width="8%">번호</th>
+            <th width="15%">카테고리</th>
+            <th width="35%">제목</th>
+            <th width="20%">사용자 이메일</th>
+            <th width="12%">날짜</th>
           </tr>
         </thead>
         <tbody>
-          {/* 가져온 posts 배열의 개수만큼 표(tr)를 반복해서 그립니다 */}
           {posts.length > 0 ? (
             posts.map((post) => (
-              <tr key={post.id}onClick={() => navigate(`/community/${post.id}`)} style={{ cursor: 'pointer' }}>
+              <tr 
+                key={post.id}
+                // 🌟 글(행)을 클릭하면 해당 글의 상세 페이지(/community/1 등)로 이동!
+                onClick={() => navigate(`/community/${post.id}`)} 
+                style={{ cursor: 'pointer' }}
+                className="board-row" // 호버 효과를 주기 위한 클래스
+              >
                 <td>{post.id}</td>
                 <td>{post.category === 'free' ? '자유게시판' : post.category}</td>
-                <td>{post.title}</td>
-                <td style={{ textAlign: 'left' }}>{post.title}</td>
+                {/* 제목 부분을 조금 더 강조 */}
+                <td style={{ textAlign: 'left', fontWeight: '500' }}>{post.title}</td>
                 <td>{post.author}</td>
-                {/* 시간 데이터 자르기 (예: 2026-06-12T14:00:00 -> 2026-06-12) */}
                 <td>{post.createdAt ? post.createdAt.split('T')[0] : ''}</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="4" style={{ textAlign: 'center', padding: '20px' }}>
+              {/* 열 개수(colSpan)를 테이블에 맞게 5로 수정 */}
+              <td colSpan="5" style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
                 아직 등록된 게시글이 없습니다.
               </td>
             </tr>
