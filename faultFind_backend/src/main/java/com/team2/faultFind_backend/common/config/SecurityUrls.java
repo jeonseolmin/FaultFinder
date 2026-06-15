@@ -19,6 +19,9 @@ public class SecurityUrls {
 
             "/api/fault-ratios",
             "/api/community",
+            "/api/community/**",
+            "/api/posts/",
+            "/api/posts/**",
 
             "/oauth2/**",
             "/login/oauth2/**"
@@ -42,6 +45,7 @@ public class SecurityUrls {
             "/api/answer/**",
 
             "/api/community/**",
+            "/api/posts/**"
     };
 
     private SecurityUrls() {

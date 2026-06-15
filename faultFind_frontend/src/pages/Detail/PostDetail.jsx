@@ -15,13 +15,13 @@ export default function PostDetail() {
 
   // 토큰이나 로컬스토리지에 저장해 둔 현재 로그인 유저의 식별자(ID 또는 이름)
   // (로그인 시점에 저장해 두었던 키값을 꺼내옵니다)
-  const currentUsername = localStorage.getItem("username"); 
+  const currentUsername = localStorage.getItem("email") || localStorage.getItem("username");
 
   useEffect(() => {
     const fetchPostDetail = async () => {
       try {
         setLoading(true);
-        const response = await axiosInstance.get(`/api/posts/${id}`);
+        const response = await axiosInstance.get(`/api/community/${id}`);
         setPost(response.data);
         setEditTitle(response.data.title);
         setEditContent(response.data.content);
@@ -69,7 +69,7 @@ export default function PostDetail() {
   if (!post) return null;
 
   // 🌟 현재 로그인한 사람과 글쓴이가 같은지 판단하는 스위치
-  const isAuthor = post.writer === currentUsername;
+  const isAuthor = post.author === currentUsername;
 
   return (
     <div className="post-detail-container">
@@ -79,7 +79,7 @@ export default function PostDetail() {
           <div className="detail-header">
             <h2>{post.title}</h2>
             <div className="post-meta">
-              <span>작성자: {post.writer}</span> | <span>{post.createdDate}</span>
+              <span>작성자: {post.author}</span> | <span>{post.createdDate}</span>
             </div>
           </div>
           <div className="detail-content">
