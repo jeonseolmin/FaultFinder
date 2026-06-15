@@ -1,5 +1,12 @@
 import React from 'react';
 import './PopularPostAndBest5.css';
+// import { AiOutlineAlert } from "react-icons/ai";
+import { GiPoliceCar } from "react-icons/gi";
+import { LiaAmbulanceSolid } from "react-icons/lia";
+import { FaCarCrash } from "react-icons/fa";
+import { LuNotebookPen } from "react-icons/lu";
+import { FcPhone } from "react-icons/fc";
+import { FcIdea } from "react-icons/fc";
 
 function PopularPostAndBest5() {
   const latestPosts = [
@@ -23,7 +30,7 @@ function PopularPostAndBest5() {
       {/* 커뮤니티 인기글 */}
       <div className="section">
         <div className="header">
-          <h2 className="title">커뮤니티 인기글 </h2>
+          <h2 className="title">커뮤니티 인기글  </h2>
           <button className="moreBtn">더보기 <span className="moreBtn-arrow">❯</span>
           </button>
         </div>
@@ -47,8 +54,7 @@ function PopularPostAndBest5() {
       <div className="section">
         <div className="header">
           <div className="header-icon-wrapper">
-            <h2 className="title">사고 유형 TOP 5</h2>
-            <span className="trophy-icon">🏆</span>
+            <h2 className="title">사고 유형 TOP 5 </h2>
           </div>
         </div>
         <ul className="list">
@@ -72,40 +78,40 @@ function PopularPostAndBest5() {
       {/* 우측 영역 : 긴급 연락망 */}
         <div className="right-section">
           
-          <h2 className="section-title">긴급 연락망</h2>
+          <h2 className="section-title">긴급 연락망 &nbsp; <FcIdea /> </h2>
           
           <div className="guide-card">
             <ul className="guide-list">
               <li>
-                <span className="guide-num">🚓</span>
+                <span className="guide-num"><GiPoliceCar /></span>
                 <div className="guide-content">
                   <h4>112</h4>
                   <p>경찰 사고 신고 및 출동</p>
                 </div>
               </li>
               <li>
-                <span className="guide-num">🚑</span>
+                <span className="guide-num"><LiaAmbulanceSolid /></span>
                 <div className="guide-content">
                   <h4>119</h4>
                   <p>긴급구조(119) 부상자 발생 시 신고</p>
                 </div>
               </li>
               <li>
-                <span className="guide-num">🏢</span>
+                <span className="guide-num"><FaCarCrash /></span>
                 <div className="guide-content">
                   <h4>1577-0990</h4>
                   <p>도로교통공단 교통사고 상담</p>
                 </div>
               </li>
               <li>
-                <span className="guide-num">🚙</span>
+                <span className="guide-num"><LuNotebookPen /></span>
                 <div className="guide-content">
                   <h4>02-3072-8631</h4>
                   <p>손해 보험 협회 자동차 보험 상담</p>
                 </div>
               </li>
               <div class="alert alert-primary" role="alert">
-                 📞   모든 사고는 신속하고 정확하게!
+                 <FcPhone />  &nbsp;&nbsp;&nbsp; 모든 사고는 신속하고 정확하게!
                 <br></br>
                 위급 상황 시 112 또는 119로
                 즉시 연락하세요.

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./AiFaultRatio.css"; // 분리한 CSS 파일 임포트
+import { FcAdvance } from "react-icons/fc";
 
 function AiFaultRatio() {
   // 사용자가 입력할 텍스트 상태 관리
@@ -63,7 +64,7 @@ function AiFaultRatio() {
             </div>
 
             {/* 중간에 위치하는 화살표 (PC 화면에서만 표시됨) */}
-            <div className="arrow-divider">▶</div>
+            <div className="arrow-divider"><FcAdvance /></div>
 
             {/* [우측] 2. AI 분석 결과 */}
             <div className="card-box">

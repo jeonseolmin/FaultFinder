@@ -1,5 +1,6 @@
 import React from 'react';
 import './QuickServices.css';
+import { FcIdea } from "react-icons/fc";
 
 function QuickServices() {
   // 앞으로 항목이 늘어날 것을 대비해 배열 구조로 작성했습니다.
@@ -19,7 +20,7 @@ function QuickServices() {
       imgSrc: 'https://img.icons8.com/?size=100&id=kB3dy7vSuFio&format=png&color=000000', 
       imgAlt: '과실 비율 이미지',
       title: '과실 비율 조회',
-      desc: 'ㄴㄴㄴㄴㄴ',
+      desc: '사고 유형별 과실비율 조회',
       path: '/car-to-person', // 클릭 시 이동할 경로
     },
     {
@@ -37,7 +38,7 @@ function QuickServices() {
       imgSrc: 'https://img.icons8.com/?size=100&id=VF7zRdVii0QF&format=png&color=000000', 
       imgAlt: '차량 대 차량 사고 이미지',
       title: '차량 대 차량',
-      desc: '사고 유형별 과실비율 조회',
+      desc: '차량간의 사고 정보',
       path: '/car-to-bicycle', // 클릭 시 이동할 경로
     },
     {
