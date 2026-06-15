@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./SideBar.css"
 // 🌟 이제 setActiveTab은 받지 않습니다. activeTab만 받습니다!
 export default function LeftSidebar({ activeTab }) {
   const getSidebarInfo = () => {
