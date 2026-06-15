@@ -34,7 +34,7 @@ export default function AccidentType() {
                 key={type.id} 
                 className="type-card"
                 // 카드를 누르면 해당 사고유형의 상세 페이지나 과실비율 페이지로 이동하게끔 뼈대 마련
-                onClick={() => navigate(`/accidentcase/${type.id}`)}
+                onClick={() => navigate(`/cases/${type.id}`)}
               >
                 <div className="card-header">
                   <span className="card-number">{type.num}</span>

@@ -13,9 +13,9 @@ export default function CommunityPage() {
 
   const getActiveTab = () => {
     switch (location.pathname) {
-      case '/accidentguide': return 'action';
-      case '/accidentcase': return 'type';
-      case '/faultsearch': return 'ratio';
+      case '/guides': return 'action';
+      case '/cases': return 'type';
+      case '/fault-ratios': return 'ratio';
       case '/community':
       default:
         return 'community';

@@ -1,5 +1,8 @@
 /* AiFaultRatio.css */
-
+body {
+    min-width: 1200px;
+    overflow-x: auto;
+}
 /* 전체 대레이아웃 (2단 분할 구조 대비) */
 .ai-fault-container {
   font-family: 'Pretendard';
