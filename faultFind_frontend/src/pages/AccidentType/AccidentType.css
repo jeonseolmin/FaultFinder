@@ -1,0 +1,155 @@
+.accident-type-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Pretendard', sans-serif;
+  color: #333;
+}
+
+/* 상단 히어로 섹션 */
+.type-hero {
+  background: linear-gradient(to right, #f4f8ff 50%, transparent 100%),
+              url('https://images.unsplash.com/photo-1562184552-302faad9e1cb?auto=format&fit=crop&w=1200&q=80') right/cover no-repeat;
+  padding: 50px 40px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.type-hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a2b4c;
+  margin-bottom: 10px;
+}
+
+.type-hero p {
+  font-size: 16px;
+  color: #555;
+}
+
+/* 3x2 카드 그리드 */
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.type-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 30px 24px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.type-card:hover {
+  border-color: #1a56db;
+  box-shadow: 0 10px 20px rgba(26, 86, 219, 0.08);
+  transform: translateY(-5px);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.card-number {
+  background: #1a56db;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.type-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a2b4c;
+  margin: 0;
+}
+
+.type-card p {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 20px 0;
+  line-height: 1.4;
+}
+
+.card-icon {
+  font-size: 48px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.card-arrow {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  color: #1a56db;
+  font-size: 20px;
+  font-weight: bold;
+  opacity: 0.5;
+}
+
+.type-card:hover .card-arrow {
+  opacity: 1;
+}
+
+/* 하단 안내 배너 */
+.type-bottom-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f0f5ff;
+  border-radius: 12px;
+  padding: 24px 30px;
+}
+
+.banner-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #1a2b4c;
+  font-weight: 500;
+}
+
+.info-icon {
+  background: #1a56db;
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.btn-go-ratio {
+  background: transparent;
+  border: 1px solid #1a56db;
+  color: #1a56db;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-go-ratio:hover {
+  background: #1a56db;
+  color: #fff;
+}
