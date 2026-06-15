@@ -1,3 +1,7 @@
+body {
+    min-width: 1200px;
+    overflow-x: auto;
+}
 .Heder {
   font-family: 'Pretendard';
   width: 100%;

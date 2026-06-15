@@ -1,3 +1,7 @@
+body {
+    min-width: 1200px;
+    overflow-x: auto;
+}
 /* 전체 컨테이너 */
 .accident-guide-container {
   max-width: 1200px;
