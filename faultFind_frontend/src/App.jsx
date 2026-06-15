@@ -48,6 +48,7 @@ export default function App() {
 
         <Route path="/community/write" element={<WritePage />} />
         <Route path="/community/:id" element={<PostDetail />} />
+        <Route path="/posts" element={<CommunityPage />} />
         <Route path="/community/edit/:id" element={<PostEdit />} />
       </Routes>
     </>

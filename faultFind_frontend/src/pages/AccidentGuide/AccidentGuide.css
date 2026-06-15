@@ -23,6 +23,7 @@ body {
 }
 
 .guide-hero h1 {
+  font-family: 'Pretendard';
   font-size: 32px;
   font-weight: 700;
   color: #1a2b4c;
@@ -30,15 +31,17 @@ body {
 }
 
 .guide-hero p {
+  font-family: 'Pretendard';
   font-size: 16px;
   color: #555;
 }
 
 /* 3단 메인 그리드 */
 .guide-main-grid {
+  font-family: 'Pretendard';
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 30px;
 }
 
@@ -91,15 +94,15 @@ body {
 .contact-item {
   display: flex;
   align-items: center;
-  padding: 15px;
+  padding: 8px;
   border: 1px solid #edf2f7;
   border-radius: 8px;
-  gap: 20px;
+  gap: 13px;
 }
 .contact-info { flex: 1; }
 .contact-info h4 { font-size: 15px; margin: 0 0 4px 0; }
 .contact-info p { font-size: 13px; color: #666; margin: 0; }
-.contact-number { font-size: 18px; font-weight: 700; color: #1a2b4c; }
+.contact-number { font-size: 15px; font-weight: 700; color: #1a2b4c; }
 
 .emergency-banner {
   background: #1a2b4c;

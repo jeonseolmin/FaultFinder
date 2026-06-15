@@ -10,34 +10,46 @@ import { RiPoliceCarFill } from "react-icons/ri";
 import { FaPhoneAlt, FaCamera, FaAmbulance, FaBuilding, FaCarCrash, FaIdCard, FaEye, FaClipboardList, FaVideo, FaBalanceScale, FaHospital, FaGavel, FaCar } from "react-icons/fa";
 import { MdOutlineSecurity, MdLocalPolice } from "react-icons/md";
 
+// 긴급 연락망
+import { GiPoliceCar } from "react-icons/gi";
+import { LiaAmbulanceSolid } from "react-icons/lia";
+import { LuNotebookPen } from "react-icons/lu";
+import { BiSolidCarCrash } from "react-icons/bi";
+
+import { GiCheckMark } from "react-icons/gi";
+import { LiaUserInjuredSolid } from "react-icons/lia";
+
 export default function AccidentGuide() {
   
   
   const ACTION_STEPS = [
-    { icon: <RiPoliceCarFill color="#f59e0b" />, title: "부상자 확인", desc: "부상자가 있는지 확인하고 안전한 곳으로 이동" },
-    { icon: <FaAmbulance color="#ef4444" />, title: "119 신고", desc: "부상자 발생 시 즉시 119에 신고" },
-    { icon: <MdLocalPolice color="#3b82f6" />, title: "경찰 신고", desc: "사고 사실을 경찰에 신고 (112)" },
-    { icon: <FaCamera color="#8b5cf6" />, title: "현장 사진 촬영", desc: "사고 현장, 차량, 파손 부위 등을 촬영" },
-    { icon: <MdOutlineSecurity color="#0062ff" />, title: "보험사 접수", desc: "보험사에 사고 접수 및 보상 상담" },
+    { icon: <LiaUserInjuredSolid color="#f5740b" />, title: "부상자 확인", desc: "부상자가 있는지 확인하고 안전한 곳으로 이동" },
+    { icon: <FaAmbulance color="#e011c5" />, title: "119 신고", desc: "부상자 발생 시 즉시 119에 신고" },
+    { icon: <RiPoliceCarFill color="#125ed8" />, title: "경찰 신고", desc: "사고 사실을 경찰에 신고 (112)" },
+    { icon: <FaCamera color="#ac89fd" />, title: "현장 사진 촬영", desc: "사고 현장, 차량, 파손 부위 등을 촬영" },
+    { icon: <MdOutlineSecurity color="#10be19" />, title: "보험사 접수", desc: "보험사에 사고 접수 및 보상 상담" },
+  ];
+
+
+  const CHECKLIST_ITEMS = [
+    { icon: <GiCheckMark color="#22c55e" />, title: "01. 부상자 확인 및 안전 확보", desc: "부상 여부 확인 후 안전한 장소로 이동" },
+    { icon: <GiCheckMark color="#22c55e" />, title: "02. 119 및 경찰 신고", desc: "필요 시 119 신고 후 경찰(112)에 신고" },
+    { icon: <GiCheckMark color="#22c55e" />, title: "03. 현장 보존", desc: "사고 현장을 보존하고 차량 이동 최소화" },
+    { icon: <GiCheckMark color="#22c55e" />, title: "04. 증거 사진 촬영", desc: "사고 현장, 차량 파손 부위, 도로 상황 등 촬영" },
+    { icon: <GiCheckMark color="#22c55e" />, title: "05. 상대방 정보 확인", desc: "이름, 연락처, 보험사, 차량번호 확인" },
+    { icon: <GiCheckMark color="#22c55e" />, title: "06. 목격자 확보", desc: "목격자가 있다면 연락처 확보" },
+    { icon: <GiCheckMark color="#22c55e" />, title: "07. 보험사 접수", desc: "보험사에 사고 접수 및 보상 상담 진행" },
   ];
 
   const EMERGENCY_CONTACTS = [
-    { icon: <MdLocalPolice color="#3b82f6" />, title: "경찰", desc: "사고 신고 및 출동", number: "112" }, // 파란색
-    { icon: <FaAmbulance color="#ef4444" />, title: "긴급구조 (119)", desc: "부상자 발생 시 신고", number: "119" },
+    { icon: <RiPoliceCarFill color="#125ed8" />, title: "경찰", desc: "사고 신고 및 출동", number: "112" }, // 파란색
+    { icon: <LiaAmbulanceSolid color="#e011c5" />, title: "긴급구조 (119)", desc: "부상자 발생 시 신고", number: "119" },
     { icon: <FaCarCrash color="#64748b" />, title: "도로교통공단", desc: "교통사고 상담", number: "1577-0990" },
-    { icon: <FaBuilding color="#64748b" />, title: "손해보험협회", desc: "자동차 보험 상담", number: "02-3702-8631" },
-    { icon: <FaCarCrash color="#f97316" />, title: "견인 서비스", desc: "사고 차량 견인 요청", number: "1588-2504" },
+    { icon: <LuNotebookPen color="#10be19" />, title: "손해보험협회", desc: "자동차 보험 상담", number: "02-3702-8631" },
+    { icon: <BiSolidCarCrash color="#f91621" />, title: "견인 서비스", desc: "사고 차량 견인 요청", number: "1588-2504" },
   ];
 
-  const CHECKLIST_ITEMS = [
-    { icon: <MdOutlineSecurity color="#10b981" />, title: "1. 부상자 확인 및 안전 확보", desc: "부상 여부 확인 후 안전한 장소로 이동" },
-    { icon: <FaPhoneAlt color="#ef4444" />, title: "2. 119 및 경찰 신고", desc: "필요 시 119 신고 후 경찰(112)에 신고" },
-    { icon: <FaCar color="#4900d1" />, title: "3. 현장 보존", desc: "사고 현장을 보존하고 차량 이동 최소화" },
-    { icon: <FaCamera color="#000000" />, title: "4. 증거 사진 촬영", desc: "사고 현장, 차량 파손 부위, 도로 상황 등 촬영" },
-    { icon: <FaIdCard color="#0a444e" />, title: "5. 상대방 정보 확인", desc: "이름, 연락처, 보험사, 차량번호 확인" },
-    { icon: <FaEye color="#000000" />, title: "6. 목격자 확보", desc: "목격자가 있다면 연락처 확보" },
-    { icon: <FaClipboardList color="#929292" />, title: "7. 보험사 접수", desc: "보험사에 사고 접수 및 보상 상담 진행" },
-  ];
+  
 
   const BOTTOM_BANNER_ITEMS = [
     { icon: <FaVideo color="#14b8a6" />, title: "블랙박스 확인", desc: "블랙박스 영상은 사고 해결에 중요한 증거가 됩니다." },
@@ -77,6 +89,21 @@ export default function AccidentGuide() {
             </div>
 
             <div className="guide-card">
+              <h3>사고 체크리스트</h3>
+              <div className="checklist">
+                {CHECKLIST_ITEMS.map((item, idx) => (
+                  <div key={idx} className="check-item">
+                    <div className="check-icon">{item.icon}</div>
+                    <div className="check-text">
+                      <h4>{item.title}</h4>
+                      <p>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="guide-card">
               <h3>긴급 연락망</h3>
               <div className="contact-list">
                 {EMERGENCY_CONTACTS.map((contact, idx) => (
@@ -97,20 +124,6 @@ export default function AccidentGuide() {
               </div>
             </div>
 
-            <div className="guide-card">
-              <h3>사고 체크리스트</h3>
-              <div className="checklist">
-                {CHECKLIST_ITEMS.map((item, idx) => (
-                  <div key={idx} className="check-item">
-                    <div className="check-icon">{item.icon}</div>
-                    <div className="check-text">
-                      <h4>{item.title}</h4>
-                      <p>{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </section>
 
           <section className="guide-bottom-banner">
