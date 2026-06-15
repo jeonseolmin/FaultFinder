@@ -109,7 +109,7 @@ function AiFaultRatio() {
 
         {/* 우측 영역 : 사고 대처 가이드 */}
         <div className="right-section">
-          <h2 className="section-title">사고 체크리스트</h2>
+          <h2 className="section-title">사고 대처 가이드</h2>
           
           <div className="guide-card">
             <ul className="guide-list">

@@ -7,6 +7,9 @@ import { FaCarCrash } from "react-icons/fa";
 import { LuNotebookPen } from "react-icons/lu";
 import { FcPhone } from "react-icons/fc";
 import { FcIdea } from "react-icons/fc";
+import { FaPhoneAlt } from "react-icons/fa";
+import { RiPoliceCarFill } from "react-icons/ri";
+import { BiSolidCarCrash } from "react-icons/bi";
 
 function PopularPostAndBest5() {
   const latestPosts = [
@@ -83,7 +86,7 @@ function PopularPostAndBest5() {
           <div className="guide-card">
             <ul className="guide-list">
               <li>
-                <span className="guide-num"><GiPoliceCar /></span>
+                <span className="guide-num"><RiPoliceCarFill /></span>
                 <div className="guide-content">
                   <h4>112</h4>
                   <p>경찰 사고 신고 및 출동</p>
@@ -106,16 +109,22 @@ function PopularPostAndBest5() {
               <li>
                 <span className="guide-num"><LuNotebookPen /></span>
                 <div className="guide-content">
-                  <h4>02-3072-8631</h4>
+                  <h4>02-3702-8631</h4>
                   <p>손해 보험 협회 자동차 보험 상담</p>
                 </div>
               </li>
-              <div class="alert alert-primary" role="alert">
-                 <FcPhone />  &nbsp;&nbsp;&nbsp; 모든 사고는 신속하고 정확하게!
-                <br></br>
-                위급 상황 시 112 또는 119로
-                즉시 연락하세요.
-              </div>
+              <li>
+                <span className="guide-num"><BiSolidCarCrash /></span>
+                <div className="guide-content">
+                  <h4>1588-2504</h4>
+                  <p>견인 서비스 사고 차량 견인 요청</p>
+                </div>
+              </li>
+              <div className="emergency-banner">
+                              <FaPhoneAlt style={{marginRight: '8px'}} /> 
+                              모든 신고는 신속하고 정확하게!<br/>
+                              위급 상황 시 112 또는 119로 즉시 연락하세요.
+                            </div>
             </ul>
           </div>
         </div>
