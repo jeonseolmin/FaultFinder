@@ -10,7 +10,7 @@ import PostDetail from './pages/Detail/PostDetail.jsx';
 import PostEdit from './pages/Edit/PostEdit.jsx';
 import AccidentGuide from './pages/AccidentGuide/AccidentGuide.jsx';
 import PopularPostAndBest5 from './components/Body_PopularPostAndBest5/PopularPostAndBest5.jsx';
-import Heder from './components/Heder/Heder.jsx';
+import Heder from './components/Header/Header.jsx';
 import QuickServices from './components/Body_QuickServices/QuickServices.jsx';
 import AiFaultRatio from './components/Body_AiFaultRatio/AiFaultRatio.jsx';
 import AccidentType from './pages/AccidentType/AccidentType.jsx';
