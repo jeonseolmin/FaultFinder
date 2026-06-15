@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContent";
+
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isLogin, userInfo, logout } = useAuth();
@@ -37,16 +38,19 @@ function Navbar() {
       {/* 메뉴 링크 영역 */}
       <ul className={`navbar-menu ${isMobileMenuOpen ? "active" : ""}`}>
         <li>
-          <a href="/accidentguide">사고대처</a>
+          <Link to="/guides">사고대처</Link>
         </li>
+
         <li>
-          <a href="/accidentcase">사고유형</a>
+          <Link to="/cases">사고유형</Link>
         </li>
+
         <li>
-          <a href="/faultsearch">과실비율 조회</a>
+          <Link to="/fault-ratios">과실비율 조회</Link>
         </li>
+
         <li>
-          <a href="/community">커뮤니티</a>
+          <Link to="/community">커뮤니티</Link>
         </li>
       </ul>
 
