@@ -1,0 +1,39 @@
+.main-container {
+  display: flex;
+  align-items: flex-start;  /* 자식 요소들을 위쪽 정렬 */
+  justify-content: flex-start; /* 자식 요소들을 왼쪽부터 차례대로 정렬 */
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 30px; /* 왼쪽 사이드바와 본문 사이의 간격 */
+  padding: 20px;
+}
+
+.fault-search-container {
+  max-width: 100%;
+  flex: 1;
+  margin: 0 auto;
+  padding: 0;
+  font-family: "Pretendard", "Malgun Gothic", sans-serif;
+  color: #333;
+}
+
+.search-hero {
+  background: linear-gradient(to right, #f4f8ff 40%, transparent 100%);
+  text-align: left;
+  padding: 50px 40px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.search-hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a2b4c;
+  margin-bottom: 10px;
+}
+
+.search-hero p {
+  font-size: 16px;
+  color: #555;
+}
