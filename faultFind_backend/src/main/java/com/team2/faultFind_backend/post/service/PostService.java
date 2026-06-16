@@ -3,6 +3,9 @@ package com.team2.faultFind_backend.post.service;
 import com.team2.faultFind_backend.post.dto.PostDto;
 import com.team2.faultFind_backend.post.entity.Post;
 import com.team2.faultFind_backend.post.repository.PostRepository;
+import com.team2.faultFind_backend.user.entity.User;
+import com.team2.faultFind_backend.user.repository.UserRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,21 +18,25 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public void createPost(PostDto postDto, String loggedInUser) {
+    public void createPost(PostDto postDto, String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입된 회원이 아닙니다."));
+
         Post post = new Post();
         post.setCategory(postDto.getCategory());
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
 
-        post.setAuthor(loggedInUser);
+        post.setAuthor(user.getUserName());
 
         postRepository.save(post);
     }
 
     @Transactional(readOnly = true)
     public List<Post> getAllPosts() {
-        return postRepository.findAll(); // DB에 있는 모든 글을 다 꺼내옵니다.
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     // 상세보기

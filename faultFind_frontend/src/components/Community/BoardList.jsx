@@ -33,13 +33,14 @@ export default function BoardList({ activeTab }) {
       <table className="board-table">
         <thead>
           <tr>
-            <th style={{ width: '5%', textAlign: 'center' }}>No</th>
-            <th style={{ width: '10%', textAlign: 'center', whiteSpace: 'nowrap' }}>카테고리</th>
-            <th style={{ width: '50%', textAlign: 'center' }}>제목</th>
-            <th style={{ width: '15%', textAlign: 'center' }}>이메일</th>
-            <th style={{ width: '10%', textAlign: 'center', whiteSpace: 'nowrap' }}>날짜</th>
-            <th style={{ width: '5%', minWidth: '80px', textAlign: 'center', whiteSpace: 'nowrap' }}>조회수</th>
-            <th style={{ width: '5%', minWidth: '80px', textAlign: 'center', whiteSpace: 'nowrap' }}>좋아요</th>
+            <th style={{ width: '5%', minWidth: '40px', textAlign: 'center', whiteSpace: 'nowrap' }}>No</th>
+            <th style={{ width: '10%', minWidth: '80px', textAlign: 'center', whiteSpace: 'nowrap' }}>카테고리</th>
+            <th style={{ width: '40%', textAlign: 'center' }}>제목</th>
+            <th style={{ width: '9%', minWidth: '80px', textAlign: 'center' }}>게시자</th>
+            <th style={{ width: '21%', minWidth: '100px', textAlign: 'center', whiteSpace: 'nowrap' }}>날짜</th>
+            <th style={{ width: '5%', minWidth: '60px', textAlign: 'center', whiteSpace: 'nowrap' }}>조회수</th>
+            <th style={{ width: '5%', minWidth: '60px', textAlign: 'center', whiteSpace: 'nowrap' }}>댓글</th>
+            <th style={{ width: '5%', minWidth: '60px', textAlign: 'center', whiteSpace: 'nowrap' }}>좋아요</th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +60,9 @@ export default function BoardList({ activeTab }) {
                 <td>{post.author}</td>
                 <td>{post.createdAt ? post.createdAt.split('T')[0] : ''}</td>
                 <td>{post.viewCount || 0}</td>
-                <td>{post.likeCount || 0}</td>
+                <td>{post.commentCount || 0}</td>
+                <td style={{ textAlign: 'center', fontWeight: 'bold', color: '#3b82f6' }}>{post.likeCount || 0}</td>
+                
               </tr>
             ))
           ) : (

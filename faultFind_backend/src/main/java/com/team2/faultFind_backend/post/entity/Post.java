@@ -33,5 +33,8 @@ public class Post {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int likeCount;
 
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int commentCount;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 }
