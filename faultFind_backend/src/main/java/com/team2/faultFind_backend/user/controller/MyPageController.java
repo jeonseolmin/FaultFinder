@@ -1,3 +1,4 @@
+package com.team2.faultFind_backend.user.controller;
 
 import com.team2.faultFind_backend.comment.entity.Comment;
 import com.team2.faultFind_backend.comment.repository.CommentRepository;
