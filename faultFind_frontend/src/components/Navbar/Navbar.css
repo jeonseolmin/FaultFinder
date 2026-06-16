@@ -16,7 +16,14 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
-  margin: auto;
+  margin-left: 5px;
+  
+}
+
+.mainIcon{
+  margin-left:40px;
+  width: 55px;
+  height: 55px;
 }
 
 .navbar-logo a {
@@ -32,18 +39,19 @@
   font-size: 0.7rem;
   color: #718096;
   font-weight: 500;
-  padding-left: 60px;
+  padding-left: 25px;
+  
 }
 
 /* 메뉴 스타일 */
 .navbar-menu {
   display: flex;
   list-style: none;
-  gap: 60px;
+  gap: 50px;
   margin: 0;
   padding: 0;
   margin-right: auto;
-  padding-left: 50px;
+  padding-left: 110px;
 }
 
 .navbar-menu li a {
