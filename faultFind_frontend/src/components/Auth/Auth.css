@@ -1,10 +1,12 @@
 body {
-    min-width: 1200px;
-    overflow-x: auto;
+  min-width: 1200px;
+  overflow-x: auto;
 }
+
 /* Auth.css */
 .auth-container {
-  min-height: calc(100vh - 70px); /* 헤더 높이 제외 */
+  min-height: calc(100vh - 70px);
+  /* 헤더 높이 제외 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,4 +105,62 @@ body {
 
 .auth-links span {
   color: #ddd;
+}
+
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.social-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-btn img {
+  width: 28px;
+  height: 28px;
+}
+
+.google {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+}
+
+.social-btn.google img {
+  width: 50px;
+  height: 50px;
+}
+
+
+.kakao {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+}
+
+.social-btn.kakao img {
+  width: 40px;
+  height: 40px;
+}
+
+.naver {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+.social-btn.naver img {
+  width: 56px;
+  height: 56px;
 }

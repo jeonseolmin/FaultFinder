@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import axiosInstance from "../../api/axiosInstance";
 import { useAuth } from "../../context/AuthContent";
+import googleLogo from "../../images/google_logo.svg"
+import kakaoLogo from "../../images/kakao_logo.svg"
+import naverLogo from "../../images/NAVER_login.png"
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -22,11 +25,10 @@ export default function LoginForm() {
       });
 
       const token = result.data;
-  
+
       await login(token);
       console.log(localStorage.getItem("accessToken"));
       navigate("/");
-      
     } catch (error) {
       console.log(error);
 
@@ -44,7 +46,19 @@ export default function LoginForm() {
           <h2>로그인</h2>
           <p>FaultFinder 서비스 이용을 위해 로그인해주세요.</p>
         </div>
+        <div className="social-login">
+          <button type="button" className="social-btn google">
+            <img src={googleLogo} alt="Google" />
+          </button>
 
+          <button type="button" className="social-btn kakao">
+            <img src={kakaoLogo} alt="Kakao" />
+          </button>
+
+          <button type="button" className="social-btn naver">
+            <img src={naverLogo} alt="Naver" />
+          </button>
+        </div>
         <form>
           <div className="input-group">
             <label htmlFor="email">이메일</label>
