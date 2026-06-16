@@ -1,5 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { HiMiniChatBubbleLeftEllipsis } from "react-icons/hi2";
+import { FaCarSide, FaShieldHalved, FaPencil } from "react-icons/fa6";
+import { FaBalanceScale } from "react-icons/fa";
+import { PiSirenBold } from "react-icons/pi";
 // 🌟 이제 setActiveTab은 받지 않습니다. activeTab만 받습니다!
 export default function LeftSidebar({ activeTab }) {
   const getSidebarInfo = () => {
@@ -68,28 +72,45 @@ export default function LeftSidebar({ activeTab }) {
           className={`menu-item ${activeTab === "action" ? "active" : ""}`}
           style={{ textDecoration: "none" }}
         >
-          <span className="icon">🚨</span> 사고대처
+          <span className="icon">
+            <PiSirenBold color="#f32222" size={20}/>
+          </span>{" "}
+          사고대처
         </Link>
         <Link
           to="/cases"
           className={`menu-item ${activeTab === "type" ? "active" : ""}`}
           style={{ textDecoration: "none" }}
         >
-          <span className="icon">🚗</span> 사고유형
+          <span className="icon">
+            <FaCarSide color="#f7984b" size={20} />
+          </span>{" "}
+          사고유형
         </Link>
         <Link
           to="/fault-ratios"
           className={`menu-item ${activeTab === "ratio" ? "active" : ""}`}
           style={{ textDecoration: "none" }}
         >
-          <span className="icon">⚖️</span> 과실비율 조회
+          <span className="icon">
+            <FaBalanceScale color="#4437ff" size={20} />
+          </span>{" "}
+          과실비율 조회
         </Link>
         <Link
           to="/community"
           className={`menu-item ${activeTab === "community" ? "active" : ""}`}
           style={{ textDecoration: "none" }}
         >
-          <span className="icon">💬</span> 커뮤니티
+          <span className="icon">
+            <HiMiniChatBubbleLeftEllipsis
+              size={20}
+              style={{
+                filter: "invert(1)",
+              }}
+            />
+          </span>{" "}
+          커뮤니티
         </Link>
       </div>
 
@@ -101,7 +122,10 @@ export default function LeftSidebar({ activeTab }) {
           ))}
         </ul>
         <button className="btn-policy">
-          <span className="icon">🛡️</span> {info.title} 운영정책 보기 &gt;
+          <span className="icon">
+            <FaShieldHalved size={15} />
+          </span>{" "}
+          {info.title} 운영정책 보기
         </button>
       </div>
 
@@ -114,7 +138,10 @@ export default function LeftSidebar({ activeTab }) {
           justifyContent: "center",
         }}
       >
-        <span className="icon">✍️</span> 글쓰기
+        <span>
+          <FaPencil color="#cebe81" />
+        </span>{" "}
+        글쓰기
       </Link>
     </aside>
   );

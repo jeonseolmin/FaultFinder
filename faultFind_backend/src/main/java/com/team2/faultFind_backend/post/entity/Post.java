@@ -1,5 +1,6 @@
 package com.team2.faultFind_backend.post.entity;
 
+import com.team2.faultFind_backend.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "posts")
-public class Post {
+public class Post extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +28,16 @@ public class Post {
     @Column(nullable = false)
     private String author;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private String authorEmail;
+
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int viewCount;
+
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int likeCount;
+
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int commentCount;
+
+
 }

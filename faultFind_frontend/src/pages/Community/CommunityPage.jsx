@@ -38,10 +38,9 @@ export default function CommunityPage() {
       <main className="main-container">
         <LeftSidebar activeTab={activeTab} />
         
-        {/* 🌟 꽉 막혀있던 <BoardList /> 대신, 방금 만든 함수를 넣어줍니다! */}
+        {/* 꽉 막혀있던 <BoardList /> 대신, 방금 만든 함수를 넣어줍니다! */}
         {renderMainContent()}
         
-        <RightSidebar />
       </main>
     </div>
   );

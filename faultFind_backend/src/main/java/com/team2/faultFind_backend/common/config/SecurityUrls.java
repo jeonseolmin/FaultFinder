@@ -18,13 +18,10 @@ public class SecurityUrls {
             "/api/accidents/**",
 
             "/api/fault-ratios",
-            "/api/community",
-            "/api/community/**",
-            "/api/posts/",
-            "/api/posts/**",
 
             "/oauth2/**",
-            "/login/oauth2/**"
+            "/login/oauth2/**",
+            "/login/oauth2/code/**"
     };
 
     public static final String[] ADMIN_URLS = {
@@ -44,7 +41,6 @@ public class SecurityUrls {
             "/api/answer",
             "/api/answer/**",
 
-            "/api/community/**",
             "/api/posts/**"
     };
 

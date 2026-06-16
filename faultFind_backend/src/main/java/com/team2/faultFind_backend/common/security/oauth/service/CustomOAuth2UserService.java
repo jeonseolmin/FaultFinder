@@ -1,5 +1,8 @@
 package com.team2.faultFind_backend.common.security.oauth.service;
 
+import com.team2.faultFind_backend.common.security.CustomUserDetails;
+import com.team2.faultFind_backend.common.security.oauth.info.OAuth2UserInfo;
+import com.team2.faultFind_backend.common.security.oauth.info.OAuth2UserInfoFactory;
 import com.team2.faultFind_backend.user.entity.ProviderType;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.entity.UserRole;
@@ -13,41 +16,52 @@ import org.springframework.stereotype.Service;
 @Service @RequiredArgsConstructor
 public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
+
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        String provider =
+        String registrationId =
                 userRequest.getClientRegistration()
                         .getRegistrationId();
 
-        String providerId =
-                oAuth2User.getAttribute("sub");
+        OAuth2UserInfo userInfo =
+                OAuth2UserInfoFactory.getOAuth2UserInfo(
+                        registrationId,
+                        oAuth2User.getAttributes()
+                );
 
-        String email =
-                oAuth2User.getAttribute("email");
+        String email = userInfo.getEmail();
+        String name = userInfo.getName();
+        String providerId = userInfo.getProviderId();
+        ProviderType providerType = userInfo.getProviderType();
 
-        String name =
-                oAuth2User.getAttribute("name");
+        User user = userRepository.findByEmail(email)
+                .orElse(null);
 
-        User user =
-                userRepository
-                        .findByEmail(email)
-                        .orElse(null);
-        if(user == null){
-
+        if (user == null) {
             user = User.builder()
                     .email(email)
                     .userName(name)
-                    .password("SOCIAL")
-                    .nickName("name")
+                    .password("SOCIAL_LOGIN_USER")
                     .role(UserRole.ROLE_USER)
-                    .provider(ProviderType.GOOGLE)
+                    .provider(providerType)
                     .providerId(providerId)
                     .build();
 
             userRepository.save(user);
+        } else {
+            if (user.getProvider() == null) {
+                user.setProvider(providerType);
+                user.setProviderId(providerId);
+                userRepository.save(user);
+            }
         }
-        return oAuth2User;
+
+        return new CustomUserDetails(
+                user,
+                oAuth2User.getAttributes()
+        );
     }
 }

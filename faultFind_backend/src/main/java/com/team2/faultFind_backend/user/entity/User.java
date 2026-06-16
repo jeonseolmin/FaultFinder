@@ -16,17 +16,14 @@ public class User extends BaseEntity {
 
     @Column(unique = true)
     private String email;
+
     private String password;
     private String userName;
-
-    @Column(unique = true)
-    private String nickName;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private ProviderType provider;
 
     @Column(name = "provider_id")

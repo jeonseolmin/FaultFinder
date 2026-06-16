@@ -12,7 +12,12 @@ import java.io.IOException;
 @Component
 public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        super.onAuthenticationFailure(request, response, exception);
+    public void onAuthenticationFailure
+            (HttpServletRequest request,
+             HttpServletResponse response
+                    , AuthenticationException exception
+            ) throws IOException {
+        exception.printStackTrace();
+        response.sendRedirect("http://localhost:3000/login?error=oauth");
     }
 }

@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import axiosInstance from "../../api/axiosInstance";
 import { useAuth } from "../../context/AuthContent";
+import googleLogo from "../../images/google_logo.svg";
+import kakaoLogo from "../../images/kakao_logo.svg";
+import naverLogo from "../../images/NAVER_login.png";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -14,6 +17,8 @@ export default function LoginForm() {
   // *************
   // 함수 정의 시작
   // *************
+
+  // 로컬 로그인 핸들러
   const handleLogin = async () => {
     try {
       const result = await axiosInstance.post("/api/auth/login", {
@@ -22,17 +27,37 @@ export default function LoginForm() {
       });
 
       const token = result.data;
-  
+
       await login(token);
       console.log(localStorage.getItem("accessToken"));
       navigate("/");
-      
     } catch (error) {
       console.log(error);
 
       alert("로그인 실패");
     }
   };
+
+  // 구글 로그인 핸들러
+  const handleGoogleLogin = () => {
+    window.location.href = 
+    "http://localhost:8080/oauth2/authorization/google";
+  };
+
+  // 카카오 로그인 핸들러
+  const handleKakaoLogin = () => {
+    window.location.href = 
+    "http://localhost:8080/oauth2/authorization/kakao";
+  };
+
+  // 네이버 로그인 핸들러
+  const handleNaverLogin = () => {
+  window.location.href =
+    "http://localhost:8080/oauth2/authorization/naver";
+};
+
+
+
   // ***********
   // 함수 정의 끝
   // ***********
@@ -44,7 +69,22 @@ export default function LoginForm() {
           <h2>로그인</h2>
           <p>FaultFinder 서비스 이용을 위해 로그인해주세요.</p>
         </div>
+        {/* 소셜로그인 버튼 */}
+        <div className="social-login">
+          <button type="button" className="social-btn google" onClick={handleGoogleLogin}>
+            <img src={googleLogo} alt="Google" />
+          </button>
 
+          <button type="button" className="social-btn kakao" onClick={handleKakaoLogin}>
+            <img src={kakaoLogo} alt="Kakao" />
+          </button>
+
+          <button type="button" className="social-btn naver"  onClick={handleNaverLogin}>
+            <img src={naverLogo} alt="Naver" />
+          </button>
+        </div>
+
+        {/* 로컬 로그인 */}
         <form>
           <div className="input-group">
             <label htmlFor="email">이메일</label>

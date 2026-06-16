@@ -14,6 +14,7 @@ export default function BoardList({ activeTab }) {
       try {
         const response = await axiosInstance.get("/api/community");
         setPosts(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error('글 목록을 불러오지 못했습니다:', error);
       }
@@ -21,31 +22,34 @@ export default function BoardList({ activeTab }) {
 
     fetchPosts();
   }, []);
-
+  
   return (
     <div className="board-list-container">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
         <h3>자유게시판</h3>
-        {/* 🌟 나중에 글쓰기 기능이 생기면 활성화할 수 있도록 버튼 미리 배치 */}
+        {/* 글쓰기 기능이 생기면 활성화할 수 있도록 버튼 미리 배치 */}
         {/* <button onClick={() => navigate('/community/write')} className="btn-write">✍️ 글쓰기</button> */}
       </div>
       
       <table className="board-table">
         <thead>
           <tr>
-            <th width="8%">번호</th>
-            <th width="15%">카테고리</th>
-            <th width="35%">제목</th>
-            <th width="20%">사용자 이메일</th>
-            <th width="12%">날짜</th>
+            <th style={{ width: '5%', minWidth: '40px', textAlign: 'center', whiteSpace: 'nowrap' }}>No</th>
+            <th style={{ width: '10%', minWidth: '80px', textAlign: 'center', whiteSpace: 'nowrap' }}>카테고리</th>
+            <th style={{ width: '40%', textAlign: 'center' }}>제목</th>
+            <th style={{ width: '9%', minWidth: '80px', textAlign: 'center' }}>게시자</th>
+            <th style={{ width: '21%', minWidth: '100px', textAlign: 'center', whiteSpace: 'nowrap' }}>날짜</th>
+            <th style={{ width: '5%', minWidth: '60px', textAlign: 'center', whiteSpace: 'nowrap' }}>조회수</th>
+            <th style={{ width: '5%', minWidth: '60px', textAlign: 'center', whiteSpace: 'nowrap' }}>댓글</th>
+            <th style={{ width: '5%', minWidth: '60px', textAlign: 'center', whiteSpace: 'nowrap' }}>좋아요</th>
           </tr>
         </thead>
         <tbody>
-          {posts.length > 0 ? (
+          {Array.isArray(posts) && posts.length > 0 ? (
             posts.map((post) => (
               <tr 
                 key={post.id}
-                // 🌟 글(행)을 클릭하면 해당 글의 상세 페이지(/community/1 등)로 이동!
+                // 글(행)을 클릭하면 해당 글의 상세 페이지(/community/1 등)로 이동!
                 onClick={() => navigate(`/community/${post.id}`)} 
                 style={{ cursor: 'pointer' }}
                 className="board-row" // 호버 효과를 주기 위한 클래스
@@ -56,6 +60,10 @@ export default function BoardList({ activeTab }) {
                 <td style={{ textAlign: 'left', fontWeight: '500' }}>{post.title}</td>
                 <td>{post.author}</td>
                 <td>{post.createdAt ? post.createdAt.split('T')[0] : ''}</td>
+                <td>{post.viewCount || 0}</td>
+                <td>{post.commentCount || 0}</td>
+                <td style={{ textAlign: 'center', fontWeight: 'bold', color: '#3b82f6' }}>{post.likeCount || 0}</td>
+                
               </tr>
             ))
           ) : (
