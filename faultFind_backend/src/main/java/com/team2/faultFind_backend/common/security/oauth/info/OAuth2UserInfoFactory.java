@@ -10,8 +10,7 @@ public class OAuth2UserInfoFactory {
         return switch (registrationId) {
             case "google" -> new GoogleOAuth2UserInfo(attributes);
             case "kakao" -> new KakaoOAuth2UserInfo(attributes);
-//            case "naver" -> new NaverOAuth2UserInfo(attributes);
-            case "naver" -> throw new IllegalArgumentException("네이버는 아직 미구현입니다.");
+            case "naver" -> new NaverOAuth2UserInfo(attributes);
             default -> throw new IllegalArgumentException("지원하지 않는 소셜 로그인입니다.");
         };
     }
