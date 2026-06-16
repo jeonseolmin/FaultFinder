@@ -26,7 +26,6 @@ public class User extends BaseEntity {
     private UserRole role;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private ProviderType provider;
 
     @Column(name = "provider_id")

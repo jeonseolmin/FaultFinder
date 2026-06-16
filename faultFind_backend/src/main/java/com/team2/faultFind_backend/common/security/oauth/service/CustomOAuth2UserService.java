@@ -1,5 +1,6 @@
 package com.team2.faultFind_backend.common.security.oauth.service;
 
+import com.team2.faultFind_backend.common.security.CustomUserDetails;
 import com.team2.faultFind_backend.user.entity.ProviderType;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.entity.UserRole;
@@ -13,13 +14,10 @@ import org.springframework.stereotype.Service;
 @Service @RequiredArgsConstructor
 public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         OAuth2User oAuth2User = super.loadUser(userRequest);
-
-        String provider =
-                userRequest.getClientRegistration()
-                        .getRegistrationId();
 
         String providerId =
                 oAuth2User.getAttribute("sub");
@@ -39,7 +37,7 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
             user = User.builder()
                     .email(email)
                     .userName(name)
-                    .password("SOCIAL")
+                    .password("SOCIAL_LOGIN_USER")
                     .nickName("name")
                     .role(UserRole.ROLE_USER)
                     .provider(ProviderType.GOOGLE)
@@ -48,6 +46,6 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
 
             userRepository.save(user);
         }
-        return oAuth2User;
+        return new CustomUserDetails(user,oAuth2User.getAttributes());
     }
 }
