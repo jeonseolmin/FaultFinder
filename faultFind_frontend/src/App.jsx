@@ -16,6 +16,7 @@ import AiFaultRatio from "./components/Body_AiFaultRatio/AiFaultRatio.jsx";
 import AccidentType from "./pages/AccidentType/AccidentType.jsx";
 import AccidentTypeDetail from "./pages/AccidentType/AccidentTypeDetail.jsx";
 import OAuthSuccess from "./components/Auth/OAuthSuccess.jsx";
+import MyPage from "./pages/Mypage/MyPage";
 
 export default function App() {
   const location = useLocation();
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/oauth-success" element={<OAuthSuccess />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/mypage" element={<MyPage />} />
 
         <Route path="/community/write" element={<WritePage />} />
         <Route path="/community/:id" element={<PostDetail />} />

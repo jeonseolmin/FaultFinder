@@ -1,5 +1,7 @@
-package com.team2.faultFind_backend.comment;
+package com.team2.faultFind_backend.comment.controller;
 
+import com.team2.faultFind_backend.comment.service.CommentService;
+import com.team2.faultFind_backend.comment.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
