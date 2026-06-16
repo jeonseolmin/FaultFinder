@@ -29,7 +29,8 @@ public class PostService {
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
 
-        post.setAuthor(user.getUserName());
+        post.setAuthor(user.getUserName());      // 화면 표시용
+        post.setAuthorEmail(user.getEmail());
 
         postRepository.save(post);
     }
@@ -53,7 +54,7 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         // 권한 검사: 작성자와 현재 로그인한 유저가 다르면 에러 발생!
-        if (!post.getAuthor().equals(username)) {
+        if (!post.getAuthorEmail().equals(username)) {
             throw new RuntimeException("글을 수정할 권한이 없습니다.");
         }
 
@@ -68,7 +69,7 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
         // 권한 검사
-        if (!post.getAuthor().equals(username)) {
+        if (!post.getAuthorEmail().equals(username)) {
             throw new RuntimeException("글을 삭제할 권한이 없습니다.");
         }
 
