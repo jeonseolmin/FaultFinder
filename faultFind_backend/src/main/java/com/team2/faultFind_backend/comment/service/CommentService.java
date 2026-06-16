@@ -1,5 +1,7 @@
-package com.team2.faultFind_backend.comment;
+package com.team2.faultFind_backend.comment.service;
 
+import com.team2.faultFind_backend.comment.entity.Comment;
+import com.team2.faultFind_backend.comment.repository.CommentRepository;
 import com.team2.faultFind_backend.post.entity.Post;
 import com.team2.faultFind_backend.post.repository.PostRepository;
 import com.team2.faultFind_backend.user.entity.User;

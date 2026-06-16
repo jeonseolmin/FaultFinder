@@ -1,4 +1,4 @@
-package com.team2.faultFind_backend.comment;
+package com.team2.faultFind_backend.comment.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.team2.faultFind_backend.post.entity.Post;
