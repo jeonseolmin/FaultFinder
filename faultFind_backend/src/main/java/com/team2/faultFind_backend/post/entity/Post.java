@@ -27,5 +27,11 @@ public class Post {
     @Column(nullable = false)
     private String author;
 
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int viewCount;
+
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int likeCount;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 }

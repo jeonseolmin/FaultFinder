@@ -13,9 +13,34 @@ export default function PostDetail() {
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
 
-  // 토큰이나 로컬스토리지에 저장해 둔 현재 로그인 유저의 식별자(ID 또는 이름)
-  // (로그인 시점에 저장해 두었던 키값을 꺼내옵니다)
-  const currentUsername = localStorage.getItem("email") || localStorage.getItem("username");
+  const getLoginUser = () => {
+    // 1. 유저님이 발견하신 "accessToken"을 최우선으로 가져옵니다!
+    const token = localStorage.getItem("accessToken") || localStorage.getItem("token") || localStorage.getItem("Authorization");
+    
+    if (token) {
+      try {
+        // JWT 토큰의 가운데 부분(페이로드)을 디코딩합니다.
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const payload = JSON.parse(window.atob(base64));
+        
+        // 🛠️ [중요] 콘솔창(F12)에 토큰 내부에 진짜 뭐가 들었는지 강제로 출력합니다.
+        console.log("정밀 분석 - 내 토큰 내용물(페이로드):", payload);
+        
+        // 백엔드 스프링 시큐리티가 토큰에 저장한 값들 중 하나를 꺼냅니다.
+        // post.author(작성자)와 비교해야 하므로 문자열이 일치하는 필드를 찾아야 합니다.
+        return payload.sub || payload.username || payload.email || payload.id;
+      } catch (e) {
+        console.error("JWT 토큰 디코딩 실패:", e);
+      }
+    }
+    
+    // 혹시 토큰이 아니라 일반 문자열로 저장되어 있을 때를 위한 방어 코드
+    return localStorage.getItem("email") || localStorage.getItem("username");
+  };
+
+  // 최종 유저 정보 변수 담기
+  const currentUsername = getLoginUser();
 
   useEffect(() => {
     const fetchPostDetail = async () => {
@@ -36,11 +61,23 @@ export default function PostDetail() {
     fetchPostDetail();
   }, [id]);
 
+  // 게시글 좋아요 함수
+  const handleLike = async () => {
+    try {
+      await axiosInstance.post(`/api/community/${id}/like`);
+      // 좋아요 성공 시 화면의 숫자도 즉시 +1 해줍니다 (새로고침 없이 부드럽게!)
+      setPost({ ...post, likeCount: post.likeCount + 1 });
+    } catch (error) {
+      console.error("좋아요 실패", error);
+      alert("로그인이 필요하거나 오류가 발생했습니다.");
+    }
+  };
+
   // 게시글 삭제 함수
   const handleDelete = async () => {
     if (!window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) return;
     try {
-      await axiosInstance.delete(`/api/posts/${id}`);
+      await axiosInstance.delete(`/api/community/${id}`);
       alert("게시글이 삭제되었습니다.");
       navigate('/community'); // 삭제 후 목록으로 이동
     } catch (error) {
@@ -52,9 +89,10 @@ export default function PostDetail() {
   // 게시글 수정 저장 함수
   const handleUpdate = async () => {
     try {
-      await axiosInstance.put(`/api/posts/${id}`, {
+      await axiosInstance.put(`/api/community/${id}`, {
         title: editTitle,
-        content: editContent
+        content: editContent,
+        category: post.category
       });
       alert("게시글이 수정되었습니다.");
       setPost({ ...post, title: editTitle, content: editContent });
@@ -68,7 +106,7 @@ export default function PostDetail() {
   if (loading) return <div className="loading-box">로딩 중...</div>;
   if (!post) return null;
 
-  // 🌟 현재 로그인한 사람과 글쓴이가 같은지 판단하는 스위치
+  // 현재 로그인한 사람과 글쓴이가 같은지 판단하는 스위치
   const isAuthor = post.author === currentUsername;
 
   return (
@@ -79,7 +117,9 @@ export default function PostDetail() {
           <div className="detail-header">
             <h2>{post.title}</h2>
             <div className="post-meta">
-              <span>작성자: {post.author}</span> | <span>{post.createdDate}</span>
+              <span>작성자: {post.author}</span> | <span>{post.createdDate}</span> 
+              {/* 조회수 표시 */}
+              <span style={{ marginLeft: '10px' }}>조회수 {post.viewCount || 0}</span>
             </div>
           </div>
           <div className="detail-content">
@@ -88,6 +128,14 @@ export default function PostDetail() {
 
           <div className="detail-actions">
             <button onClick={() => navigate(-1)} className="btn-back">목록으로</button>
+            
+            {/* 좋아요 버튼 */}
+            <button 
+              onClick={handleLike} 
+              style={{ padding: '8px 16px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+            >
+              👍 좋아요 {post.likeCount || 0}
+            </button>
             
             {/* 글쓴이 본인일 때만 수정/삭제 버튼을 렌더링합니다 */}
             {isAuthor && (

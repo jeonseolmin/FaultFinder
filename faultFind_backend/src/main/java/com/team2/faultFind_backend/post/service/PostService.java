@@ -27,16 +27,20 @@ public class PostService {
         postRepository.save(post);
     }
 
+    @Transactional(readOnly = true)
     public List<Post> getAllPosts() {
         return postRepository.findAll(); // DB에 있는 모든 글을 다 꺼내옵니다.
     }
 
+    // 상세보기
     public Post getPost(Long id) {
-        return postRepository.findById(id)
+        Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+
+        post.setViewCount(post.getViewCount() + 1); // 조회수 증가
+        return post;
     }
 
-    @Transactional
     public void updatePost(Long id, PostDto postDto, String username) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
@@ -52,7 +56,6 @@ public class PostService {
         // JPA 영속성 컨텍스트 덕분에 save() 생략 가능
     }
 
-    @Transactional
     public void deletePost(Long id, String username) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
@@ -63,5 +66,13 @@ public class PostService {
         }
 
         postRepository.delete(post);
+    }
+
+    //  좋아요 메서드
+    public void likePost(Long id, String username) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+
+        post.setLikeCount(post.getLikeCount() + 1); // 좋아요 1 증가
     }
 }
