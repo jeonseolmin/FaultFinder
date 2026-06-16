@@ -17,6 +17,7 @@ import AccidentType from "./pages/AccidentType/AccidentType.jsx";
 import AccidentTypeDetail from "./pages/AccidentType/AccidentTypeDetail.jsx";
 import OAuthSuccess from "./components/Auth/OAuthSuccess.jsx";
 import MyPage from "./pages/Mypage/MyPage";
+import AdminDashboard from "./pages/AdminDashboard/AdminDashBoard.jsx";
 
 export default function App() {
   const location = useLocation();
@@ -49,6 +50,7 @@ export default function App() {
         <Route path="/oauth-success" element={<OAuthSuccess />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
 
         <Route path="/community/write" element={<WritePage />} />
         <Route path="/community/:id" element={<PostDetail />} />
