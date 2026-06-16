@@ -43,6 +43,10 @@ export default function LoginForm() {
     window.location.href = "http://localhost:8080/oauth2/authorization/google";
   };
 
+  const handleKakaoLogin = () => {
+    window.location.href = "http://localhost:8080/oauth2/authorization/kakao";
+  };
+
 
 
   // ***********
@@ -62,7 +66,7 @@ export default function LoginForm() {
             <img src={googleLogo} alt="Google" />
           </button>
 
-          <button type="button" className="social-btn kakao">
+          <button type="button" className="social-btn kakao" onClick={handleKakaoLogin}>
             <img src={kakaoLogo} alt="Kakao" />
           </button>
 
