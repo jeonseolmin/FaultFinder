@@ -74,7 +74,6 @@ public class UserService {
         return UserResponse.builder()
                 .email(user.getEmail())
                 .userName(user.getUserName())
-                .nickName(user.getNickName())
                 .build();
     }
 }

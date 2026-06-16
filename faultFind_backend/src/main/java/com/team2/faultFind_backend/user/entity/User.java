@@ -16,11 +16,9 @@ public class User extends BaseEntity {
 
     @Column(unique = true)
     private String email;
+
     private String password;
     private String userName;
-
-    @Column(unique = true)
-    private String nickName;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
