@@ -141,7 +141,7 @@ export default function PostDetail() {
   if (!post) return null;
 
   // 현재 로그인한 사람과 글쓴이가 같은지 판단하는 스위치
-  const isAuthor = post.author === currentUsername;
+  const isAuthor = post.authorEmail === currentUsername;
 
   return (
     <div className="post-detail-container">
