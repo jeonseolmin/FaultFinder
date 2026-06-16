@@ -4,6 +4,7 @@ import com.team2.faultFind_backend.common.security.dto.LoginRequest;
 import com.team2.faultFind_backend.common.security.jwt.JwtUtil;
 import com.team2.faultFind_backend.user.dto.UserRequest;
 import com.team2.faultFind_backend.user.dto.UserResponse;
+import com.team2.faultFind_backend.user.entity.ProviderType;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.entity.UserRole;
 import com.team2.faultFind_backend.user.repository.UserRepository;
@@ -31,6 +32,8 @@ public class UserService {
                 .userName(userRequest.getUserName())
                 .password(bCryptPasswordEncoder.encode(userRequest.getPassword()))
                 .role(UserRole.ROLE_USER)
+                .provider(ProviderType.LOCAL)
+                .providerId(null)
                 .build();
         userRepository.save(data);
     }

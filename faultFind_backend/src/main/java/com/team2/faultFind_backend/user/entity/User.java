@@ -17,7 +17,6 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String email;
     private String password;
-
     private String userName;
 
     @Column(unique = true)
@@ -25,4 +24,10 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    @Enumerated(EnumType.STRING)
+    private ProviderType provider;
+
+    @Column(name = "provider_id")
+    private String providerId;
 }

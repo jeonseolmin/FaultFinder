@@ -1,18 +1,51 @@
 package com.team2.faultFind_backend.common.security.oauth.service;
 
+import com.team2.faultFind_backend.common.security.CustomUserDetails;
+import com.team2.faultFind_backend.user.entity.ProviderType;
+import com.team2.faultFind_backend.user.entity.User;
+import com.team2.faultFind_backend.user.entity.UserRole;
+import com.team2.faultFind_backend.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service @RequiredArgsConstructor
 public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
+    private final UserRepository userRepository;
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
-        System.out.println("OAuth2 User = " + oAuth2User.getAttributes());
+        String providerId =
+                oAuth2User.getAttribute("sub");
 
-        return oAuth2User;
+        String email =
+                oAuth2User.getAttribute("email");
+
+        String name =
+                oAuth2User.getAttribute("name");
+
+        User user =
+                userRepository
+                        .findByEmail(email)
+                        .orElse(null);
+        if(user == null){
+
+            user = User.builder()
+                    .email(email)
+                    .userName(name)
+                    .password("SOCIAL_LOGIN_USER")
+                    .nickName("name")
+                    .role(UserRole.ROLE_USER)
+                    .provider(ProviderType.GOOGLE)
+                    .providerId(providerId)
+                    .build();
+
+            userRepository.save(user);
+        }
+        return new CustomUserDetails(user,oAuth2User.getAttributes());
     }
 }
