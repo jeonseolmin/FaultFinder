@@ -38,13 +38,18 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
                     .email(email)
                     .userName(name)
                     .password("SOCIAL_LOGIN_USER")
-                    .nickName("name")
                     .role(UserRole.ROLE_USER)
                     .provider(ProviderType.GOOGLE)
                     .providerId(providerId)
                     .build();
 
             userRepository.save(user);
+        }else {
+            if (user.getProvider() == null) {
+                user.setProvider(ProviderType.GOOGLE);
+                user.setProviderId(providerId);
+                userRepository.save(user);
+            }
         }
         return new CustomUserDetails(user,oAuth2User.getAttributes());
     }
