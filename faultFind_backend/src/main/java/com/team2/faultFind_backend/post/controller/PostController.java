@@ -52,4 +52,12 @@ public class PostController {
     public ResponseEntity<Post> getPost(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getPost(id));
     }
+    
+    // 좋아요
+    @PostMapping("/{id}/like")
+    public ResponseEntity<String> likePost(@PathVariable Long id, Authentication authentication) {
+        // 이미 SecurityUrls에 POST /api/community/** 는 로그인(USER_URLS)해야 가능하도록 세팅해 두셨죠!
+        postService.likePost(id, authentication.getName());
+        return ResponseEntity.ok("좋아요가 반영되었습니다.");
+    }
 }

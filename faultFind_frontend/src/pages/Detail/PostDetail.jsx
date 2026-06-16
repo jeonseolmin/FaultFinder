@@ -61,6 +61,18 @@ export default function PostDetail() {
     fetchPostDetail();
   }, [id]);
 
+  // 게시글 좋아요 함수
+  const handleLike = async () => {
+    try {
+      await axiosInstance.post(`/api/community/${id}/like`);
+      // 좋아요 성공 시 화면의 숫자도 즉시 +1 해줍니다 (새로고침 없이 부드럽게!)
+      setPost({ ...post, likeCount: post.likeCount + 1 });
+    } catch (error) {
+      console.error("좋아요 실패", error);
+      alert("로그인이 필요하거나 오류가 발생했습니다.");
+    }
+  };
+
   // 게시글 삭제 함수
   const handleDelete = async () => {
     if (!window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) return;
@@ -105,7 +117,9 @@ export default function PostDetail() {
           <div className="detail-header">
             <h2>{post.title}</h2>
             <div className="post-meta">
-              <span>작성자: {post.author}</span> | <span>{post.createdDate}</span>
+              <span>작성자: {post.author}</span> | <span>{post.createdDate}</span> 
+              {/* 조회수 표시 */}
+              <span style={{ marginLeft: '10px' }}>조회수 {post.viewCount || 0}</span>
             </div>
           </div>
           <div className="detail-content">
@@ -114,6 +128,14 @@ export default function PostDetail() {
 
           <div className="detail-actions">
             <button onClick={() => navigate(-1)} className="btn-back">목록으로</button>
+            
+            {/* 좋아요 버튼 */}
+            <button 
+              onClick={handleLike} 
+              style={{ padding: '8px 16px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+            >
+              👍 좋아요 {post.likeCount || 0}
+            </button>
             
             {/* 글쓴이 본인일 때만 수정/삭제 버튼을 렌더링합니다 */}
             {isAuthor && (

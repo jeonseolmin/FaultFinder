@@ -26,18 +26,20 @@ export default function BoardList({ activeTab }) {
     <div className="board-list-container">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
         <h3>자유게시판</h3>
-        {/* 🌟 나중에 글쓰기 기능이 생기면 활성화할 수 있도록 버튼 미리 배치 */}
+        {/* 글쓰기 기능이 생기면 활성화할 수 있도록 버튼 미리 배치 */}
         {/* <button onClick={() => navigate('/community/write')} className="btn-write">✍️ 글쓰기</button> */}
       </div>
       
       <table className="board-table">
         <thead>
           <tr>
-            <th width="8%">번호</th>
-            <th width="15%">카테고리</th>
-            <th width="35%">제목</th>
-            <th width="20%">사용자 이메일</th>
-            <th width="12%">날짜</th>
+            <th style={{ width: '5%', textAlign: 'center' }}>No</th>
+            <th style={{ width: '10%', textAlign: 'center', whiteSpace: 'nowrap' }}>카테고리</th>
+            <th style={{ width: '50%', textAlign: 'center' }}>제목</th>
+            <th style={{ width: '15%', textAlign: 'center' }}>이메일</th>
+            <th style={{ width: '10%', textAlign: 'center', whiteSpace: 'nowrap' }}>날짜</th>
+            <th style={{ width: '5%', minWidth: '80px', textAlign: 'center', whiteSpace: 'nowrap' }}>조회수</th>
+            <th style={{ width: '5%', minWidth: '80px', textAlign: 'center', whiteSpace: 'nowrap' }}>좋아요</th>
           </tr>
         </thead>
         <tbody>
@@ -45,7 +47,7 @@ export default function BoardList({ activeTab }) {
             posts.map((post) => (
               <tr 
                 key={post.id}
-                // 🌟 글(행)을 클릭하면 해당 글의 상세 페이지(/community/1 등)로 이동!
+                // 글(행)을 클릭하면 해당 글의 상세 페이지(/community/1 등)로 이동!
                 onClick={() => navigate(`/community/${post.id}`)} 
                 style={{ cursor: 'pointer' }}
                 className="board-row" // 호버 효과를 주기 위한 클래스
@@ -56,6 +58,8 @@ export default function BoardList({ activeTab }) {
                 <td style={{ textAlign: 'left', fontWeight: '500' }}>{post.title}</td>
                 <td>{post.author}</td>
                 <td>{post.createdAt ? post.createdAt.split('T')[0] : ''}</td>
+                <td>{post.viewCount || 0}</td>
+                <td>{post.likeCount || 0}</td>
               </tr>
             ))
           ) : (
