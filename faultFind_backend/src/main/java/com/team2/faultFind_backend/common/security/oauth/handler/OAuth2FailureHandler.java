@@ -16,11 +16,8 @@ public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler 
             (HttpServletRequest request,
              HttpServletResponse response
                     , AuthenticationException exception
-            ) throws IOException, ServletException {
-        System.out.println("카카오 OAuth 실패");
-        System.out.println(exception.getMessage());
+            ) throws IOException {
         exception.printStackTrace();
-
         response.sendRedirect("http://localhost:3000/login?error=oauth");
     }
 }

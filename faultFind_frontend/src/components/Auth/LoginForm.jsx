@@ -40,12 +40,21 @@ export default function LoginForm() {
 
   // 구글 로그인 핸들러
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    window.location.href = 
+    "http://localhost:8080/oauth2/authorization/google";
   };
 
+  // 카카오 로그인 핸들러
   const handleKakaoLogin = () => {
-    window.location.href = "http://localhost:8080/oauth2/authorization/kakao";
+    window.location.href = 
+    "http://localhost:8080/oauth2/authorization/kakao";
   };
+
+  // 네이버 로그인 핸들러
+  const handleNaverLogin = () => {
+  window.location.href =
+    "http://localhost:8080/oauth2/authorization/naver";
+};
 
 
 
@@ -70,7 +79,7 @@ export default function LoginForm() {
             <img src={kakaoLogo} alt="Kakao" />
           </button>
 
-          <button type="button" className="social-btn naver">
+          <button type="button" className="social-btn naver"  onClick={handleNaverLogin}>
             <img src={naverLogo} alt="Naver" />
           </button>
         </div>

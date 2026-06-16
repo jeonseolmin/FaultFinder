@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import "./Navbar.css";
 import { FaUserTie } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa6";
 import { useNavigate,Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContent";
+import mainIcon from "../../images/mainIcon.png";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -31,8 +33,9 @@ function Navbar() {
   return (
     <nav className="navbar">
       {/* 로고 영역 */}
+      <a href="/"> <img  className="mainIcon"src={mainIcon} alt="" /></a>
       <div className="navbar-logo">
-        <a href="/">⚖️ FaultFinder</a>
+        <a href="/"> FaultFinder </a>
         <span className="navbar-slogan">교통사고 법률 정보 사이트</span>
       </div>
 
@@ -60,7 +63,7 @@ function Navbar() {
         {isLogin ? (
           <>
             <span className="user">
-              <FaUserTie className="user-icon"/> {userInfo?.userName}님
+              <FaUserTie className="user-icon"/> {userInfo?.userName} 님
             </span>
 
             <button className="btn-login" onClick={() => navigate("/mypage")}>
@@ -73,6 +76,9 @@ function Navbar() {
           </>
         ) : (
           <>
+          <span className="user">
+              <FaRegUser className="user-icon" /> 게스트 님
+            </span>
             <button className="btn-login" onClick={() => navigate("/login")}>
               로그인
             </button>
