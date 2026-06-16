@@ -8,6 +8,7 @@ import com.team2.faultFind_backend.common.security.oauth.service.CustomOAuth2Use
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -77,6 +78,12 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // 여기에 직접 오픈할 GET 주소들을 한 줄로 박아버립니다.
+                        .requestMatchers(HttpMethod.GET, "/api/community", "/api/community/**", "/api/posts/**").permitAll()
+                        .requestMatchers("/error").permitAll()
+
                         // PUBLIC_URLS
                         .requestMatchers(
                                 SecurityUrls.PUBLIC_URLS
