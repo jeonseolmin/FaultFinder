@@ -14,6 +14,7 @@ export default function BoardList({ activeTab }) {
       try {
         const response = await axiosInstance.get("/api/community");
         setPosts(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error('글 목록을 불러오지 못했습니다:', error);
       }
@@ -21,7 +22,7 @@ export default function BoardList({ activeTab }) {
 
     fetchPosts();
   }, []);
-
+  
   return (
     <div className="board-list-container">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
@@ -44,7 +45,7 @@ export default function BoardList({ activeTab }) {
           </tr>
         </thead>
         <tbody>
-          {posts.length > 0 ? (
+          {Array.isArray(posts) && posts.length > 0 ? (
             posts.map((post) => (
               <tr 
                 key={post.id}

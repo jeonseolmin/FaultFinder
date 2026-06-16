@@ -78,6 +78,12 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // 여기에 직접 오픈할 GET 주소들을 한 줄로 박아버립니다.
+                        .requestMatchers(HttpMethod.GET, "/api/community", "/api/community/**", "/api/posts/**").permitAll()
+                        .requestMatchers("/error").permitAll()
+
                         // PUBLIC_URLS
                         .requestMatchers(
                                 SecurityUrls.PUBLIC_URLS
