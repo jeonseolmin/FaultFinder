@@ -20,7 +20,8 @@ public class SecurityUrls {
             "/api/fault-ratios",
 
             "/oauth2/**",
-            "/login/oauth2/**"
+            "/login/oauth2/**",
+            "/login/oauth2/code/**"
     };
 
     public static final String[] ADMIN_URLS = {
