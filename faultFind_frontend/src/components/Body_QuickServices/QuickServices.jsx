@@ -12,7 +12,7 @@ function QuickServices() {
       imgAlt: '사고 대처 가이드',
       title: '사고 대처 ',
       desc: '사고 발생 시 대처 요령',
-      path: '/car-to-car', // 클릭 시 이동할 경로
+      path: '/guides', // 클릭 시 이동할 경로
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ function QuickServices() {
       imgAlt: '과실 비율 이미지',
       title: '과실 비율 조회',
       desc: '사고 유형별 과실비율 조회',
-      path: '/car-to-person', // 클릭 시 이동할 경로
+      path: '/fault-ratios', // 클릭 시 이동할 경로
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ function QuickServices() {
       imgAlt: '커뮤니티 관련 이미지',
       title: '커뮤니티',
       desc: '게시판 인기글 사고사례',
-      path: '/car-to-motorcycle', // 클릭 시 이동할 경로
+      path: '/community', // 클릭 시 이동할 경로
     },
     {
       id: 4,
@@ -39,16 +39,16 @@ function QuickServices() {
       imgAlt: '차량 대 차량 사고 이미지',
       title: '차량 대 차량',
       desc: '차량간의 사고 정보',
-      path: '/car-to-bicycle', // 클릭 시 이동할 경로
+      path: '/cases/car-to-car', // 클릭 시 이동할 경로
     },
     {
       id: 5,
       // 공공 데이터나 프로젝트 내 이미지를 넣으시면 됩니다. (우선 Unsplash 자동차 일러스트 활용)
       imgSrc: 'https://img.icons8.com/?size=100&id=qYlz28isTjPC&format=png&color=000000', 
       imgAlt: '차량 대 사람 사고 이미지',
-      title: '차량 대 사람',
+      title: '차량 대 보행자',
       desc: '보행자 사고 정보',
-      path: '/single-accident', // 클릭 시 이동할 경로
+      path: '/cases/car-to-pedestrian', // 클릭 시 이동할 경로
     },
     {
       id: 6,
@@ -57,7 +57,7 @@ function QuickServices() {
       imgAlt: '차량 대 이륜차 사고 이미지',
       title: '차량 대 이륜차',
       desc: '이륜차 사고 정보',
-      path: '/legal-info', // 클릭 시 이동할 경로
+      path: '/cases/car-to-motorcycle', // 클릭 시 이동할 경로
     },
   ];
 
