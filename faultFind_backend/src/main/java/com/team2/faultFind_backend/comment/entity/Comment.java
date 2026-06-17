@@ -22,6 +22,9 @@ public class Comment {
     @Column(nullable = false)
     private String author; // 댓글 작성자 이메일
 
+    @Column(nullable = false)
+    private String authorEmail;
+
     @CreationTimestamp
     private LocalDateTime createdDate; // 작성 시간
 

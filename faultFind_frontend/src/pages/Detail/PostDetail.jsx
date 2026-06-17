@@ -297,8 +297,8 @@ export default function PostDetail() {
             style={{ width: '100%', padding: '10px', minHeight: '300px', marginBottom: '20px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
           <div className="edit-actions" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-            <button onClick={() => setIsEditMode(false)} className="btn-cancel" style={{ padding: '10px 20px', borderRadius: '4px', border: '1px solid #ccc', backgroundColor: 'white', cursor: 'pointer' }}>취소</button>
             <button onClick={handleUpdate} className="btn-save" style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>저장</button>
+            <button onClick={() => setIsEditMode(false)} className="btn-cancel" style={{ padding: '10px 20px', borderRadius: '4px', border: '1px solid #ccc', backgroundColor: 'red', cursor: 'pointer' }}>취소</button>
           </div>
         </div>
       )}
