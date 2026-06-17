@@ -24,6 +24,10 @@ public class PostService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("가입된 회원이 아닙니다."));
 
+        if (user.isSuspended()) {
+            throw new RuntimeException("활동이 정지된 계정입니다. 글을 작성할 수 없습니다.");
+        }
+
         Post post = new Post();
         post.setCategory(postDto.getCategory());
         post.setTitle(postDto.getTitle());

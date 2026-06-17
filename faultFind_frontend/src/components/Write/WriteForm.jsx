@@ -42,7 +42,7 @@ export default function WriteForm() {
       
     } catch (error) {
       console.error('글 등록 실패:', error);
-      alert('글 등록 중 서버 오류가 발생했습니다.');
+      alert('현재 활동 정지 상태이거나 서버 오류가 발생했습니다.');
     }
   };
 

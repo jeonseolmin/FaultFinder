@@ -26,14 +26,20 @@ public class UserService {
         if (isExist) {
             throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
         }
+        // 특정 이메일이거나 특정 도메인을 쓰면 관리자로 가입
+        UserRole role = UserRole.ROLE_USER;
+        if (userRequest.getEmail().equals("admin@test.com") || userRequest.getEmail().endsWith("@roadlaw.com")) {
+            role = UserRole.ROLE_ADMIN;
+        }
         // 새로운 유저면 엔티티 만들고 저장
         User data = User.builder()
                 .email(userRequest.getEmail())
                 .userName(userRequest.getUserName())
                 .password(bCryptPasswordEncoder.encode(userRequest.getPassword()))
-                .role(UserRole.ROLE_USER)
+                .role(role)
                 .provider(ProviderType.LOCAL)
                 .providerId(null)
+                .isSuspended(false)
                 .build();
         userRepository.save(data);
     }
