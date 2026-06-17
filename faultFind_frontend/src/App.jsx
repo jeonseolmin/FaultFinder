@@ -18,6 +18,7 @@ import AccidentTypeDetail from "./pages/AccidentType/AccidentTypeDetail.jsx";
 import OAuthSuccess from "./components/Auth/OAuthSuccess.jsx";
 import MyPage from "./pages/Mypage/MyPage";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashBoard.jsx";
+import FaultSearch from "./pages/FaultSearch/FaultSearch.jsx";
 
 export default function App() {
   const location = useLocation();
@@ -40,11 +41,11 @@ export default function App() {
           }
         />
 
-        <Route path="/community" element={<CommunityPage />} />
         <Route path="/guides" element={<AccidentGuide />} />
         <Route path="/cases" element={<AccidentType />} />
         <Route path="/cases/:typeId" element={<AccidentTypeDetail />} />
-        <Route path="/fault-ratios" element={<CommunityPage />} />
+        <Route path="/fault-ratios" element={<FaultSearch />} />
+        <Route path="/community" element={<CommunityPage />} />
         
         <Route path="/login" element={<Login />} />
         <Route path="/oauth-success" element={<OAuthSuccess />} />
