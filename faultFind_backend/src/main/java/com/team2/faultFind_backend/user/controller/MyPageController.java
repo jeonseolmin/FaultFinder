@@ -32,8 +32,8 @@ public class MyPageController {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
-        List<Post> myPosts = postRepository.findByAuthorOrderByIdDesc(user.getUserName());
-        List<Comment> myComments = commentRepository.findByAuthorOrderByIdDesc(user.getUserName());
+        List<Post> myPosts = postRepository.findByAuthorEmailOrderByIdDesc(user.getEmail());
+        List<Comment> myComments = commentRepository.findByAuthorEmailOrderByIdDesc(user.getEmail());
 
         // 🌟 추가된 부분: 리액트가 기절하지 않도록 댓글 배열을 직접 포장합니다!
         List<Map<String, Object>> commentList = new java.util.ArrayList<>();

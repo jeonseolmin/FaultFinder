@@ -5,6 +5,7 @@ import { FaRegUser } from "react-icons/fa6";
 import { useNavigate,Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContent";
 import mainIcon from "../../images/mainIcon.png";
+import { HiUser } from "react-icons/hi2";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -77,7 +78,7 @@ function Navbar() {
         ) : (
           <>
           <span className="user">
-              <FaRegUser className="user-icon" /> 게스트 님
+              <HiUser className="user-icon" /> 게스트 님
             </span>
             <button className="btn-login" onClick={() => navigate("/login")}>
               로그인

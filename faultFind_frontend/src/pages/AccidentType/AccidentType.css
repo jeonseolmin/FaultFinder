@@ -58,7 +58,7 @@
   position: relative;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-height: 220px; /* 사진이 예쁘게 보이도록 높이 증가 */
+  min-height: 170px; /* 사진이 예쁘게 보이도록 높이 증가 */
   display: flex;
   flex-direction: column;
   overflow: hidden; /* 이미지가 카드 밖으로 튀어나가지 않게 고정 */
@@ -77,20 +77,20 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(180, 178, 178, 0.65) 100%);
   z-index: 1;
   transition: background 0.3s;
 }
 
 .type-card:hover .card-overlay {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(155, 151, 211, 0.8) 100%);
 }
 
 /* 🌟 새로 추가: 내용물들을 감싸는 컨테이너 */
 .card-content {
   position: relative;
   z-index: 2; /* 오버레이보다 위로 띄움 */
-  padding: 30px 24px;
+  padding: 30px 34px;
   height: 100%;
   box-sizing: border-box;
   display: flex;
@@ -105,7 +105,7 @@
 }
 
 .card-number {
-  background: #fff; /* 파란 배경에서 흰 배경으로 변경 */
+  background: #ffffff; /* 파란 배경에서 흰 배경으로 변경 */
   color: #1a56db; /* 글씨를 파란색으로 */
   font-size: 14px;
   font-weight: bold;
@@ -127,7 +127,7 @@
 
 .type-card p {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.85); /* 밝은 회색/흰색으로 변경 */
+  color: rgba(255, 255, 255, 0.85); /* 밝은 회색/흰색으로 변경 */ 
   margin: 0 0 20px 0;
   line-height: 1.4;
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
@@ -137,10 +137,10 @@
 
 .card-arrow {
   position: absolute;
-  bottom: 24px;
+  bottom: 10px;
   right: 24px;
-  color: #ffffff; /* 화살표도 흰색으로 */
-  font-size: 20px;
+  color: #1a56db; /* 화살표도 흰색으로 */
+  font-size: 30px;
   font-weight: bold;
   opacity: 0.6;
   z-index: 2; /* 오버레이 위로 띄움 */
@@ -159,7 +159,7 @@
   align-items: center;
   background: #f0f5ff;
   border-radius: 12px;
-  padding: 24px 30px;
+  padding: 24px 15px;
 }
 
 .banner-info {

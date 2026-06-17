@@ -24,6 +24,19 @@ export default function MyPage() {
     fetchMyPageData();
   }, [navigate]);
 
+  const getUserRoleFromToken = () => {
+      const token = localStorage.getItem("accessToken") || localStorage.getItem("token") || localStorage.getItem("Authorization");
+      if (!token) return null;
+      try {
+        const payload = JSON.parse(window.atob(token.split('.')[1]));
+        return payload.role;
+      } catch (e) {
+        return null;
+      }
+    };
+
+    const userRole = getUserRoleFromToken();
+
   if (loading) return <div style={{ textAlign: 'center', padding: '50px' }}>로딩 중...</div>;
   if (!data.user) return null;
 
@@ -80,6 +93,28 @@ export default function MyPage() {
               </li>
             ))}
           </ul>
+        )}
+        {userRole === 'ROLE_ADMIN' && (
+          <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px dashed #ccc', textAlign: 'center' }}>
+            <h4 style={{ color: '#ef4444', marginBottom: '10px' }}>관리자 전용 메뉴</h4>
+            <button 
+              onClick={() => navigate('/admin')} // 설정해두신 어드민 페이지 라우터 주소
+              style={{ 
+                width: '100%', 
+                padding: '12px 20px', 
+                backgroundColor: '#1f2937', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '8px', 
+                cursor: 'pointer', 
+                fontWeight: 'bold',
+                fontSize: '1em',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+              }}
+            >
+              관리자 대시보드 입장
+            </button>
+          </div>
         )}
       </div>
     </div>

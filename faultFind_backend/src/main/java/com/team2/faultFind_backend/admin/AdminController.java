@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,5 +44,31 @@ public class AdminController {
         response.put("posts", allPosts);
 
         return ResponseEntity.ok(response);
+    }
+    // 1. 유저 강제 탈퇴 API
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
+        return ResponseEntity.ok("유저가 강제 탈퇴되었습니다.");
+    }
+
+    // 2. 유저 활동 정지 / 해제 토글 API
+    @PutMapping("/users/{id}/suspend")
+    public ResponseEntity<String> suspendUser(@PathVariable Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
+
+        user.setSuspended(!user.isSuspended()); // 상태 뒤집기 (정지 <-> 해제)
+        userRepository.save(user);
+
+        String message = user.isSuspended() ? "활동이 정지되었습니다." : "정지가 해제되었습니다.";
+        return ResponseEntity.ok(message);
+    }
+
+    // 3. 게시글 강제 삭제 API
+    @DeleteMapping("/posts/{id}")
+    public ResponseEntity<String> deletePostByAdmin(@PathVariable Long id) {
+        postRepository.deleteById(id);
+        return ResponseEntity.ok("게시글이 삭제되었습니다.");
     }
 }
