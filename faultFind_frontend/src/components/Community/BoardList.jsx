@@ -69,7 +69,7 @@ export default function BoardList({ activeTab }) {
           ) : (
             <tr>
               {/* 열 개수(colSpan)를 테이블에 맞게 5로 수정 */}
-              <td colSpan="5" style={{ textAlign: 'center', padding: '40px', color: '#666' }}>
+              <td colSpan="5" style={{ textAlign: 'center', padding: '40px', color: '#666', font: 'Pretendard' }}>
                 아직 등록된 게시글이 없습니다.
               </td>
             </tr>
