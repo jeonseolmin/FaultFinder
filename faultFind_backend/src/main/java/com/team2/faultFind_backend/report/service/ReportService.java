@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReportService {
@@ -39,5 +41,10 @@ public class ReportService {
         reportRepository.save(report);
 
         return "신고가 정상적으로 접수되었습니다.";
+    }
+
+    @Transactional(readOnly = true)
+    public List<Report> getAllReportsForAdmin() {
+        return reportRepository.findAllByOrderByCreatedAtDesc();
     }
 }
