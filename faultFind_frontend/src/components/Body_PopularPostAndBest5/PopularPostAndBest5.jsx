@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom'
 import './PopularPostAndBest5.css';
 // import { AiOutlineAlert } from "react-icons/ai";
 import { GiPoliceCar } from "react-icons/gi";
@@ -12,6 +13,8 @@ import { RiPoliceCarFill } from "react-icons/ri";
 import { BiSolidCarCrash } from "react-icons/bi";
 
 function PopularPostAndBest5() {
+  const navigate = useNavigate();
+
   const latestPosts = [
     { id: 1, tag: '자유', tagBg: '#E6F0FF', tagColor: '#0052CC', title: '사고 처리 어떻게 해야 하나요?', date: '10:30' },
     { id: 2, tag: '후기', tagBg: '#EBF5FF', tagColor: '#1E40AF', title: '합의금 적정한가요?', date: '09:15' },
@@ -34,7 +37,8 @@ function PopularPostAndBest5() {
       <div className="section">
         <div className="header">
           <h2 className="title">커뮤니티 인기글  </h2>
-          <button className="moreBtn">더보기 <span className="moreBtn-arrow">❯</span>
+          <button className="moreBtn" onClick={() => navigate('/community')}>
+            더보기 <span className="moreBtn-arrow">❯</span>
           </button>
         </div>
         <ul className="list">
