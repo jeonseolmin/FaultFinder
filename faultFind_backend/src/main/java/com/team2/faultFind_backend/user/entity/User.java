@@ -31,12 +31,4 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private boolean isSuspended = false; // 기본값은 false (정상 활동 중)
-
-    public void setSuspended(boolean suspended) {
-        this.isSuspended = suspended;
-    }
-
-    public boolean isSuspended() {
-        return this.isSuspended;
-    }
 }
