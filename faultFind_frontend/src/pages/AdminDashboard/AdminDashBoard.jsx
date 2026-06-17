@@ -5,14 +5,23 @@ import axiosInstance from '../../api/axiosInstance';
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [data, setData] = useState({ users: [], posts: [] });
+
+  const [reports, setReports] = useState([]); 
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('users'); // 'users' 또는 'posts'
+  const [activeTab, setActiveTab] = useState('users');
 
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
+        setLoading(true);
+        // 기존 유저 & 게시글 데이터 불러오기
         const response = await axiosInstance.get('/api/admin/dashboard');
         setData(response.data);
+
+        // 신고 내역 데이터 불러오기
+        const reportsResponse = await axiosInstance.get('/api/admin/reports');
+        setReports(reportsResponse.data);
+
       } catch (error) {
         console.error("관리자 데이터 불러오기 실패", error);
         alert("관리자 권한이 없거나 접근할 수 없습니다.");
@@ -29,8 +38,8 @@ export default function AdminDashboard() {
   return (
     <div style={{ maxWidth: '1000px', margin: '40px auto', padding: '20px' }}>
       <div style={{ backgroundColor: '#1f2937', padding: '30px', borderRadius: '12px', marginBottom: '30px', textAlign: 'center', color: 'white' }}>
-        <h2 style={{ margin: '0 0 10px 0' }}>관리자 페이지 (Admin Dashboard)</h2>
-        <p style={{ margin: '0', color: '#9ca3af' }}>모든 유저와 게시글을 관리합니다.</p>
+        <h2 style={{ margin: '0 0 10px 0' }}>관리자 페이지 </h2>
+        <p style={{ margin: '0', color: '#9ca3af' }}>모든 유저, 게시글, 신고 내역을 관리합니다.</p>
       </div>
 
       {/* 탭 메뉴 */}
@@ -46,6 +55,13 @@ export default function AdminDashboard() {
           style={{ flex: 1, padding: '15px', fontSize: '1.1em', fontWeight: 'bold', border: 'none', backgroundColor: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'posts' ? '3px solid #ef4444' : 'none', color: activeTab === 'posts' ? '#ef4444' : '#9ca3af' }}
         >
           게시글 관리 ({data.posts.length}개)
+        </button>
+        {/* 신고 관리 탭 버튼 */}
+        <button 
+          onClick={() => setActiveTab('reports')}
+          style={{ flex: 1, padding: '15px', fontSize: '1.1em', fontWeight: 'bold', border: 'none', backgroundColor: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'reports' ? '3px solid #ef4444' : 'none', color: activeTab === 'reports' ? '#ef4444' : '#9ca3af' }}
+        >
+          🚨 신고 관리 ({reports.length}건)
         </button>
       </div>
 
@@ -73,7 +89,6 @@ export default function AdminDashboard() {
                     {user.role}
                   </td>
                   <td>
-                    {/* 자기 자신은 강제 탈퇴 버튼 안 보이게 처리 필요 */}
                     <button style={{ padding: '6px 12px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}>
                       강제 탈퇴
                     </button>
@@ -100,7 +115,6 @@ export default function AdminDashboard() {
               {data.posts.map(post => (
                 <tr key={post.id} style={{ borderBottom: '1px solid #eee' }}>
                   <td style={{ padding: '12px' }}>{post.id}</td>
-                  {/* 제목 누르면 해당 글로 이동 */}
                   <td style={{ cursor: 'pointer', color: '#3b82f6', textDecoration: 'underline' }} onClick={() => navigate(`/community/${post.id}`)}>
                     {post.title}
                   </td>
@@ -113,6 +127,56 @@ export default function AdminDashboard() {
                   </td>
                 </tr>
               ))}
+            </tbody>
+          </table>
+        )}
+
+        {/* 🌟 [추가] 신고 관리 탭 */}
+        {activeTab === 'reports' && (
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#fee2e2', borderBottom: '2px solid #fca5a5' }}>
+                <th style={{ padding: '12px', color: '#b91c1c' }}>신고 ID</th>
+                <th style={{ color: '#b91c1c' }}>신고자</th>
+                <th style={{ color: '#b91c1c' }}>구분</th>
+                <th style={{ color: '#b91c1c' }}>대상 번호</th>
+                <th style={{ color: '#b91c1c' }}>신고 사유</th>
+                <th style={{ color: '#b91c1c' }}>일시</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reports.map(report => (
+                <tr key={report.id} style={{ borderBottom: '1px solid #eee', backgroundColor: '#fff' }}>
+                  <td style={{ padding: '12px', fontWeight: 'bold' }}>{report.id}</td>
+                  <td>{report.reporterEmail}</td>
+                  <td>
+                    <span style={{ 
+                      padding: '4px 8px', borderRadius: '4px', fontSize: '0.85em', fontWeight: 'bold',
+                      backgroundColor: report.targetType === 'POST' ? '#dbeafe' : '#fef3c7',
+                      color: report.targetType === 'POST' ? '#1e40af' : '#92400e'
+                    }}>
+                      {report.targetType === 'POST' ? '게시글' : '댓글'}
+                    </span>
+                  </td>
+                  <td 
+                    style={{ cursor: 'pointer', color: '#3b82f6', textDecoration: 'underline' }} 
+                    onClick={() => report.targetType === 'POST' && navigate(`/community/${report.targetId}`)}
+                  >
+                    #{report.targetId}번
+                  </td>
+                  <td style={{ color: '#dc2626', maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {report.reason}
+                  </td>
+                  <td style={{ color: '#9ca3af', fontSize: '0.9em' }}>
+                    {new Date(report.createdAt).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+              {reports.length === 0 && (
+                <tr>
+                  <td colSpan="6" style={{ padding: '40px', color: '#9ca3af' }}>접수된 신고 내역이 없습니다.</td>
+                </tr>
+              )}
             </tbody>
           </table>
         )}

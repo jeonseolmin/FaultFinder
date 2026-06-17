@@ -38,6 +38,8 @@ public class CommentService {
         // 이메일 대신 유저의 '이름'을 작성자로 저장합니다.
         comment.setAuthor(user.getUserName());
 
+        comment.setAuthorEmail(user.getEmail());
+
         comment.setPost(post); // 댓글과 게시글 연관관계 매핑
 
         commentRepository.save(comment);

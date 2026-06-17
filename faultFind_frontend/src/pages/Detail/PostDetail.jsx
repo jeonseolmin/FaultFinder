@@ -14,6 +14,43 @@ export default function PostDetail() {
   const [editContent, setEditContent] = useState('');
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [reportConfig, setReportConfig] = useState({ targetType: '', targetId: null });
+  const [reportReason, setReportReason] = useState('');
+
+  const openReportModal = (type, id) => {
+    setReportConfig({ targetType: type, targetId: id });
+    setReportReason(''); // 이전 입력값 초기화
+    setShowReportModal(true);
+  };
+
+  // 백엔드로 신고 데이터를 쏘는 함수
+  const handleReportSubmit = async () => {
+    if (!reportReason.trim()) {
+      alert("신고 사유를 입력해주세요.");
+      return;
+    }
+
+    try {
+      // 2단계에서 만든 백엔드 주소로 POST 요청!
+      const response = await axiosInstance.post('/api/reports', {
+        targetType: reportConfig.targetType,
+        targetId: reportConfig.targetId,
+        reason: reportReason
+      });
+      
+      alert(response.data); // "신고가 정상적으로 접수되었습니다."
+      setShowReportModal(false); // 모달 닫기
+      
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        // 백엔드에서 튕겨낸 중복 신고 메시지 출력
+        alert(error.response.data); 
+      } else {
+        alert("로그인이 필요하거나 오류가 발생했습니다.");
+      }
+    }
+  };
 
   const getLoginUser = () => {
     // "accessToken"을 최우선으로 가져옵니다
@@ -170,9 +207,15 @@ export default function PostDetail() {
               </button>
               <button 
                 onClick={handleLike} 
-                style={{ padding: '8px 16px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+                style={{ padding: '8px 16px', backgroundColor: '#28fa80', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
               >
                 👍 좋아요 {post.likeCount || 0}
+              </button>
+              <button 
+                onClick={() => openReportModal('POST', id)}
+                style={{ padding: '8px 16px', backgroundColor: '#ff0000', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+              >
+                🚨 신고
               </button>
             </div>
 
@@ -218,6 +261,12 @@ export default function PostDetail() {
                     <span style={{ fontWeight: 'normal', color: '#999', fontSize: '0.8em', marginLeft: '10px' }}>
                       {new Date(comment.createdDate).toLocaleString()} {/* 날짜 포맷팅 깔끔하게 */}
                     </span>
+                    <button 
+                      onClick={() => openReportModal('COMMENT', comment.id)}
+                      style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '0.9em' }}
+                    >
+                      🚨 신고
+                    </button>
                   </div>
                   <div style={{ marginTop: '8px', color: '#555', lineHeight: '1.4' }}>{comment.content}</div>
                 </div>
@@ -248,8 +297,43 @@ export default function PostDetail() {
             style={{ width: '100%', padding: '10px', minHeight: '300px', marginBottom: '20px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
           <div className="edit-actions" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
-            <button onClick={() => setIsEditMode(false)} className="btn-cancel" style={{ padding: '10px 20px', borderRadius: '4px', border: '1px solid #ccc', backgroundColor: 'white', cursor: 'pointer' }}>취소</button>
             <button onClick={handleUpdate} className="btn-save" style={{ padding: '10px 20px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>저장</button>
+            <button onClick={() => setIsEditMode(false)} className="btn-cancel" style={{ padding: '10px 20px', borderRadius: '4px', border: '1px solid #ccc', backgroundColor: 'red', cursor: 'pointer' }}>취소</button>
+          </div>
+        </div>
+      )}
+      {showReportModal && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+          backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000
+        }}>
+          <div style={{
+            backgroundColor: 'white', padding: '25px', borderRadius: '8px', width: '400px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+          }}>
+            <h3 style={{ marginTop: 0, marginBottom: '15px', color: '#ef4444' }}>🚨 신고하기</h3>
+            <p style={{ fontSize: '0.9em', color: '#555', marginBottom: '10px' }}>
+              부적절한 내용인가요? 신고 사유를 명확히 적어주세요.
+            </p>
+            <textarea
+              value={reportReason}
+              onChange={(e) => setReportReason(e.target.value)}
+              placeholder="예: 욕설 및 비방, 불법 광고, 도배 등"
+              style={{ width: '100%', height: '100px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', marginBottom: '15px' }}
+            />
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <button 
+                onClick={() => setShowReportModal(false)}
+                style={{ padding: '8px 16px', border: '1px solid #ccc', backgroundColor: 'white', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                취소
+              </button>
+              <button 
+                onClick={handleReportSubmit}
+                style={{ padding: '8px 16px', border: 'none', backgroundColor: '#ef4444', color: 'white', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+              >
+                신고 제출
+              </button>
+            </div>
           </div>
         </div>
       )}
