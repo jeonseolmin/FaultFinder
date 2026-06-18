@@ -1,10 +1,14 @@
-
+.quickService-container{
+  background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
+  padding-bottom: 20px;
+}
 .services-grid {
   padding-top: 5px;
   display: flex;
   overflow-x: auto;
   gap: 16px;
   margin-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 /* 미디어 쿼리: 화면 가로폭이 최소 1024px 이상일 때 */
@@ -18,10 +22,11 @@
   font-weight: bold;      
   font-weight: 700;
   font-family: 'Pretendard';
-  margin-top: 15px;    
   color: #1f2937;      
-  margin-bottom: 20px;  
-  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 20px; 
+  padding-top: 10px;
+  text-shadow: 1px 1px 5px rgba(176, 176, 179, 0.5);
 }
 
 /* 카드 기본 스타일 */
@@ -39,6 +44,10 @@
   text-align: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: 250px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.19);
+  text-align: center;
+
 }
 
 .service-card:hover {

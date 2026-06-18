@@ -72,7 +72,7 @@ public class PostService {
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
         post.setCategory(postDto.getCategory());
-        post.setNotice(postDto.isNotice());
+//        post.setNotice(postDto.isNotice());
     }
 
     // 6. 게시글 삭제

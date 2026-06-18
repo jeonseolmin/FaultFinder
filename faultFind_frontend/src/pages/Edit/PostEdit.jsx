@@ -10,7 +10,7 @@ export default function PostEdit() {
   useEffect(() => {
     axios.get(`http://localhost:8080/api/posts/${id}`)
       .then(res => {
-        setFormData({ title: res.data.title, content: res.data.content, category: res.data.category });
+        setFormData({ title: res.data.title, content: res.data.content, category: res.data.category, isNotice: res.data.isNotice });
       });
   }, [id]);
 
