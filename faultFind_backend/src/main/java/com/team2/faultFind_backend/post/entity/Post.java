@@ -1,16 +1,17 @@
 package com.team2.faultFind_backend.post.entity;
 
-import com.team2.faultFind_backend.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "posts")
 @Getter
 @Setter
-@Table(name = "posts")
-public class Post extends BaseEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,19 +26,27 @@ public class Post extends BaseEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String author;
+    private String author;      // 닉네임 (화면 표시용)
+    private String authorEmail; // 이메일 (권한 검사용)
 
-    private String authorEmail;
+    @Builder.Default
+    private int viewCount = 0;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private int viewCount;
+    @Builder.Default
+    private int commentCount = 0;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private int likeCount;
+    @Builder.Default
+    private int likeCount = 0;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private int commentCount;
+    @Builder.Default
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isNotice = false; // 공지사항 여부
 
+    private LocalDateTime createdDate;
 
+    // DB에 저장되기 직전에 자동으로 현재 시간을 입력해 줍니다.
+    @PrePersist
+    public void prePersist() {
+        this.createdDate = LocalDateTime.now();
+    }
 }

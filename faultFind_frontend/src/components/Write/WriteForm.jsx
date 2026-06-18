@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 import "./Write.css";
@@ -6,27 +6,50 @@ import "./Write.css";
 export default function WriteForm() {
   const navigate = useNavigate();
 
-  // 1. 사용자가 입력한 데이터를 담을 그릇(상태) 만들기
   const [formData, setFormData] = useState({
     category: "free",
     title: "",
     content: "",
+    isNotice: false,
   });
 
-  // 2. 글씨를 칠 때마다 그릇에 데이터 업데이트하기
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // 컴포넌트 렌더링 시 토큰을 해독하여 관리자 권한 확인
+  useEffect(() => {
+    const token = localStorage.getItem("token") || localStorage.getItem("accessToken") || localStorage.getItem("Authorization");
+    
+    if (token) {
+      try {
+        // JWT 토큰은 세 부분으로 나뉘며, 두 번째 부분(Payload)에 권한 정보가 있습니다.
+        const payloadBase64 = token.split('.')[1];
+        const decodedJson = atob(payloadBase64);
+        const decodedData = JSON.parse(decodedJson);
+
+        // 스프링 시큐리티 설정에 따라 키 값이 'auth' 또는 'role'일 수 있습니다.
+        const userRole = decodedData.auth || decodedData.role; 
+        
+        if (userRole === "ROLE_ADMIN") {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error("토큰 해독 실패:", error);
+      }
+    }
+  }, []);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     });
   };
 
-  // 3. 등록 버튼을 눌렀을 때 실행될 함수
   const handleSubmit = async (e) => {
-    e.preventDefault(); // 새로고침 방지
+    e.preventDefault(); 
 
-    // 입력값 검사
     if (!formData.title.trim() || !formData.content.trim()) {
       alert("제목과 내용을 모두 입력해주세요!");
       return;
@@ -34,10 +57,7 @@ export default function WriteForm() {
 
     try {
       const response = await axiosInstance.post("/api/community", formData);
-
-      alert(response.data); // "게시글이 성공적으로 등록되었습니다." 알림
-
-      // 글쓰기 성공 시 커뮤니티 목록으로 강제 이동
+      alert(response.data); 
       navigate("/community");
     } catch (error) {
       console.error("글 등록 실패:", error);
@@ -51,7 +71,6 @@ export default function WriteForm() {
         <h2>새 게시글 작성</h2>
       </div>
 
-      {/* 🌟 폼 전송 이벤트 연결 */}
       <form onSubmit={handleSubmit}>
         <div className="write-form-group">
           <label>카테고리</label>
@@ -67,12 +86,31 @@ export default function WriteForm() {
           </select>
         </div>
 
+        {/* 토큰 해독 결과 isAdmin이 true일 때만 렌더링 */}
+        {isAdmin && (
+          <div className="write-form-group" style={{ backgroundColor: '#f0f4f8', padding: '15px', borderRadius: '8px', border: '1px solid #d1d5db', marginBottom: '20px' }}>
+            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', margin: 0 }}>
+              <input 
+                type="checkbox" 
+                name="isNotice" 
+                className="write-notice-checkbox"
+                checked={formData.isNotice} 
+                onChange={handleChange} 
+                style={{ width: '20px', height: '20px', marginRight: '10px', cursor: 'pointer' }}
+              />
+              <span style={{ fontSize: '1em', fontWeight: '700', color: '#1e3a8a' }}>
+                📢 이 게시글을 공지사항으로 등록하기
+              </span>
+            </label>
+          </div>
+        )}
+
         <div className="write-form-group">
           <label>제목</label>
           <input
             type="text"
             className="write-input"
-            name="title" // name을 꼭 지정해야 합니다
+            name="title" 
             value={formData.title}
             onChange={handleChange}
             placeholder="제목을 입력하세요"
@@ -83,7 +121,7 @@ export default function WriteForm() {
           <label>내용</label>
           <textarea
             className="write-textarea"
-            name="content" // name 지정
+            name="content" 
             value={formData.content}
             onChange={handleChange}
             placeholder="자유롭게 의견과 경험을 나누어 주세요."
@@ -94,7 +132,6 @@ export default function WriteForm() {
           <Link to="/community" className="btn-cancel">
             취소
           </Link>
-          {/* 🌟 type을 submit으로 변경 */}
           <button type="submit" className="btn-submit">
             등록하기
           </button>
