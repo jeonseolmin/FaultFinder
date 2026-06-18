@@ -32,6 +32,10 @@ public class CommentService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("가입된 회원이 아닙니다."));
 
+        if (user.isSuspended()) {
+            throw new RuntimeException("활동이 정지된 계정입니다. 댓글을 작성할 수 없습니다.");
+        }
+        
         Comment comment = new Comment();
         comment.setContent(content);
 

@@ -17,6 +17,9 @@ export default function PostDetail() {
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportConfig, setReportConfig] = useState({ targetType: '', targetId: null });
   const [reportReason, setReportReason] = useState('');
+  
+  // 🌟 유저 상태 관리 (정지 여부 파악)
+  const [userStatus, setUserStatus] = useState({ isSuspended: false });
 
   const openReportModal = (type, id) => {
     setReportConfig({ targetType: type, targetId: id });
@@ -32,7 +35,6 @@ export default function PostDetail() {
     }
 
     try {
-      // 2단계에서 만든 백엔드 주소로 POST 요청!
       const response = await axiosInstance.post('/api/reports', {
         targetType: reportConfig.targetType,
         targetId: reportConfig.targetId,
@@ -44,7 +46,6 @@ export default function PostDetail() {
       
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        // 백엔드에서 튕겨낸 중복 신고 메시지 출력
         alert(error.response.data); 
       } else {
         alert("로그인이 필요하거나 오류가 발생했습니다.");
@@ -53,32 +54,22 @@ export default function PostDetail() {
   };
 
   const getLoginUser = () => {
-    // "accessToken"을 최우선으로 가져옵니다
     const token = localStorage.getItem("accessToken") || localStorage.getItem("token") || localStorage.getItem("Authorization");
     
     if (token) {
       try {
-        // JWT 토큰의 가운데 부분(페이로드)을 디코딩
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
         const payload = JSON.parse(window.atob(base64));
-        
-        // 콘솔창(F12)에 토큰 내부에 진짜 뭐가 들었는지 강제로 출력
         console.log("정밀 분석 - 내 토큰 내용물(페이로드):", payload);
-        
-        // 백엔드 스프링 시큐리티가 토큰에 저장한 값들 중 하나를 꺼냅니다.
-        // post.author(작성자)와 비교해야 하므로 문자열이 일치하는 필드를 찾아야 합니다.
         return payload.sub || payload.username || payload.email || payload.id;
       } catch (e) {
         console.error("JWT 토큰 디코딩 실패:", e);
       }
     }
-    
-    // 혹시 토큰이 아니라 일반 문자열로 저장되어 있을 때를 위한 방어 코드
     return localStorage.getItem("email") || localStorage.getItem("username");
   };
 
-  // 최종 유저 정보 변수 담기
   const currentUsername = getLoginUser();
 
   useEffect(() => {
@@ -97,6 +88,7 @@ export default function PostDetail() {
         setLoading(false);
       }
     };
+
     const fetchComments = async () => {
       try {
         const response = await axiosInstance.get(`/api/community/${id}/comments`);
@@ -106,15 +98,24 @@ export default function PostDetail() {
       }
     };
     
+    // 🌟 현재 접속한 유저의 정보를 불러와 정지 여부를 체크합니다.
+    const fetchUserInfo = async () => {
+      try {
+        const res = await axiosInstance.get('/api/users/me'); 
+        setUserStatus({ isSuspended: res.data.isSuspended || res.data.suspended });
+      } catch (e) {
+        console.log("로그인하지 않았거나 유저 정보를 가져올 수 없습니다.");
+      }
+    };
+    
+    fetchUserInfo();
     fetchComments();
     fetchPostDetail();
   }, [id]);
 
-  // 게시글 좋아요 함수
   const handleLike = async () => {
     try {
       await axiosInstance.post(`/api/community/${id}/like`);
-      // 좋아요 성공 시 화면의 숫자도 즉시 +1 해줍니다
       setPost({ ...post, likeCount: post.likeCount + 1 });
     } catch (error) {
       console.error("좋아요 실패", error);
@@ -122,20 +123,18 @@ export default function PostDetail() {
     }
   };
 
-  // 게시글 삭제 함수
   const handleDelete = async () => {
     if (!window.confirm("정말로 이 게시글을 삭제하시겠습니까?")) return;
     try {
       await axiosInstance.delete(`/api/community/${id}`);
       alert("게시글이 삭제되었습니다.");
-      navigate('/community'); // 삭제 후 목록으로 이동
+      navigate('/community'); 
     } catch (error) {
       console.error("삭제 실패", error);
       alert("삭제 권한이 없거나 오류가 발생했습니다.");
     }
   };
 
-  // 게시글 수정 저장 함수
   const handleUpdate = async () => {
     try {
       await axiosInstance.put(`/api/community/${id}`, {
@@ -152,7 +151,6 @@ export default function PostDetail() {
     }
   };
 
-  // 새 댓글을 백엔드로 보내는 함수
   const handleCommentSubmit = async () => {
     if (!newComment.trim()) {
       alert("댓글 내용을 입력해주세요.");
@@ -163,26 +161,23 @@ export default function PostDetail() {
       await axiosInstance.post(`/api/community/${id}/comments`, {
         content: newComment
       });
-      setNewComment(""); // 입력창 비우기
+      setNewComment(""); 
       
-      // 방금 쓴 댓글이 화면에 바로 보이도록 목록을 다시 불러옵니다
       const response = await axiosInstance.get(`/api/community/${id}/comments`);
       setComments(response.data);
     } catch (error) {
       console.error("댓글 작성 실패", error);
-      alert("로그인이 필요합니다.");
+      alert("현재 활동 정지 상태입니다.");
     }
   };
 
   if (loading) return <div className="loading-box">로딩 중...</div>;
   if (!post) return null;
 
-  // 현재 로그인한 사람과 글쓴이가 같은지 판단하는 스위치
   const isAuthor = post.authorEmail === currentUsername;
 
   return (
     <div className="post-detail-container">
-      {/* 수정 모드가 아닐 때 (일반 상세 보기) */}
       {!isEditMode ? (
         <>
           {/* 1. 게시글 헤더 */}
@@ -199,7 +194,7 @@ export default function PostDetail() {
             <p>{post.content}</p>
           </div>
 
-          {/* 3. 액션 버튼 모음 (양쪽 정렬로 깔끔하게 배치) */}
+          {/* 3. 액션 버튼 모음 */}
           <div className="detail-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
             <div className="left-buttons">
               <button onClick={() => navigate(-1)} className="btn-back" style={{ padding: '8px 16px', borderRadius: '4px', border: '1px solid #ccc', cursor: 'pointer', backgroundColor: 'white' }}>
@@ -219,7 +214,6 @@ export default function PostDetail() {
               </button>
             </div>
 
-            {/* 글쓴이 본인일 때만 우측에 수정/삭제 버튼 표시 */}
             {isAuthor && (
               <div className="right-buttons">
                 <button onClick={() => setIsEditMode(true)} className="btn-edit" style={{ padding: '8px 16px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginRight: '10px' }}>수정</button>
@@ -230,36 +224,41 @@ export default function PostDetail() {
 
           <hr style={{ margin: '40px 0', border: 'none', borderTop: '1px solid #ddd' }} />
 
-          {/* 4. 댓글 영역 (버튼 영역 밖으로 완전히 탈출) */}
+          {/* 4. 댓글 영역 */}
           <div className="comments-section">
             <h3 style={{ marginBottom: '20px' }}>💬 댓글 ({comments.length})</h3>
             
-            {/* 댓글 입력창 (위로 올리면 최신 댓글 달기가 더 편합니다) */}
-            <div className="comment-input-box" style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
-              <input 
-                type="text" 
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="댓글을 입력하세요..." 
-                style={{ flex: 1, padding: '12px', borderRadius: '4px', border: '1px solid #ddd', fontSize: '1em' }}
-                onKeyDown={(e) => { if(e.key === 'Enter') handleCommentSubmit(); }} // 엔터키로도 등록 가능하게 추가!
-              />
-              <button 
-                onClick={handleCommentSubmit}
-                style={{ padding: '0 25px', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
-              >
-                등록
-              </button>
-            </div>
+            {/* 🌟 정지된 유저일 경우 입력창 대신 알림 표시 */}
+            {userStatus.isSuspended ? (
+              <div style={{ padding: '20px', backgroundColor: '#fff7ed', border: '1px solid #fed7aa', textAlign: 'center', borderRadius: '8px', marginBottom: '30px', color: '#9a3412' }}>
+                ⚠️ <strong>활동이 정지된 계정입니다.</strong> 댓글을 작성할 수 없습니다.
+              </div>
+            ) : (
+              <div className="comment-input-box" style={{ display: 'flex', gap: '10px', marginBottom: '30px' }}>
+                <input 
+                  type="text" 
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="댓글을 입력하세요..." 
+                  style={{ flex: 1, padding: '12px', borderRadius: '4px', border: '1px solid #ddd', fontSize: '1em' }}
+                  onKeyDown={(e) => { if(e.key === 'Enter') handleCommentSubmit(); }}
+                />
+                <button 
+                  onClick={handleCommentSubmit}
+                  style={{ padding: '0 25px', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                >
+                  등록
+                </button>
+              </div>
+            )}
 
-            {/* 댓글 목록 보여주기 */}
             <div className="comments-list">
               {comments.map((comment) => (
                 <div key={comment.id} style={{ borderBottom: '1px solid #eee', padding: '15px 0' }}>
                   <div style={{ fontWeight: 'bold', color: '#333' }}>
                     {comment.author} 
                     <span style={{ fontWeight: 'normal', color: '#999', fontSize: '0.8em', marginLeft: '10px' }}>
-                      {new Date(comment.createdDate).toLocaleString()} {/* 날짜 포맷팅 깔끔하게 */}
+                      {new Date(comment.createdDate).toLocaleString()} 
                     </span>
                     <button 
                       onClick={() => openReportModal('COMMENT', comment.id)}
@@ -280,7 +279,7 @@ export default function PostDetail() {
           </div>
         </>
       ) : (
-        /* 수정 모드일 때 (폼 화면으로 변경) */
+        /* 수정 모드일 때 */
         <div className="edit-form" style={{ padding: '20px', backgroundColor: '#f9fafb', borderRadius: '8px' }}>
           <h3 style={{ marginBottom: '20px' }}>게시글 수정</h3>
           <input 
@@ -302,6 +301,8 @@ export default function PostDetail() {
           </div>
         </div>
       )}
+      
+      {/* 신고 모달창 (완벽 유지) */}
       {showReportModal && (
         <div style={{
           position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',

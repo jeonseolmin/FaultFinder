@@ -58,7 +58,7 @@ export default function AccidentType() {
             </div>
             <button 
               className="btn-go-ratio"
-              onClick={() => navigate('/faultsearch')}
+              onClick={() => navigate('/fault-ratios')}
             >
               과실비율 조회 바로가기 &gt;
             </button>

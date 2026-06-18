@@ -33,6 +33,49 @@ export default function AdminDashboard() {
     fetchAdminData();
   }, [navigate]);
 
+  // 유저 강제 탈퇴 함수
+  const handleDeleteUser = async (id) => {
+    if (!window.confirm("정말 이 유저를 강제 탈퇴시키겠습니까? (복구 불가)")) return;
+    try {
+      await axiosInstance.delete(`/api/admin/users/${id}`);
+      alert("탈퇴 처리되었습니다.");
+      setData(prev => ({ ...prev, users: prev.users.filter(u => u.id !== id) }));
+    } catch (e) { 
+      console.error(e);
+      alert("삭제 실패"); 
+    }
+  };
+
+  // 유저 활동 정지/해제 함수
+  const handleSuspendUser = async (user) => {
+    const actionText = user.suspended ? "정지 해제" : "활동 정지";
+    if (!window.confirm(`이 유저를 ${actionText} 하시겠습니까?`)) return;
+    try {
+      const res = await axiosInstance.put(`/api/admin/users/${user.id}/suspend`);
+      alert(res.data);
+      setData(prev => ({
+        ...prev,
+        users: prev.users.map(u => u.id === user.id ? { ...u, suspended: !u.suspended } : u)
+      }));
+    } catch (e) { 
+      console.error(e);
+      alert("처리 실패"); 
+    }
+  };
+
+  // 게시글 강제 삭제 함수
+  const handleDeletePost = async (id) => {
+    if (!window.confirm("이 게시글을 강제 삭제하시겠습니까?")) return;
+    try {
+      await axiosInstance.delete(`/api/admin/posts/${id}`);
+      alert("삭제되었습니다.");
+      setData(prev => ({ ...prev, posts: prev.posts.filter(p => p.id !== id) }));
+    } catch (e) { 
+      console.error(e);
+      alert("삭제 실패"); 
+    }
+  };
+
   if (loading) return <div style={{ textAlign: 'center', padding: '50px' }}>로딩 중...</div>;
 
   return (
@@ -56,7 +99,6 @@ export default function AdminDashboard() {
         >
           게시글 관리 ({data.posts.length}개)
         </button>
-        {/* 신고 관리 탭 버튼 */}
         <button 
           onClick={() => setActiveTab('reports')}
           style={{ flex: 1, padding: '15px', fontSize: '1.1em', fontWeight: 'bold', border: 'none', backgroundColor: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'reports' ? '3px solid #ef4444' : 'none', color: activeTab === 'reports' ? '#ef4444' : '#9ca3af' }}
@@ -88,8 +130,18 @@ export default function AdminDashboard() {
                   <td style={{ color: user.role === 'ROLE_ADMIN' ? '#ef4444' : 'inherit', fontWeight: user.role === 'ROLE_ADMIN' ? 'bold' : 'normal' }}>
                     {user.role}
                   </td>
-                  <td>
-                    <button style={{ padding: '6px 12px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}>
+                  {/* 관리 영역: 정지 및 탈퇴 버튼 나란히 배치 */}
+                  <td style={{ display: 'flex', gap: '8px', justifyContent: 'center', padding: '10px' }}>
+                    <button 
+                      onClick={() => handleSuspendUser(user)}
+                      style={{ padding: '6px 12px', backgroundColor: user.suspended ? '#10b981' : '#f59e0b', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}
+                    >
+                      {user.suspended ? '정지 해제' : '활동 정지'}
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteUser(user.id)}
+                      style={{ padding: '6px 12px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}
+                    >
                       강제 탈퇴
                     </button>
                   </td>
@@ -121,7 +173,10 @@ export default function AdminDashboard() {
                   <td>{post.author}</td>
                   <td>{post.createdDate}</td>
                   <td>
-                    <button style={{ padding: '6px 12px', backgroundColor: '#6b7280', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}>
+                    <button 
+                      onClick={() => handleDeletePost(post.id)}
+                      style={{ padding: '6px 12px', backgroundColor: '#6b7280', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}
+                    >
                       강제 삭제
                     </button>
                   </td>
@@ -131,7 +186,7 @@ export default function AdminDashboard() {
           </table>
         )}
 
-        {/* 🌟 [추가] 신고 관리 탭 */}
+        {/* 신고 관리 탭 */}
         {activeTab === 'reports' && (
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
             <thead>
