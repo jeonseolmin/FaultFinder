@@ -19,6 +19,9 @@ import { BiSolidCarCrash } from "react-icons/bi";
 import { GiCheckMark } from "react-icons/gi";
 import { LiaUserInjuredSolid } from "react-icons/lia";
 
+import { IoWarningOutline } from "react-icons/io5";
+
+
 export default function AccidentGuide() {
   
   
@@ -128,8 +131,8 @@ export default function AccidentGuide() {
 
           <section className="guide-bottom-banner">
             <div className="banner-title">
-              <span style={{fontSize: '24px'}}><MdOutlineSecurity /></span><br/>
-              추가 안내
+              <span style={{fontSize: '24px', color: '#fa7101'}}><IoWarningOutline /></span>
+              마무리까지 <br/>꼼꼼하게
             </div>
             <div className="banner-items">
               {BOTTOM_BANNER_ITEMS.map((item, idx) => (
