@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../api/axiosInstance';
-import './Write.css';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
+import "./Write.css";
 
 export default function WriteForm() {
   const navigate = useNavigate();
 
   // 1. 사용자가 입력한 데이터를 담을 그릇(상태) 만들기
   const [formData, setFormData] = useState({
-    category: 'free',
-    title: '',
-    content: ''
+    category: "free",
+    title: "",
+    content: "",
   });
 
   // 2. 글씨를 칠 때마다 그릇에 데이터 업데이트하기
@@ -18,7 +18,7 @@ export default function WriteForm() {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -28,21 +28,20 @@ export default function WriteForm() {
 
     // 입력값 검사
     if (!formData.title.trim() || !formData.content.trim()) {
-      alert('제목과 내용을 모두 입력해주세요!');
+      alert("제목과 내용을 모두 입력해주세요!");
       return;
     }
 
     try {
-      const response = await  axiosInstance.post("/api/community",formData);
-      
+      const response = await axiosInstance.post("/api/community", formData);
+
       alert(response.data); // "게시글이 성공적으로 등록되었습니다." 알림
-      
+
       // 글쓰기 성공 시 커뮤니티 목록으로 강제 이동
-      navigate('/community');
-      
+      navigate("/community");
     } catch (error) {
-      console.error('글 등록 실패:', error);
-      alert('현재 활동 정지 상태이거나 서버 오류가 발생했습니다.');
+      console.error("글 등록 실패:", error);
+      alert("현재 활동 정지 상태이거나 서버 오류가 발생했습니다.");
     }
   };
 
@@ -51,15 +50,15 @@ export default function WriteForm() {
       <div className="write-header">
         <h2>새 게시글 작성</h2>
       </div>
-      
+
       {/* 🌟 폼 전송 이벤트 연결 */}
       <form onSubmit={handleSubmit}>
         <div className="write-form-group">
           <label>카테고리</label>
-          <select 
-            className="write-select" 
-            name="category" 
-            value={formData.category} 
+          <select
+            className="write-select"
+            name="category"
+            value={formData.category}
             onChange={handleChange}
           >
             <option value="free">자유게시판</option>
@@ -67,34 +66,38 @@ export default function WriteForm() {
             <option value="qna">Q&A</option>
           </select>
         </div>
-        
+
         <div className="write-form-group">
           <label>제목</label>
-          <input 
-            type="text" 
-            className="write-input" 
+          <input
+            type="text"
+            className="write-input"
             name="title" // name을 꼭 지정해야 합니다
-            value={formData.title} 
+            value={formData.title}
             onChange={handleChange}
-            placeholder="제목을 입력하세요" 
+            placeholder="제목을 입력하세요"
           />
         </div>
-        
+
         <div className="write-form-group">
           <label>내용</label>
-          <textarea 
-            className="write-textarea" 
+          <textarea
+            className="write-textarea"
             name="content" // name 지정
-            value={formData.content} 
+            value={formData.content}
             onChange={handleChange}
             placeholder="자유롭게 의견과 경험을 나누어 주세요."
           ></textarea>
         </div>
-        
+
         <div className="write-actions">
-          <a href="/community" className="btn-cancel" style={{ textDecoration: 'none' }}>취소</a>
+          <Link to="/community" className="btn-cancel">
+            취소
+          </Link>
           {/* 🌟 type을 submit으로 변경 */}
-          <button type="submit" className="btn-submit">등록하기</button>
+          <button type="submit" className="btn-submit">
+            등록하기
+          </button>
         </div>
       </form>
     </div>
