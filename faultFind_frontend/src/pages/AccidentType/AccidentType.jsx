@@ -54,13 +54,13 @@ export default function AccidentType() {
           <section className="type-bottom-banner">
             <div className="banner-info">
               <span className="info-icon">i</span>
-              <span>사고 유형을 정확히 선택하면 과실비율 조회 및 관련 법률 정보를 더 정확하게 확인할 수 있습니다.</span>
+              <span className="info-text">사고 유형을 정확히 선택하면 과실비율 조회 및 관련 법률 정보를 더 정확하게 확인할 수 있습니다.</span>
             </div>
             <button 
               className="btn-go-ratio"
               onClick={() => navigate('/fault-ratios')}
             >
-              과실비율 조회 바로가기 &gt;
+              과실비율 조회 바로가기 {'>'}
             </button>
           </section>
 
