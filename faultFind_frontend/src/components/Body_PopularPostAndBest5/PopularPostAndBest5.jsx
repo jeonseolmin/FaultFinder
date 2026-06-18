@@ -1,7 +1,7 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../api/axiosInstance';
 import './PopularPostAndBest5.css';
-// import { AiOutlineAlert } from "react-icons/ai";
 import { GiPoliceCar } from "react-icons/gi";
 import { LiaAmbulanceSolid } from "react-icons/lia";
 import { FaCarCrash } from "react-icons/fa";
@@ -15,14 +15,24 @@ import { BiSolidCarCrash } from "react-icons/bi";
 function PopularPostAndBest5() {
   const navigate = useNavigate();
 
-  const latestPosts = [
-    { id: 1, tag: '자유', tagBg: '#E6F0FF', tagColor: '#0052CC', title: '사고 처리 어떻게 해야 하나요?', date: '10:30' },
-    { id: 2, tag: '후기', tagBg: '#EBF5FF', tagColor: '#1E40AF', title: '합의금 적정한가요?', date: '09:15' },
-    { id: 3, tag: 'Q&A', tagBg: '#F3E8FF', tagColor: '#6B21A8', title: '보험사 보상 거절 대응 방법', date: '05.20' },
-    { id: 4, tag: '자유', tagBg: '#E6F0FF', tagColor: '#0052CC', title: '블랙박스 영상 첨부 방법 알려주세요', date: '05.19' },
-    { id: 5, tag: '후기', tagBg: '#EBF5FF', tagColor: '#1E40AF', title: '주차장 접촉사고 과실 비율 문의', date: '05.18' },
-  ];
+  // 실제 데이터를 담을 빈 배열 상태 생성
+  const [popularPosts, setPopularPosts] = useState([]);
 
+  // 컴포넌트가 켜질 때 백엔드 API 호출
+  useEffect(() => {
+    const fetchPopularPosts = async () => {
+      try {
+        const response = await axiosInstance.get('/api/community/popular');
+        setPopularPosts(response.data);
+      } catch (error) {
+        console.error("인기글을 불러오는 데 실패했습니다.", error);
+      }
+    };
+    
+    fetchPopularPosts();
+  }, []);
+
+  // 사고 유형 TOP 5 (이 부분도 나중에 통계 API가 생기면 똑같이 바꿀 수 있습니다)
   const topAccidents = [
     { id: 1, rank: 1, title: '신호 없는 교차로 사고', type: '차대차' },
     { id: 2, rank: 2, title: '차선 변경 사고', type: '차대차' },
@@ -30,6 +40,15 @@ function PopularPostAndBest5() {
     { id: 4, rank: 4, title: '후진 사고', type: '차대차' },
     { id: 5, rank: 5, title: '보행자 사고', type: '차대보행자' },
   ];
+
+  // 날짜 변환 함수 (예: 2026-06-18T10:30:00 -> 06.18)
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${month}.${day}`;
+  };
 
   return (
     <div className="container">
@@ -42,18 +61,30 @@ function PopularPostAndBest5() {
           </button>
         </div>
         <ul className="list">
-          {latestPosts.map((post) => (
-            <li key={post.id} className="listItem">
-              <div className="leftContent">
-                <span className="tag" 
-                style={{ backgroundColor: post.tagBg, color: post.tagColor }}>
-                  {post.tag}
-                </span>
-                <span className="postTitle">{post.title}</span>
-              </div>
-              <span className="date">{post.date}</span>
+          {/* popularPosts 배열을 화면에 뿌려줍니다. 데이터가 없을 때의 방어 로직 포함 */}
+          {popularPosts.length > 0 ? (
+            popularPosts.map((post) => (
+              <li 
+                key={post.id} 
+                className="listItem" 
+                onClick={() => navigate(`/community/${post.id}`)} // 클릭 시 해당 게시글로 이동
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="leftContent">
+                  <span className="tag" style={{ backgroundColor: '#E6F0FF', color: '#0052CC' }}>
+                    {post.category || '인기'} 
+                  </span>
+                  <span className="postTitle">{post.title}</span>
+                </div>
+                {/* 작성일을 깔끔한 포맷으로 출력 */}
+                <span className="date">{formatDate(post.createdDate)}</span>
+              </li>
+            ))
+          ) : (
+            <li className="listItem" style={{ justifyContent: 'center', color: '#9ca3af' }}>
+              아직 등록된 인기글이 없습니다.
             </li>
-          ))}
+          )}
         </ul>
       </div>
 

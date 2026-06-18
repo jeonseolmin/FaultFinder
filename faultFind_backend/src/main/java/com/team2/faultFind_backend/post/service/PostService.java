@@ -87,4 +87,8 @@ public class PostService {
 
         post.setLikeCount(post.getLikeCount() + 1); // 좋아요 1 증가
     }
+
+    public List<Post> getPopularPosts() {
+        return postRepository.findTop5ByOrderByLikeCountDesc();
+    }
 }

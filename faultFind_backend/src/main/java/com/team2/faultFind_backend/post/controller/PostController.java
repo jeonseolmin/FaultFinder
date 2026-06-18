@@ -60,4 +60,9 @@ public class PostController {
         postService.likePost(id, authentication.getName());
         return ResponseEntity.ok("좋아요가 반영되었습니다.");
     }
+
+    @GetMapping("/popular")
+    public ResponseEntity<List<Post>> getPopularPosts() {
+        return ResponseEntity.ok(postService.getPopularPosts());
+    }
 }
