@@ -62,7 +62,7 @@ function QuickServices() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="quickService-container">
       <h2 className="services-title-main">자주 찾는 서비스</h2>
       <div className="services-grid">
         {services.map((service) => (
