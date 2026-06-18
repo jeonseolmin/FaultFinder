@@ -38,31 +38,30 @@ function FaultSearch() {
         <LeftSidebar activeTab="ratio" />
         
         {/* 가운데 메인 내용 */}
-        <div className="fault-search-container" style={{ flex: 1, padding: '20px' }}>
+        <div className="fault-search-container">
           
-          <section className="search-hero" style={{ marginBottom: '30px' }}>
-            <h1 style={{ fontSize: '2em', color: '#1f2937', marginBottom: '10px' }}>과실비율 AI 조회</h1>
-            <p style={{ color: '#6b7280', margin: 0 }}>
+          <section className="search-hero">
+            <h1>과실비율 AI 조회</h1>
+            <p>
               사고 상황을 자연스럽게 입력하시면, AI가 유사 판례를 분석하여 예상 과실비율을 알려드립니다.
             </p>
           </section>
 
           {/* AI 분석 컨테이너 (좌: 입력, 우: 결과) */}
-          <div style={{ display: 'flex', gap: '30px', alignItems: 'stretch', flexWrap: 'wrap' }}>
-            
+          <div className="main-content-container">
             {/* 🟢 왼쪽: AI 사고 상황 입력 창 */}
-            <div style={{ flex: '1', minWidth: '350px', backgroundColor: '#fffbeb', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ fontSize: '1.2em', color: '#374151', marginBottom: '20px', display: 'flex', alignItems: 'center' }}>
+            <div className="section-input">
+              <h3>
                 <span style={{ backgroundColor: '#1e3a8a', color: 'white', width: '24px', height: '24px', borderRadius: '50%', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', fontSize: '14px', marginRight: '10px' }}>1</span>
                 AI 사고 상황 입력
               </h3>
               
-              <div style={{ backgroundColor: 'white', borderRadius: '8px', padding: '15px', border: '1px solid #fde68a', marginBottom: '20px' }}>
+              <div className="input-box">
                 <textarea 
                   value={situationText}
                   onChange={(e) => setSituationText(e.target.value)}
                   placeholder="예) 신호 없는 교차로에서 직진 중인 A차량과 우측 도로에서 진입한 B차량이 충돌했습니다."
-                  style={{ width: '100%', height: '120px', border: 'none', resize: 'none', outline: 'none', fontSize: '15px', lineHeight: '1.5' }}
+                  style={{ width: '100%', height: '120px', border: 'none', resize: 'none', outline: 'none', fontSize: '13px', lineHeight: '1.5' }}
                   maxLength={300}
                 />
                 <div style={{ textAlign: 'right', fontSize: '0.85em', color: '#9ca3af', marginTop: '10px' }}>
@@ -81,10 +80,9 @@ function FaultSearch() {
                   <option value="car_to_human">차량 대 보행자</option>
                   <option value="car_to_bike">차량 대 이륜차</option>
                 </select>
-                <button 
+                <button className="btn-analyze"
                   onClick={handleAnalyzeClick}
                   disabled={isAnalyzing}
-                  style={{ padding: '0 24px', backgroundColor: '#1e3a8a', color: 'white', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: isAnalyzing ? 'not-allowed' : 'pointer', fontSize: '15px' }}
                 >
                   {isAnalyzing ? '분석 중...' : 'AI 분석하기'}
                 </button>
