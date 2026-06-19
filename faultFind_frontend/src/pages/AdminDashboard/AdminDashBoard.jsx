@@ -63,16 +63,43 @@ export default function AdminDashboard() {
     }
   };
 
-  // 게시글 강제 삭제 함수
+  // 일반 게시글 강제 삭제 함수 (게시글 관리 탭 용도)
   const handleDeletePost = async (id) => {
     if (!window.confirm("이 게시글을 강제 삭제하시겠습니까?")) return;
     try {
       await axiosInstance.delete(`/api/admin/posts/${id}`);
       alert("삭제되었습니다.");
       setData(prev => ({ ...prev, posts: prev.posts.filter(p => p.id !== id) }));
+      // 게시글이 지워졌다면 관련된 신고 내역도 화면에서 제거
+      setReports(prev => prev.filter(r => !(r.targetType === 'POST' && r.targetId === id)));
     } catch (e) { 
       console.error(e);
       alert("삭제 실패"); 
+    }
+  };
+
+  // 🌟 [추가됨] 신고된 대상(게시글/댓글) 강제 삭제 함수 (신고 관리 탭 용도)
+  const handleDeleteReportedTarget = async (report) => {
+    const targetName = report.targetType === 'POST' ? '게시글' : '댓글';
+    if (!window.confirm(`신고 접수된 이 ${targetName}을(를) 강제 삭제하시겠습니까?`)) return;
+
+    try {
+      if (report.targetType === 'POST') {
+        await axiosInstance.delete(`/api/admin/reports/posts/${report.targetId}`);
+        // 게시글 관리 탭의 데이터도 함께 동기화
+        setData(prev => ({ ...prev, posts: prev.posts.filter(p => p.id !== report.targetId) }));
+      } else if (report.targetType === 'COMMENT') {
+        await axiosInstance.delete(`/api/admin/reports/comments/${report.targetId}`);
+      }
+
+      alert(`해당 ${targetName}이(가) 삭제되었습니다.`);
+      
+      // 처리 완료 후 동일한 대상을 가리키는 모든 신고 내역을 화면에서 즉시 제거
+      setReports(prev => prev.filter(r => !(r.targetType === report.targetType && r.targetId === report.targetId)));
+      
+    } catch (e) {
+      console.error("신고 대상 삭제 실패:", e);
+      alert("권한이 없거나 서버에서 처리에 실패했습니다.");
     }
   };
 
@@ -130,7 +157,6 @@ export default function AdminDashboard() {
                   <td style={{ color: user.role === 'ROLE_ADMIN' ? '#ef4444' : 'inherit', fontWeight: user.role === 'ROLE_ADMIN' ? 'bold' : 'normal' }}>
                     {user.role}
                   </td>
-                  {/* 관리 영역: 정지 및 탈퇴 버튼 나란히 배치 */}
                   <td style={{ display: 'flex', gap: '8px', justifyContent: 'center', padding: '10px' }}>
                     <button 
                       onClick={() => handleSuspendUser(user)}
@@ -197,6 +223,8 @@ export default function AdminDashboard() {
                 <th style={{ color: '#b91c1c' }}>대상 번호</th>
                 <th style={{ color: '#b91c1c' }}>신고 사유</th>
                 <th style={{ color: '#b91c1c' }}>일시</th>
+                {/* 관리 열 추가 */}
+                <th style={{ color: '#b91c1c' }}>관리</th>
               </tr>
             </thead>
             <tbody>
@@ -225,11 +253,21 @@ export default function AdminDashboard() {
                   <td style={{ color: '#9ca3af', fontSize: '0.9em' }}>
                     {new Date(report.createdAt).toLocaleDateString()}
                   </td>
+                  {/* 삭제 버튼 추가 */}
+                  <td>
+                    <button 
+                      onClick={() => handleDeleteReportedTarget(report)}
+                      style={{ padding: '6px 12px', backgroundColor: '#ef4444', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '0.9em' }}
+                    >
+                      처리 (삭제)
+                    </button>
+                  </td>
                 </tr>
               ))}
               {reports.length === 0 && (
                 <tr>
-                  <td colSpan="6" style={{ padding: '40px', color: '#9ca3af' }}>접수된 신고 내역이 없습니다.</td>
+                  {/* 열 개수에 맞춰 colSpan 증가 */}
+                  <td colSpan="7" style={{ padding: '40px', color: '#9ca3af' }}>접수된 신고 내역이 없습니다.</td>
                 </tr>
               )}
             </tbody>

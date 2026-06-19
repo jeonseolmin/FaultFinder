@@ -1,8 +1,11 @@
 package com.team2.faultFind_backend.post.entity;
 
+import com.team2.faultFind_backend.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -49,4 +52,7 @@ public class Post {
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
     }
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 }
