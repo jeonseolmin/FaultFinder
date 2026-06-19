@@ -16,4 +16,6 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     );
 
     List<Report> findAllByOrderByCreatedAtDesc();
+
+    void deleteByTargetTypeAndTargetId(ReportTargetType targetType, Long targetId);
 }
