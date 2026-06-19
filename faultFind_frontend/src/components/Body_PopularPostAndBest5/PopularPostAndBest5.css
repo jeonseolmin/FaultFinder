@@ -1,19 +1,30 @@
 body {
     min-width: 1200px;
     overflow-x: auto;
+    background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
+  padding-bottom: 20px;
 }
 .container {
   font-family: 'Pretendard';
-  display: flex;
   gap: 35px;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+  margin: 0;
   padding: 20px;
+  display: flex;
+  justify-content: center;
   box-sizing: border-box;
+  background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
+  background-repeat: repeat;
+  max-width: 1200px;
+  margin-bottom: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+  padding-bottom: 10px;
 }
 
 .section {
+  width: 100%;
+
   flex: 1;
   background-color: #ffffff;
   border-radius: 12px;
@@ -27,15 +38,17 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
-  border-bottom: 1px solid #f5f5f5;
+  border-bottom: 40px;
   padding-bottom: 12px;
 }
 
 .title {
+  font-family: 'Pretendard';
   font-size: 1.55rem;
-  font-weight: bold;
+  font-weight: 700;
   color: #1a1a1a;
   margin: 0;
+  margin-bottom: 1.5rem;
 }
 
 .moreBtn {
@@ -123,7 +136,83 @@ body {
   gap: 10px;
 }
 
-.emergency-banner {
+
+
+/* 우측 섹션 (긴급 연락망) */
+
+.right-section-contact{
+  font-family: "Pretendard";
+  display: flex;
+  flex-direction: column;
+  width: 295px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.section-title-contact {
+  font-family: 'Pretendard';
+  font-size: 1.55rem;
+  font-weight: bold;
+  color: #1a1a1a;
+  margin-bottom: 1.5rem;
+}
+
+.guide-card-contact {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.guide-list {
+  list-style: none;
+  padding: 0;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.guide-list li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.guide-list li:last-child {
+  margin-bottom: 0; /* 마지막 요소는 여백 제외 */
+}
+
+/* 숫자 번호 스타일 */
+.guide-num {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #1d4ed8; /* 포인트 블루 색상 */
+  background-color: #eff6ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-right: 14px;
+}
+
+/* 가이드 본문 스타일 */
+.guide-content-contact h4 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  color: #1e293b;
+  font-weight: 700;
+  padding-top: 7px;
+}
+
+.guide-content-contact p {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #b42930;
+  line-height: 1.4;
+}
+
+
+/* .emergency-banner {
   background: #e5f1f3;
   color: #050505;
   padding: 15px;
@@ -135,4 +224,5 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-}
+} */
+

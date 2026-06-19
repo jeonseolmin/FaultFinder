@@ -3,11 +3,13 @@
   padding-bottom: 20px;
 }
 .services-grid {
-  padding-top: 5px;
+  padding-top: 10px;
   display: flex;
   overflow-x: auto;
   gap: 16px;
   margin-bottom: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
   padding-bottom: 10px;
 }
 
@@ -24,7 +26,7 @@
   font-family: 'Pretendard';
   color: #1f2937;      
   margin-bottom: 10px;
-  margin-left: 20px; 
+  margin-left: 50px; 
   padding-top: 10px;
   text-shadow: 1px 1px 5px rgba(176, 176, 179, 0.5);
 }

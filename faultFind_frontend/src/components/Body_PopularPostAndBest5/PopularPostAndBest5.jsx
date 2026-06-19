@@ -114,52 +114,48 @@ function PopularPostAndBest5() {
 
       
       {/* 우측 영역 : 긴급 연락망 */}
-        <div className="right-section">
+        <div className="right-section-contact">
           
-          <h2 className="section-title">긴급 연락망 &nbsp; <FcIdea /> </h2>
+          <h2 className="section-title-contact">긴급 연락망</h2>
           
-          <div className="guide-card">
+          <div className="guide-card-contact">
             <ul className="guide-list">
               <li>
                 <span className="guide-num"><RiPoliceCarFill /></span>
-                <div className="guide-content">
+                <div className="guide-content-contact">
                   <h4>112</h4>
-                  <p>경찰 사고 신고 및 출동</p>
+                  <p>경찰 신고 및 출동</p>
                 </div>
               </li>
               <li>
                 <span className="guide-num"><LiaAmbulanceSolid /></span>
-                <div className="guide-content">
+                <div className="guide-content-contact">
                   <h4>119</h4>
-                  <p>긴급구조(119) 부상자 발생 시 신고</p>
+                  <p>부상자 발생 시 신고</p>
                 </div>
               </li>
               <li>
                 <span className="guide-num"><FaCarCrash /></span>
-                <div className="guide-content">
+                <div className="guide-content-contact">
                   <h4>1577-0990</h4>
                   <p>도로교통공단 교통사고 상담</p>
                 </div>
               </li>
               <li>
                 <span className="guide-num"><LuNotebookPen /></span>
-                <div className="guide-content">
+                <div className="guide-content-contact">
                   <h4>02-3702-8631</h4>
-                  <p>손해 보험 협회 자동차 보험 상담</p>
+                  <p>손해보험협회 보험 상담</p>
                 </div>
               </li>
               <li>
                 <span className="guide-num"><BiSolidCarCrash /></span>
-                <div className="guide-content">
+                <div className="guide-content-contact">
                   <h4>1588-2504</h4>
-                  <p>견인 서비스 사고 차량 견인 요청</p>
+                  <p>사고 차량 견인 요청</p>
                 </div>
               </li>
-              <div className="emergency-banner">
-                              <FaPhoneAlt style={{marginRight: '8px'}} /> 
-                              모든 신고는 신속하고 정확하게!<br/>
-                              위급 상황 시 112 또는 119로 즉시 연락하세요.
-                            </div>
+
             </ul>
           </div>
         </div>

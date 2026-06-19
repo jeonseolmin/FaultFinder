@@ -1,23 +1,39 @@
 /* AiFaultRatio.css */
 body {
-    min-width: 1200px;
-    overflow-x: auto;
+  min-width: 1200px;
+  overflow-x: auto;
+  background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
+  padding-bottom: 20px;
+  
     
 }
 /* 전체 대레이아웃 (2단 분할 구조 대비) */
 .ai-fault-container {
   font-family: 'Pretendard';
   width: 100%;
-  margin: 0; /* 1280px (max-w-7xl) */
-  /* margin-left: 30px;
-  margin-right: auto; */
-  padding: 2rem 1rem; /* py-8 px-4 */
+     /* margin: 0; 1280px (max-w-7xl) */
+     /* margin-left: 30px;
+      margin-right: auto; */
+  /* padding: 2rem 1rem;  */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* background: linear-gradient(to right, #f4f8ff 50%, transparent 100%); */
+  /* background-repeat: repeat; */
+  /* margin-left: 60px; */
+  /* max-width: 1200px; */
+  /* margin-bottom: 20px; */
+  /* margin-left: 50px; */
+  /* margin-right: 50px; */
+  /* padding-bottom: 10px; */
+  max-width: 100%; /* 1200px 제한을 풀거나 상단 헤더 크기에 맞춰 1400px~1600px 등으로 크게 늘려줍니다 */
+  padding: 2rem 4rem; /* 양옆 여백을 줘서 자연스럽게 정렬 */
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
-  background-repeat: repeat;
-  
+  margin: 0 auto 20px auto; /* 마진 정리 */
+  box-sizing: border-box;
 }
 
 .grid-layout {
@@ -25,6 +41,7 @@ body {
   grid-template-columns: 2fr 1fr;
   gap: 30px; /* gap-6 */
   align-items: start;
+  
 }
 
 /* 좌측 메인 영역 */
@@ -247,7 +264,7 @@ body {
 .right-section {
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 280px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -263,13 +280,15 @@ body {
 .guide-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .guide-list li {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .guide-list li:last-child {
@@ -293,14 +312,15 @@ body {
   font-size: 1rem;
   color: #1e293b;
   font-weight: 600;
+  padding-top: 7px;
 }
 
-.guide-content p {
+/* .guide-content p {
   margin: 0;
   font-size: 0.875rem;
   color: #64748b;
   line-height: 1.4;
-}
+} */
 
 
 /* [반응형 미디어 쿼리 - PC화면 대응] */
