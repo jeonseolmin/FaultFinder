@@ -90,14 +90,14 @@ function FaultSearch() {
             </div>
 
             {/* 🔵 오른쪽: AI 분석 결과 창 */}
-            <div style={{ flex: '1.5', minWidth: '400px', backgroundColor: '#fffbeb', borderRadius: '12px', padding: '30px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', position: 'relative' }}>
-              <h3 style={{ fontSize: '1.2em', color: '#374151', marginBottom: '30px', display: 'flex', alignItems: 'center' }}>
+            <div className="card-box">
+              <h3 className="card-title">
                 <span style={{ backgroundColor: '#1e3a8a', color: 'white', width: '24px', height: '24px', borderRadius: '50%', display: 'inline-flex', justifyContent: 'center', alignItems: 'center', fontSize: '14px', marginRight: '10px' }}>2</span>
                 AI 분석 결과
               </h3>
 
               {!showResult && !isAnalyzing && (
-                <div style={{ height: '250px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#9ca3af' }}>
+                <div style={{ height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#9ca3af' }}>
                   왼쪽에서 사고 상황을 입력하고 분석을 시작해보세요.
                 </div>
               )}

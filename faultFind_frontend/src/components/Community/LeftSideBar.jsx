@@ -136,7 +136,7 @@ export default function LeftSidebar({ activeTab }) {
           ))}
         </ul>
         <button className="btn-policy" onClick={() => setIsModalOpen(true)}>
-          <span className="icon"><FaShieldHalved size={15} /></span> {info.title} 운영정책 보기
+          <span className="icon"><FaShieldHalved size={15} /></span> {info.title} 운영정책
         </button>
       </div>
 
