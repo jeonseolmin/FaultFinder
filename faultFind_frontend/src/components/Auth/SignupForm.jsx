@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 import axiosInstance from '../../api/axiosInstance';
+import { BiFontFamily } from 'react-icons/bi';
 
 export default function SignupForm() {
   const [email, setEmail] = useState('');
