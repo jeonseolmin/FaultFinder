@@ -96,7 +96,7 @@ export default function MyPage() {
         )}
         {userRole === 'ROLE_ADMIN' && (
           <div style={{ marginTop: '30px', paddingTop: '20px', borderTop: '1px dashed #ccc', textAlign: 'center' }}>
-            <h4 style={{ color: '#ef4444', marginBottom: '10px' }}>관리자 전용 메뉴</h4>
+            <h4 style={{ fontWeight: 'bold', color: '#ef4444', marginBottom: '10px' }}>관리자 전용 메뉴</h4>
             <button 
               onClick={() => navigate('/admin')} // 설정해두신 어드민 페이지 라우터 주소
               style={{ 

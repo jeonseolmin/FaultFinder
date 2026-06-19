@@ -50,7 +50,7 @@ function AiFaultRatio() {
                 >
                   <option value="">사고 유형 선택</option>
                   <option value="car-to-car">차량 대 차량</option>
-                  <option value="car-to-person">차량 대 사람</option>
+                  <option value="car-to-person">차량 대 보행자</option>
                   <option value="car-to-motorcycle">차량 대 이륜차</option>
                   <option value="car-to-bicycle">차량 대 자전거</option>
                   <option value="single-accident">단독사고</option>
