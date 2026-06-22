@@ -1,50 +1,62 @@
-body {
-    min-width: 1200px;
-    overflow-x: auto;
-    background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
-  padding-bottom: 20px;
-}
+/* PopularPostAndBest5.css */
+
 .container {
-  font-family: 'Pretendard';
-  /* gap: 35px;
-  width: 100%;
-  margin: 0;
-  padding: 20px;
-  box-sizing: border-box;
-  background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
-  background-repeat: repeat;
-  max-width: 1200px;
-  margin-bottom: 20px;
-  margin-left: 50px;
-  margin-right: 50px; 
-  padding-bottom: 10px; */
+  font-family: "Pretendard";
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: 20px;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.4); 
+  box-sizing: border-box; /* 패딩 때문에 삐져나가는 현상 방지 */
+
+  /* 전체 유리 효과 */
+  background-color: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  
   padding: 30px;
 }
 
 .section {
-  width: 100%;
-
   flex: 1;
-  background-color: #ffffff;
+  min-width: 0;
+
+  /* 🌟 각각의 내용물 상자도 살짝 투명하게 (흰색 60%) */
+  background-color: rgba(255, 255, 255, 0.6);
   border-radius: 12px;
   padding: 24px;
-  border: 1px solid #f0f0f0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+.right-section-contact {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  /* width: 295px; 🚨 범인 삭제! (고정 크기 제거) */
+
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* 📱 1024px 이하로 줄어들면 세로로 탑 쌓기! */
+@media screen and (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+  }
+  .section,
+  .right-section-contact {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+/* --- 아래는 기존 텍스트 및 리스트 디자인 (유지) --- */
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -53,16 +65,14 @@ body {
   border-bottom: 40px;
   padding-bottom: 12px;
 }
-
 .title {
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-size: 1.55rem;
   font-weight: 700;
   color: #1a1a1a;
   margin: 0;
   margin-bottom: 1.5rem;
 }
-
 .moreBtn {
   background: none;
   border: none;
@@ -70,17 +80,14 @@ body {
   font-size: 12px;
   cursor: pointer;
 }
-
 .moreBtn-arrow {
   font-size: 10px;
 }
-
 .list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .listItem {
   display: flex;
   justify-content: space-between;
@@ -88,14 +95,12 @@ body {
   padding: 12px 0;
   border-bottom: 1px solid #f9f9f9;
 }
-
 .leftContent {
   display: flex;
   align-items: center;
   gap: 12px;
   min-width: 0;
 }
-
 .tag {
   padding: 2px 8px;
   border-radius: 4px;
@@ -103,7 +108,6 @@ body {
   font-weight: 500;
   white-space: nowrap;
 }
-
 .postTitle {
   font-size: 1rem;
   font-weight: bold;
@@ -112,13 +116,11 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .date {
   font-size: 13px;
   color: #999999;
   margin-left: 8px;
 }
-
 .rank {
   width: 20px;
   height: 20px;
@@ -130,7 +132,6 @@ body {
   align-items: center;
   justify-content: center;
 }
-
 .typeTag {
   font-size: 12px;
   color: #666666;
@@ -140,73 +141,45 @@ body {
   margin-left: 8px;
   white-space: nowrap;
 }
-
-/* 헤더 아이콘 스타일 추가 */
 .section-header-icon-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
-
-
-/* 우측 섹션 (긴급 연락망) */
-
-.right-section-contact{
-  font-family: "Pretendard";
-  display: flex;
-  flex-direction: column;
-  width: 295px;
-  margin-left: auto;
-  margin-right: 10px;
-}
-
 .section-title-contact {
-  font-family: 'Pretendard';
+  font-family: "Pretendard";
   font-size: 1.55rem;
   font-weight: bold;
   color: #1a1a1a;
   margin-bottom: 1.5rem;
 }
-
 .guide-card-contact {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  background: transparent;
+  border: none;
+  padding: 0;
 }
-
 .guide-list {
   list-style: none;
   padding: 0;
-  margin-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 0;
 }
-
 .guide-list li {
   display: flex;
   align-items: flex-start;
   margin-bottom: 25px;
 }
-
 .guide-list li:last-child {
-  margin-bottom: 0; /* 마지막 요소는 여백 제외 */
+  margin-bottom: 0;
 }
-
-/* 숫자 번호 스타일 */
 .guide-num {
   font-weight: bold;
   font-size: 1.1rem;
-  color: #1d4ed8; /* 포인트 블루 색상 */
+  color: #1d4ed8;
   background-color: #eff6ff;
   padding: 4px 8px;
   border-radius: 6px;
   margin-right: 14px;
 }
-
-/* 가이드 본문 스타일 */
 .guide-content-contact h4 {
   margin: 0 0 4px 0;
   font-size: 1rem;
@@ -214,7 +187,6 @@ body {
   font-weight: 700;
   padding-top: 7px;
 }
-
 .guide-content-contact p {
   margin: 0;
   font-size: 0.875rem;
@@ -222,19 +194,3 @@ body {
   color: #b42930;
   line-height: 1.4;
 }
-
-
-/* .emergency-banner {
-  background: #e5f1f3;
-  color: #050505;
-  padding: 15px;
-  border-radius: 8px;
-  margin-top: 15px;
-  text-align: center;
-  font-size: 14px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-} */
-
