@@ -60,7 +60,7 @@
 .btn-back, .btn-edit, .btn-delete, .btn-save, .btn-cancel {
   padding: 10px 20px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   border: none;

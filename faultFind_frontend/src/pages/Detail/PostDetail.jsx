@@ -202,13 +202,13 @@ export default function PostDetail() {
               </button>
               <button 
                 onClick={handleLike} 
-                style={{ padding: '8px 16px', backgroundColor: '#28fa80', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+                style={{ fontSize:12 , padding: '9px 12px', fontWeight: 'bold', backgroundColor: '#7ce781', color: 'black', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
               >
                 👍 좋아요 {post.likeCount || 0}
               </button>
               <button 
                 onClick={() => openReportModal('POST', id)}
-                style={{ padding: '8px 16px', backgroundColor: '#ff0000', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+                style={{ fontSize:12 , padding: '9px 16px', fontWeight: 'bold', backgroundColor: '#ffa600', color: 'black', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
               >
                 🚨 신고
               </button>
@@ -226,7 +226,7 @@ export default function PostDetail() {
 
           {/* 4. 댓글 영역 */}
           <div className="comments-section">
-            <h3 style={{ marginBottom: '20px' }}>💬 댓글 ({comments.length})</h3>
+            <h3 style={{ fontSize:22 , fontFamily: 'Pretendard' , marginBottom: '20px' }}>💬 댓글 ({comments.length})</h3>
             
             {/* 🌟 정지된 유저일 경우 입력창 대신 알림 표시 */}
             {userStatus.isSuspended ? (
@@ -264,7 +264,7 @@ export default function PostDetail() {
                       onClick={() => openReportModal('COMMENT', comment.id)}
                       style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '0.9em' }}
                     >
-                      🚨 신고
+                      &nbsp; 🚨 신고
                     </button>
                   </div>
                   <div style={{ marginTop: '8px', color: '#555', lineHeight: '1.4' }}>{comment.content}</div>
@@ -311,7 +311,7 @@ export default function PostDetail() {
           <div style={{
             backgroundColor: 'white', padding: '25px', borderRadius: '8px', width: '400px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
           }}>
-            <h3 style={{ marginTop: 0, marginBottom: '15px', color: '#ef4444' }}>🚨 신고하기</h3>
+            <h3 style={{ fontfamily: 'Pretendard', fontWeight: 'bold', marginTop: 0, marginBottom: '15px', color: '#ef4444' }}>🚨 신고하기</h3>
             <p style={{ fontSize: '0.9em', color: '#555', marginBottom: '10px' }}>
               부적절한 내용인가요? 신고 사유를 명확히 적어주세요.
             </p>
