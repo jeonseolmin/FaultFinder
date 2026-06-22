@@ -19,7 +19,7 @@ import OAuthSuccess from "./components/Auth/OAuthSuccess.jsx";
 import MyPage from "./pages/Mypage/MyPage";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashBoard.jsx";
 import FaultSearch from "./pages/FaultSearch/FaultSearch.jsx";
-
+import Body from "./components/Body/index.jsx";
 export default function App() {
   const location = useLocation();
   const hideHeaderPaths = ["/login", "/signup", "/mypage"];
@@ -29,18 +29,9 @@ export default function App() {
     <>
       <Navbar />
       {showHeader && <Header />}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <main>
-              <QuickServices />
-              <AiFaultRatio />
-              <PopularPostAndBest5 />
-            </main>
-          }
-        />
+      <Body/>
 
+      <Routes>
         <Route path="/guides" element={<AccidentGuide />} />
         <Route path="/cases" element={<AccidentType />} />
         <Route path="/cases/:typeId" element={<AccidentTypeDetail />} />

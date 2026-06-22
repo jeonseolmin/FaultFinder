@@ -2,12 +2,12 @@ body {
     min-width: 1200px;
     overflow-x: auto;
 }
-.header {
+.bg-bodyImage {
   font-family: 'Pretendard';
   padding: auto;
   width: 100%;
   min-height: 700px;
-  background-image: url("../../images/header-bg.png");
+  background-image: url("../../images/body.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
