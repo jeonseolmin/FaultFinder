@@ -6,20 +6,32 @@ body {
 }
 .container {
   font-family: 'Pretendard';
-  gap: 35px;
+  /* gap: 35px;
   width: 100%;
   margin: 0;
   padding: 20px;
-  display: flex;
-  justify-content: center;
   box-sizing: border-box;
   background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
   background-repeat: repeat;
   max-width: 1200px;
   margin-bottom: 20px;
   margin-left: 50px;
-  margin-right: 50px;
-  padding-bottom: 10px;
+  margin-right: 50px; 
+  padding-bottom: 10px; */
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 20px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.4); 
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  padding: 30px;
 }
 
 .section {

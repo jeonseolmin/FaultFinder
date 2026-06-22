@@ -1,6 +1,23 @@
 .quickService-container{
-  background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
-  padding-bottom: 20px;
+  /* background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
+  padding-bottom: 20px; */
+  background-color: rgba(255, 255, 255, 0.4); 
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  
+  padding: 30px;
+  margin-bottom: 20px; /* 아래인기글과 살짝 떨어뜨리기 */
+}
+
+/* 🌟 혹시 자주찾는 서비스 안에 각 아이콘 버튼들도 하얗게 튀어 보인다면? */
+.service-item {
+    background-color: rgba(255, 255, 255, 0.6); /* 버튼들도 약간 투명하게 */
+    border: none;
+    box-shadow: none;
 }
 .services-grid {
   padding-top: 10px;
