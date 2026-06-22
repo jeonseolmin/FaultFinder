@@ -54,7 +54,7 @@ function PopularPostAndBest5() {
     <div className="container">
       {/* 커뮤니티 인기글 */}
       <div className="section">
-        <div className="header">
+        <div className="section-header">
           <h2 className="title">커뮤니티 인기글  </h2>
           <button className="moreBtn" onClick={() => navigate('/community')}>
             더보기 <span className="moreBtn-arrow">❯</span>
@@ -90,8 +90,8 @@ function PopularPostAndBest5() {
 
       {/* 사고 유형 TOP 5 */}
       <div className="section">
-        <div className="header">
-          <div className="header-icon-wrapper">
+        <div className="section-header">
+          <div className="section-header-icon-wrapper">
             <h2 className="title">사고 유형 TOP 5 </h2>
           </div>
         </div>

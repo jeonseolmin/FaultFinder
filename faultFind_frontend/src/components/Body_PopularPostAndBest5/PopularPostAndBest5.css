@@ -33,7 +33,7 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.header {
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -130,7 +130,7 @@ body {
 }
 
 /* 헤더 아이콘 스타일 추가 */
-.header-icon-wrapper {
+.section-header-icon-wrapper {
   display: flex;
   align-items: center;
   gap: 10px;
