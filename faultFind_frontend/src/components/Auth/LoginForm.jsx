@@ -58,6 +58,8 @@ export default function LoginForm() {
 
 
 
+
+
   // ***********
   // 함수 정의 끝
   // ***********
@@ -114,7 +116,7 @@ export default function LoginForm() {
         </form>
 
         <div className="auth-links">
-          <Link to="#">비밀번호 찾기</Link>
+          <Link to="/find-password">비밀번호 찾기</Link>
           <span>|</span>
           <Link to="/signup">회원가입</Link>
         </div>

@@ -98,4 +98,31 @@ public class UserService {
         // 3. 새 비밀번호 암호화 후 변경
         user.setPassword(bCryptPasswordEncoder.encode(dto.getNewPassword()));
     }
+
+    public String findPassword(String email, String userName) {
+        // 1. 이메일과 이름이 모두 일치하는 유저 찾기
+        User user = userRepository.findByEmailAndUserName(email, userName)
+                .orElseThrow(() -> new IllegalArgumentException("입력하신 정보와 일치하는 계정이 없습니다."));
+
+        // 2. 4자리 임시 비밀번호 생성
+        String tempPassword = generateTempPassword(4);
+
+        // 3. 비밀번호 암호화 후 DB 업데이트
+        user.setPassword(bCryptPasswordEncoder.encode(tempPassword));
+
+        // 4. 프론트엔드 화면에 띄워주기 위해 생성된 임시 비밀번호를 리턴!
+        return tempPassword;
+    }
+
+    //  2. 랜덤 문자열 생성기
+    private String generateTempPassword(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int index = (int) (Math.random() * chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return sb.toString();
+    }
 }
