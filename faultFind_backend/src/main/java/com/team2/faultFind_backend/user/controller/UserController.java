@@ -1,5 +1,6 @@
 package com.team2.faultFind_backend.user.controller;
 
+import com.team2.faultFind_backend.user.dto.PasswordChangeDto;
 import com.team2.faultFind_backend.user.dto.UserRequest;
 import com.team2.faultFind_backend.user.dto.UserResponse;
 import com.team2.faultFind_backend.user.service.UserService;
@@ -43,5 +44,19 @@ public class UserController {
     @GetMapping("/test")
     public String test() {
         return "success";
+    }
+
+    @PutMapping("/password")
+    public ResponseEntity<String> changePassword(
+            @RequestBody PasswordChangeDto dto,
+            Authentication authentication
+    ) {
+        try {
+            userService.changePassword(authentication.getName(), dto);
+            return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
