@@ -1,0 +1,59 @@
+/* src/pages/Mypage/MyPage.css */
+
+.password-change-section {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.password-form .form-group {
+  margin-bottom: 20px;
+}
+
+.password-form label {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+.password-form input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box; 
+  background-color: #f9fafb;
+  transition: all 0.2s ease;
+}
+
+.password-form input:focus {
+  outline: none;
+  background-color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.btn-change-pw {
+  width: 100%;
+  padding: 14px;
+  background-color: #ef4444; /* 빨간색 계열로 주의/보안 느낌 강조 */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-change-pw:hover {
+  background-color: #dc2626;
+}

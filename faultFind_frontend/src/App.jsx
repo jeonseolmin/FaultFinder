@@ -18,10 +18,11 @@ import MyPage from "./pages/Mypage/MyPage";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashBoard.jsx";
 import FaultSearch from "./pages/FaultSearch/FaultSearch.jsx";
 import Footer from "./components/Footer/Footer.jsx"; 
+import FindPassword from "./pages/FindPassword/FindPassword.jsx";
 
 export default function App() {
   const location = useLocation();
-  const hideHeaderPaths = ["/login", "/signup", "/mypage"];
+  const hideHeaderPaths = ["/login", "/signup", "/mypage", "/find-password"];
   const showHeader = !hideHeaderPaths.includes(location.pathname);
 
   return (
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/community/:id" element={<PostDetail />} />
           <Route path="/posts" element={<CommunityPage />} />
           <Route path="/community/edit/:id" element={<PostEdit />} />
+          <Route path="/find-password" element={<FindPassword />} />
         </Routes>
       </div>
 
