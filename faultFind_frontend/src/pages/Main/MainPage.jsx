@@ -6,9 +6,9 @@ import QuickServices from "../../components/Body_QuickServices/QuickServices.jsx
 import PopularPostAndBest5 from "../../components/Body_PopularPostAndBest5/PopularPostAndBest5.jsx";
 
 // 배경으로 쓸 사진 2장을 정확히 불러옵니다
-import bgLightCar from "../../images/header-bg.png"; // 첫 번째: 하늘색 자동차 사진
-import bgDarkCity from "../../images/body.png"; // 두 번째: 어두운 야경 사진
-import Footer from "../../components/Footer/Footer.jsx" 
+import bgLightCar from "../../images/Front001.png"; // 첫번째:하늘색자동차사진//AI교통사고비율사진으로 교체
+// import bgDarkCity from "../../images/Front06.jpg"; // 두 번째: 어두운 야경 사진
+
 export default function MainPage() {
   return (
     <div className="main-page-container">
@@ -22,6 +22,8 @@ export default function MainPage() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
+          height: "500px",
+          paddingBottom: "50%",
           maxWidth: "100vw",
           overflow: "hidden",
           boxSizing: "border-box",
@@ -39,8 +41,32 @@ export default function MainPage() {
           <AiFaultRatio />
         </div>
       </div>
-      <Footer />
-      
+
+      <div
+        style={{
+          // backgroundImage: `url(${bgDarkCity})`,
+          // backgroundColor: "#BCCCDC",
+          // backgroundSize: "cover",
+          // backgroundPosition: "center",
+          // padding: "80px 20px",
+          // minHeight: "600px",
+
+          // width: "100%",
+          // maxWidth: "100vw",
+          // overflow: "hidden",
+          // boxSizing: "border-box",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "80px 20px",
+          }}
+        ></div>
+        <QuickServices />
+        <PopularPostAndBest5 />
+      </div>
     </div>
   );
 }

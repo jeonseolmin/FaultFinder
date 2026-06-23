@@ -9,6 +9,8 @@ public class SecurityUrls {
 
             "/api/signup",
 
+            "/api/users/find-password",
+
             "/api/accident-guides",
             "/api/accident-guides/**",
 

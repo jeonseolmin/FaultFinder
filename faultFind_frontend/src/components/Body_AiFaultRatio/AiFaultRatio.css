@@ -44,7 +44,7 @@ body {
   border-radius: 20px;                         /* 모서리를 더 부드럽게 */
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);    /* 기존 그림자가 너무 쌔다면 이걸로 교체 (부드럽고 얇은 그림자) */
   
-  padding: 40px;
+  padding: 400px;
 }
 
 .grid-layout {
