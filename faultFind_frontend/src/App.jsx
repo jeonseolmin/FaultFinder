@@ -17,7 +17,6 @@ import OAuthSuccess from "./components/Auth/OAuthSuccess.jsx";
 import MyPage from "./pages/Mypage/MyPage";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashBoard.jsx";
 import FaultSearch from "./pages/FaultSearch/FaultSearch.jsx";
-import Footer from "./components/Footer/Footer.jsx"; 
 import FindPassword from "./pages/FindPassword/FindPassword.jsx";
 
 export default function App() {
@@ -58,8 +57,6 @@ export default function App() {
           <Route path="/find-password" element={<FindPassword />} />
         </Routes>
       </div>
-
-      <Footer />
       
     </div>
   );

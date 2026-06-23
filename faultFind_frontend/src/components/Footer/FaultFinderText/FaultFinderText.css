@@ -2,9 +2,10 @@
     
     background-color: #D9EAFD; 
     margin: 0px;
-    padding: 0px;
+    padding-bottom: 100px;
     width: 100%;
-    height: 850px;
+    min-height: 900px;
+    
 }
 
 .faultFinderText-title-main {
@@ -13,7 +14,7 @@
     font-family: 'Pretendard';
     color: #323335;
 
-    padding: 40px 0px 30px 30px;
+    padding: 100px 0px 30px 30px;
     text-align: center;
     /* 타이틀을 깔끔하게 가운데로 */
     text-shadow: 1px 1px 5px 0 rgba(46, 46, 46, 0.5);
@@ -47,7 +48,7 @@
     font-weight: 400;
     line-height: 1.5;
     color: #3c424b;
-    background-color: #ecf2f8;
+    background-color: #ffffff;
     padding: 20px;
     border-radius: 24px;
 }

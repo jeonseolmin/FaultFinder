@@ -35,7 +35,7 @@
 .service-card {
   font-family: 'Pretendard';
   /* 화면 넓이에 따라 버튼 크기가 유연하게 변하며, 130px보다 좁아지면 무조건 아랫줄로 밀어냅니다 */
-  flex: 1 1 130px;      
+  flex: 1 1 130px;
   max-width: 300px;     /* 버튼이 너무 거대해지는 것을 방어 */
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
   padding: 20px 10px;
   
   /* 유리 상자 안의 뽀얀 버튼 느낌 */
-  background-color: #F8FAFC; 
+  background-color: #F8FAFC;
   border: 1px solid rgba(134, 134, 134, 0.5);
   border-radius: 24px;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.1);
