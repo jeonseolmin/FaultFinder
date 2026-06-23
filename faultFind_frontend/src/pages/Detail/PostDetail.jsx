@@ -18,7 +18,7 @@ export default function PostDetail() {
   const [reportConfig, setReportConfig] = useState({ targetType: '', targetId: null });
   const [reportReason, setReportReason] = useState('');
   
-  // 🌟 유저 상태 관리 (정지 여부 파악)
+  // 유저 상태 관리 (정지 여부 파악)
   const [userStatus, setUserStatus] = useState({ isSuspended: false });
 
   const openReportModal = (type, id) => {
@@ -98,7 +98,7 @@ export default function PostDetail() {
       }
     };
     
-    // 🌟 현재 접속한 유저의 정보를 불러와 정지 여부를 체크합니다.
+    // 현재 접속한 유저의 정보를 불러와 정지 여부를 체크합니다.
     const fetchUserInfo = async () => {
       try {
         const res = await axiosInstance.get('/api/users/me'); 
@@ -115,8 +115,19 @@ export default function PostDetail() {
 
   const handleLike = async () => {
     try {
-      await axiosInstance.post(`/api/community/${id}/like`);
-      setPost({ ...post, likeCount: post.likeCount + 1 });
+      // 1. 백엔드에 요청을 보냅니다.
+      const response = await axiosInstance.post(`/api/community/${id}/like`);
+      
+      // 2. 백엔드가 돌려준 결과값 (true: 좋아요 됨, false: 취소 됨)
+      const isNowLiked = response.data; 
+
+      // 3. 결과에 따라 화면의 숫자를 똑똑하게 바꿉니다!
+      if (isNowLiked) {
+        setPost({ ...post, likeCount: post.likeCount + 1 });
+      } else {
+        setPost({ ...post, likeCount: post.likeCount - 1 });
+      }
+      
     } catch (error) {
       console.error("좋아요 실패", error);
       alert("로그인이 필요하거나 오류가 발생했습니다.");
@@ -228,7 +239,7 @@ export default function PostDetail() {
           <div className="comments-section">
             <h3 style={{ fontSize:22 , fontFamily: 'Pretendard' , marginBottom: '20px' }}>💬 댓글 ({comments.length})</h3>
             
-            {/* 🌟 정지된 유저일 경우 입력창 대신 알림 표시 */}
+            {/* 정지된 유저일 경우 입력창 대신 알림 표시 */}
             {userStatus.isSuspended ? (
               <div style={{ padding: '20px', backgroundColor: '#fff7ed', border: '1px solid #fed7aa', textAlign: 'center', borderRadius: '8px', marginBottom: '30px', color: '#9a3412' }}>
                 ⚠️ <strong>활동이 정지된 계정입니다.</strong> 댓글을 작성할 수 없습니다.
