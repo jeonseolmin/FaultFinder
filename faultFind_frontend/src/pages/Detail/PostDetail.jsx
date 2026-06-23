@@ -114,6 +114,12 @@ export default function PostDetail() {
   }, [id]);
 
   const handleLike = async () => {
+    if (!currentUsername) {
+      alert("로그인 후 이용할 수 있는 기능입니다.");
+      // 원하신다면 여기서 로그인 페이지로 이동시킬 수도 있습니다.
+      // navigate('/login'); 
+      return; // 👈 여기서 함수를 강제 종료시켜서 백엔드로 요청 자체가 안 가게 막습니다.
+    }
     try {
       // 1. 백엔드에 요청을 보냅니다.
       const response = await axiosInstance.post(`/api/community/${id}/like`);
@@ -163,6 +169,13 @@ export default function PostDetail() {
   };
 
   const handleCommentSubmit = async () => {
+    if (!currentUsername) {
+      alert("로그인 후 이용할 수 있는 기능입니다.");
+      // 원하신다면 여기서 로그인 페이지로 이동시킬 수도 있습니다.
+      // navigate('/login'); 
+      return; // 여기서 함수를 강제 종료시켜서 백엔드로 요청 자체가 안 가게 막습니다.
+    }
+
     if (!newComment.trim()) {
       alert("댓글 내용을 입력해주세요.");
       return;
