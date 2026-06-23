@@ -37,7 +37,7 @@ function Navbar() {
       <a href="/"> <img  className="mainIcon"src={mainIcon} alt="" /></a>
       <div className="navbar-logo">
         <a href="/"> FaultFinder </a>
-        <span className="navbar-slogan">교통사고 법률 정보 사이트</span>
+        <span className="navbar-slogan">과실비율 조회 서비스 사이트</span>
       </div>
 
       {/* 메뉴 링크 영역 */}
