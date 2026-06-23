@@ -97,7 +97,7 @@ function FaultSearch() {
               </h3>
 
               {!showResult && !isAnalyzing && (
-                <div style={{ height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#9ca3af' }}>
+                <div style={{ fontSize: '14px',height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#9ca3af' }}>
                   왼쪽에서 사고 상황을 입력하고 분석을 시작해보세요.
                 </div>
               )}
