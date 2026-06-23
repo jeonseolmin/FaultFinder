@@ -17,7 +17,7 @@ import OAuthSuccess from "./components/Auth/OAuthSuccess.jsx";
 import MyPage from "./pages/Mypage/MyPage";
 import AdminDashboard from "./pages/AdminDashboard/AdminDashBoard.jsx";
 import FaultSearch from "./pages/FaultSearch/FaultSearch.jsx";
-import Footer from "./components/Footer/Footer.jsx"; 
+
 
 export default function App() {
   const location = useLocation();
@@ -57,7 +57,6 @@ export default function App() {
         </Routes>
       </div>
 
-      <Footer />
       
     </div>
   );

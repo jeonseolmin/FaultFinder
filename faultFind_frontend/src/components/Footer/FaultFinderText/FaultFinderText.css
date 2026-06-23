@@ -1,0 +1,62 @@
+.faultFinderText-container {
+    
+    background-color: #D9EAFD; 
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 850px;
+}
+
+.faultFinderText-title-main {
+    font-size: 50px;
+    font-weight: 700;
+    font-family: 'Pretendard';
+    color: #323335;
+
+    padding: 40px 0px 30px 30px;
+    text-align: center;
+    /* 타이틀을 깔끔하게 가운데로 */
+    text-shadow: 1px 1px 5px 0 rgba(46, 46, 46, 0.5);
+
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 350px);
+    gap: 30px 30px;
+    
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    
+}
+
+.info-title {
+    font-family: 'Pretendard';
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -1px;
+    color: #313842;
+    margin-bottom: 18px;
+}
+
+
+.info-item  {
+    font-family: 'Pretendard';
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #3c424b;
+    background-color: #ecf2f8;
+    padding: 20px;
+    border-radius: 24px;
+}
+
+.info-highlight{
+    font-family: 'Pretendard';
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: #3a3a3a;
+}
+

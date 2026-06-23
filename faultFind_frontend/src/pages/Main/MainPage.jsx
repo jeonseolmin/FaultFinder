@@ -8,7 +8,7 @@ import PopularPostAndBest5 from "../../components/Body_PopularPostAndBest5/Popul
 // 배경으로 쓸 사진 2장을 정확히 불러옵니다
 import bgLightCar from "../../images/header-bg.png"; // 첫 번째: 하늘색 자동차 사진
 import bgDarkCity from "../../images/body.png"; // 두 번째: 어두운 야경 사진
-
+import Footer from "../../components/Footer/Footer.jsx" 
 export default function MainPage() {
   return (
     <div className="main-page-container">
@@ -39,31 +39,8 @@ export default function MainPage() {
           <AiFaultRatio />
         </div>
       </div>
-
-      <div
-        style={{
-          backgroundImage: `url(${bgDarkCity})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          padding: "80px 20px",
-          minHeight: "600px",
-
-          width: "100%",
-          maxWidth: "100vw",
-          overflow: "hidden",
-          boxSizing: "border-box",
-        }}
-      >
-        <div
-          style={{
-            maxWidth: "1200px",
-            margin: "0 auto",
-            padding: "80px 20px",
-          }}
-        ></div>
-        <QuickServices />
-        <PopularPostAndBest5 />
-      </div>
+      <Footer />
+      
     </div>
   );
 }
