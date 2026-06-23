@@ -4,9 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import axiosInstance from "../../api/axiosInstance";
 import { useAuth } from "../../context/AuthContent";
-import googleLogo from "../../images/google_logo.svg";
-import kakaoLogo from "../../images/kakao_logo.svg";
-import naverLogo from "../../images/NAVER_login.png";
+import googleLogo from "../../images/logos/google_logo.svg";
+import kakaoLogo from "../../images/logos/kakao_logo.svg";
+import naverLogo from "../../images/logos/NAVER_login.png";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");

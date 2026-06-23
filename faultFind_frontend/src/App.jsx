@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Layout/Navbar/Navbar.jsx";
 import MainPage from "./pages/Main/MainPage.jsx";
 
 import CommunityPage from "./pages/Community/CommunityPage.jsx";
-import Login from "./pages/Login/Login.jsx";
-import Signup from "./pages/Signup/Signup.jsx";
-import WritePage from "./pages/Write/WritePage.jsx";
-import PostDetail from "./pages/Detail/PostDetail.jsx";
-import PostEdit from "./pages/Edit/PostEdit.jsx";
-import AccidentGuide from "./pages/AccidentGuide/AccidentGuide.jsx"; 
-import AccidentType from "./pages/AccidentType/AccidentType.jsx";
-import AccidentTypeDetail from "./pages/AccidentType/AccidentTypeDetail.jsx";
+import LoginPage from "./pages/Auth/LoginPage.jsx";
+import SignupPage from "./pages/Auth/SignupPage.jsx";
+import CommunityWritePage from "./pages/Community/CommunityWritePage.jsx";
+import CommunityDetailPage from "./pages/Community/CommunityDetailPage.jsx";
+import CommunityEditPage from "./pages/Community/CommunityEditPage.jsx";
+import AccidentGuidePage from "./pages/AccidentGuide/AccidentGuidePage.jsx";
+import AccidentTypePage from "./pages/AccidentType/AccidentTypePage.jsx";
+import AccidentTypeDetailPage from "./pages/AccidentType/AccidentTypeDetailPage.jsx";
 import OAuthSuccess from "./components/Auth/OAuthSuccess.jsx";
 import MyPage from "./pages/Mypage/MyPage";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashBoard.jsx";
-import FaultSearch from "./pages/FaultSearch/FaultSearch.jsx";
-import FindPassword from "./pages/FindPassword/FindPassword.jsx";
+import AdminPage from "./pages/Admin/AdminPage.jsx";
+import FaultSearchPage from "./pages/FaultSearch/FaultSearchPage.jsx";
+import FindPasswordPage from "./pages/Auth/FindPasswordPage.jsx";
 
 export default function App() {
   const location = useLocation();
@@ -38,23 +38,23 @@ export default function App() {
           <Route path="/" element={<MainPage showHeader={showHeader} />} />
 
           {/* 나머지 페이지들 */}
-          <Route path="/guides" element={<AccidentGuide />} />
-          <Route path="/cases" element={<AccidentType />} />
-          <Route path="/cases/:typeId" element={<AccidentTypeDetail />} />
-          <Route path="/fault-ratios" element={<FaultSearch />} />
+          <Route path="/guides" element={<AccidentGuidePage />} />
+          <Route path="/cases" element={<AccidentTypePage />} />
+          <Route path="/cases/:typeId" element={<AccidentTypeDetailPage />} />
+          <Route path="/fault-ratios" element={<FaultSearchPage />} />
           <Route path="/community" element={<CommunityPage />} />
           
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/oauth-success" element={<OAuthSuccess />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin" element={<AdminPage />} />
 
-          <Route path="/community/write" element={<WritePage />} />
-          <Route path="/community/:id" element={<PostDetail />} />
+          <Route path="/community/write" element={<CommunityWritePage />} />
+          <Route path="/community/:id" element={<CommunityDetailPage />} />
           <Route path="/posts" element={<CommunityPage />} />
-          <Route path="/community/edit/:id" element={<PostEdit />} />
-          <Route path="/find-password" element={<FindPassword />} />
+          <Route path="/community/edit/:id" element={<CommunityEditPage />} />
+          <Route path="/find-password" element={<FindPasswordPage />} />
         </Routes>
       </div>
       

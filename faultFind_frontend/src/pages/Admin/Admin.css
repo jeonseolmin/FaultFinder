@@ -1,0 +1,187 @@
+/* Admin.css */
+
+.admin-container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* 상단 헤더 */
+
+.admin-header {
+    background-color: #1f2937;
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: white;
+}
+
+.admin-header p {
+    margin: 0;
+    color: #9ca3af;
+}
+
+/* 탭 */
+
+.admin-tabs {
+    display: flex;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 20px;
+}
+
+.admin-tab-btn {
+    flex: 1;
+    padding: 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #9ca3af;
+}
+
+.admin-tab-btn.active {
+    border-bottom: 3px solid #ef4444;
+    color: #ef4444;
+}
+
+/* 공통 테이블 */
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.admin-table thead tr {
+    background-color: #f3f4f6;
+    border-bottom: 2px solid #ddd;
+}
+
+.admin-table th {
+    padding: 12px;
+}
+
+.admin-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.admin-table td {
+    padding: 12px;
+}
+
+/* 신고 테이블 헤더 */
+
+.report-table thead tr {
+    background-color: #fee2e2;
+    border-bottom: 2px solid #fca5a5;
+}
+
+.report-table th {
+    color: #b91c1c;
+}
+
+/* 권한 표시 */
+
+.role-admin {
+    color: #ef4444;
+    font-weight: bold;
+}
+
+/* 관리 버튼 영역 */
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    padding: 10px;
+}
+
+/* 버튼 공통 */
+
+.btn-admin {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-size: 0.9em;
+}
+
+/* 버튼 종류 */
+
+.btn-warning {
+    background-color: #f59e0b;
+}
+
+.btn-success {
+    background-color: #10b981;
+}
+
+.btn-danger {
+    background-color: #ef4444;
+}
+
+.btn-gray {
+    background-color: #6b7280;
+}
+
+/* 게시글 링크 */
+
+.post-link {
+    cursor: pointer;
+    color: #3b82f6;
+    text-decoration: underline;
+}
+
+/* 신고 타입 */
+
+.report-type {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.report-type-post {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.report-type-comment {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+/* 신고 사유 */
+
+.report-reason {
+    color: #dc2626;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 신고 날짜 */
+
+.report-date {
+    color: #9ca3af;
+    font-size: 0.9em;
+}
+
+/* 빈 데이터 */
+
+.empty-message {
+    padding: 40px;
+    color: #9ca3af;
+    text-align: center;
+}
+
+/* 로딩 */
+
+.admin-loading {
+    text-align: center;
+    padding: 50px;
+}
