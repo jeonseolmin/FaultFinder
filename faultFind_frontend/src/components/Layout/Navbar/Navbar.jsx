@@ -1,7 +1,7 @@
-import{ useState } from "react";
+import { useState } from "react";
 import "./Navbar.css";
 import { FaUserTie } from "react-icons/fa";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContent.jsx";
 import { HiUser } from "react-icons/hi2";
 
@@ -31,6 +31,9 @@ function Navbar() {
 
   return (
     <nav className="navbar">
+      {/* 로고/제목 영역 (왼쪽 배치용) */}
+        <Link to="/" className="navbar-logo">FaultFinder</Link>
+
       {/* 메뉴 링크 영역 */}
       <ul className={`navbar-menu ${isMobileMenuOpen ? "active" : ""}`}>
         <li>
@@ -55,7 +58,7 @@ function Navbar() {
         {isLogin ? (
           <>
             <span className="user">
-              <FaUserTie className="user-icon"/> {userInfo?.userName} 님
+              <FaUserTie className="user-icon" /> {userInfo?.userName} 님
             </span>
 
             <button className="btn-login" onClick={() => navigate("/mypage")}>
@@ -68,15 +71,15 @@ function Navbar() {
           </>
         ) : (
           <>
-          <span className="user">
-              <HiUser className="user-icon" color="black"/>
+            <span className="user">
+              <HiUser className="user-icon" color="black" />
             </span>
             <button className="btn-login" onClick={() => navigate("/login")}>
               Login
             </button>
 
             <button className="btn-signup" onClick={() => navigate("/signup")}>
-               SignUp
+              SignUp
             </button>
           </>
         )}
