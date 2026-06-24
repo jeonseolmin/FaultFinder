@@ -18,6 +18,9 @@ export default function CommunityDetailPage() {
   const [reportConfig, setReportConfig] = useState({ targetType: '', targetId: null });
   const [reportReason, setReportReason] = useState('');
   
+  // 💡 [추가] 사용자가 이 글에 좋아요를 눌렀는지 여부를 관리하는 상태
+  const [isLiked, setIsLiked] = useState(false);
+
   // 유저 상태 관리 (정지 여부 파악)
   const [userStatus, setUserStatus] = useState({ isSuspended: false });
 
@@ -80,6 +83,13 @@ export default function CommunityDetailPage() {
         setPost(response.data);
         setEditTitle(response.data.title);
         setEditContent(response.data.content);
+
+        // 💡 [추가] 만약 백엔드 response.data에 해당 유저의 좋아요 여부(예: isLiked)가 포함되어 온다면 세팅해줍니다.
+        // 만약 없다면, 아래 handleLike에서 토글되는 데이터로만 화면이 제어됩니다.
+        if (response.data.isLiked !== undefined) {
+          setIsLiked(response.data.isLiked);
+        }
+
       } catch (error) {
         console.error("게시글을 불러오는데 실패했습니다.", error);
         alert("존재하지 않거나 삭제된 게시글입니다.");
@@ -130,8 +140,10 @@ export default function CommunityDetailPage() {
       // 3. 결과에 따라 화면의 숫자를 똑똑하게 바꿉니다!
       if (isNowLiked) {
         setPost({ ...post, likeCount: post.likeCount + 1 });
+        setIsLiked(true);
       } else {
         setPost({ ...post, likeCount: post.likeCount - 1 });
+        setIsLiked(false);
       }
       
     } catch (error) {
@@ -226,13 +238,23 @@ export default function CommunityDetailPage() {
               </button>
               <button 
                 onClick={handleLike} 
-                style={{ fontSize:12 , padding: '9px 12px', fontWeight: 'bold', backgroundColor: '#7ce781', color: 'black', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+                style={{ 
+                  fontSize:12 , 
+                  padding: '9px 12px', 
+                  fontWeight: 'bold', 
+                  backgroundColor: isLiked ? '#98ebee' : '#f9faf9', 
+                  color: 'black', 
+                  border: 'none', 
+                  borderRadius: '4px', 
+                  cursor: 'pointer', 
+                  marginLeft: '10px' 
+                }}
               >
-                👍 좋아요 {post.likeCount || 0}
+                {isLiked ? '❤' : '🤍'} {post.likeCount || 0}
               </button>
               <button 
                 onClick={() => openReportModal('POST', id)}
-                style={{ fontSize:12 , padding: '9px 16px', fontWeight: 'bold', backgroundColor: '#ffa600', color: 'black', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
+                style={{ fontSize:12 , padding: '9px 16px', fontWeight: 'bold', backgroundColor: '#faf9f8', color: 'black', border: 'none', borderRadius: '4px', cursor: 'pointer', marginLeft: '10px' }}
               >
                 🚨 신고
               </button>

@@ -47,6 +47,12 @@ export default function BoardList({ activeTab }) {
               // 🌟 백엔드 세팅에 따라 isNotice 또는 notice로 넘어올 수 있으므로 둘 다 확인합니다.
               const isNoticePost = post.isNotice || post.notice;
 
+              const categoryLabels = {
+                free: '자유게시판',
+                review: '사고후기',
+                qna: 'Q&A'
+              };
+              
               return (
                 <tr 
                   key={post.id}
@@ -58,6 +64,8 @@ export default function BoardList({ activeTab }) {
                     backgroundColor: isNoticePost ? '#eff6ff' : 'transparent' 
                   }}
                 >
+
+
                   <td style={{ textAlign: 'center' }}>
                     {/* 🌟 공지사항이면 글 번호 대신 '공지' 뱃지를 보여줍니다. */}
                     {isNoticePost ? (
@@ -68,7 +76,7 @@ export default function BoardList({ activeTab }) {
                       post.id
                     )}
                   </td>
-                  <td>{post.category === 'free' ? '자유게시판' : post.category}</td>
+                  <td>{categoryLabels[post.category] || post.category}</td>
                   
                   {/* 🌟 공지사항이면 제목을 더 굵고 진한 색으로 표시합니다. */}
                   <td style={{ textAlign: 'left', fontWeight: isNoticePost ? '700' : '500', color: isNoticePost ? '#1e3a8a' : 'inherit' }}>
