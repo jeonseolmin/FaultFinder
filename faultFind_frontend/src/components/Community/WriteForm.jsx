@@ -81,7 +81,7 @@ export default function WriteForm() {
             onChange={handleChange}
           >
             <option value="free">자유게시판</option>
-            <option value="review">사고 후기</option>
+            <option value="review">사고후기</option>
             <option value="qna">Q&A</option>
           </select>
         </div>
