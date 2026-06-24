@@ -21,9 +21,7 @@ public class AccidentDetailResponse {
     private String accidentSituation;
     private String baseFaultExplanation;
     private String modifierExplanation;
-    private String usageNote;
     private String legalReference;
-    private String precedent;
 
     private List<FaultResponse> modifiers;
 }
