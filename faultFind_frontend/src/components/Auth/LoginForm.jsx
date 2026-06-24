@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import axiosInstance from "../../api/axiosInstance";
@@ -19,7 +18,10 @@ export default function LoginForm() {
   // *************
 
   // 로컬 로그인 핸들러
-  const handleLogin = async () => {
+  // 🌟 1. 매개변수 e를 받고, 새로고침을 막는 코드 추가
+  const handleLogin = async (e) => {
+    e.preventDefault(); 
+    
     try {
       const result = await axiosInstance.post("/api/auth/login", {
         email: email,
@@ -33,7 +35,6 @@ export default function LoginForm() {
       navigate("/");
     } catch (error) {
       console.log(error);
-
       alert("로그인 실패");
     }
   };
@@ -54,11 +55,7 @@ export default function LoginForm() {
   const handleNaverLogin = () => {
   window.location.href =
     "http://localhost:8080/oauth2/authorization/naver";
-};
-
-
-
-
+  };
 
   // ***********
   // 함수 정의 끝
@@ -71,6 +68,7 @@ export default function LoginForm() {
           <h2>로그인</h2>
           <p>FaultFinder 서비스 이용을 위해 로그인해주세요.</p>
         </div>
+        
         {/* 소셜로그인 버튼 */}
         <div className="social-login">
           <button type="button" className="social-btn google" onClick={handleGoogleLogin}>
@@ -87,7 +85,7 @@ export default function LoginForm() {
         </div>
 
         {/* 로컬 로그인 */}
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="input-group">
             <label htmlFor="email">이메일</label>
             <input
@@ -110,7 +108,7 @@ export default function LoginForm() {
             />
           </div>
 
-          <button type="button" className="btn-submit" onClick={handleLogin}>
+          <button type="submit" className="btn-submit">
             로그인
           </button>
         </form>
