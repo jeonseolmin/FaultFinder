@@ -1,5 +1,6 @@
 package com.team2.faultFind_backend.calculator.service;
 
+import com.team2.faultFind_backend.accident.dto.AccidentResponse;
 import com.team2.faultFind_backend.accident.entity.Accident;
 import com.team2.faultFind_backend.accident.service.AccidentService;
 import com.team2.faultFind_backend.calculator.dto.FaultResultDto;
@@ -28,7 +29,7 @@ public class FaultCalculationService {
     public FaultResultDto calculate(String caseCode, List<Long> selectedModifierIds) {
 
         // 1. 기본 사고 정보 및 기본 과실 비율 가져오기
-        Accident accident = accidentService.getAccidentByCaseCode(caseCode);
+        AccidentResponse accident = accidentService.getAccidentByCaseCode(caseCode);
         int finalFaultA = accident.getBaseFaultA();
 
         // 2. 선택된 가감산 요소들이 있다면 가져와서 합산하기

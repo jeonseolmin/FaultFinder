@@ -1,10 +1,14 @@
 package com.team2.faultFind_backend.accident.entity;
 
 
+import com.team2.faultFind_backend.accidentdetail.entity.AccidentDetails;
+import com.team2.faultFind_backend.fault.entity.Fault;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @Entity
@@ -13,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class Accident {
 
     @Id
+    @Column(name = "case_code")
     private String caseCode;
 
     @Column(nullable = false)
@@ -32,6 +37,12 @@ public class Accident {
 
     @Column(name = "base_fault_b", nullable = false)
     private int baseFaultB;
+
+    @OneToMany(mappedBy = "accident")
+    private List<Fault> modifiers;
+
+    @OneToOne(mappedBy = "accident")
+    private AccidentDetails detail;
 
     @Builder
     public Accident(String category, String caseCode, String title, String partyAName, String partyBName, int baseFaultA, int baseFaultB) {

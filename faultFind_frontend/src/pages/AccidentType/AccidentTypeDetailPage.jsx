@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance';
 
@@ -10,7 +10,7 @@ import './AccidentTypeDetail.css';
 export default function AccidentTypeDetailPage() {
   const { typeId } = useParams();
   const navigate = useNavigate();
-
+  const [accident, setAccident] = useState(null);
   const [cases, setCases] = useState([]);
   const [loading, setLoading] = useState(true);
 
