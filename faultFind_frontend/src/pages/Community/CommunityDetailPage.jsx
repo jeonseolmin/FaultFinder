@@ -17,6 +17,13 @@ export default function CommunityDetailPage() {
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportConfig, setReportConfig] = useState({ targetType: '', targetId: null });
   const [reportReason, setReportReason] = useState('');
+
+  // 💡 [추가] 댓글 수정 및 대댓글 관리를 위한 상태들
+  const [editingCommentId, setEditingCommentId] = useState(null); // 현재 수정 중인 댓글 ID
+  const [editingCommentContent, setEditingCommentContent] = useState(''); // 수정 중인 댓글 내용
+  const [replyingCommentId, setReplyingCommentId] = useState(null); // 현재 답글(대댓글) 작성 중인 부모 댓글 ID
+  const [newReply, setNewReply] = useState(''); // 작성 중인 대댓글 내용
+
   
   // 💡 [추가] 사용자가 이 글에 좋아요를 눌렀는지 여부를 관리하는 상태
   const [isLiked, setIsLiked] = useState(false);
@@ -198,12 +205,71 @@ export default function CommunityDetailPage() {
         content: newComment
       });
       setNewComment(""); 
+      fetchComments();
       
       const response = await axiosInstance.get(`/api/community/${id}/comments`);
       setComments(response.data);
     } catch (error) {
       console.error("댓글 작성 실패", error);
       alert("현재 활동 정지 상태입니다.");
+    }
+  };
+
+  // 💡 [추가] 댓글 수정 제출 핸들러
+  const handleCommentUpdate = async (commentId) => {
+    if (!editingCommentContent.trim()) {
+      alert("수정할 내용을 입력해주세요.");
+      return;
+    }
+    try {
+      // API 주소는 백엔드 설계에 맞게 조절하세요 (예: /api/comments/1)
+      await axiosInstance.put(`/api/community/comments/${commentId}`, {
+        content: editingCommentContent
+      });
+      alert("댓글이 수정되었습니다.");
+      setEditingCommentId(null);
+      fetchComments();
+    } catch (error) {
+      console.error("댓글 수정 실패", error);
+      alert("수정 권한이 없거나 오류가 발생했습니다.");
+    }
+  };
+
+  // 💡 [추가] 댓글 삭제 핸들러 (원할 경우 사용)
+  const handleCommentDelete = async (commentId) => {
+    if (!window.confirm("댓글을 삭제하시겠습니까?")) return;
+    try {
+      await axiosInstance.delete(`/api/community/comments/${commentId}`);
+      alert("댓글이 삭제되었습니다.");
+      fetchComments();
+    } catch (error) {
+      console.error("댓글 삭제 실패", error);
+      alert("삭제 권한이 없거나 오류가 발생했습니다.");
+    }
+  };
+
+  // 💡 [추가] 대댓글(답글) 작성 제출 핸들러
+  const handleReplySubmit = async (parentId) => {
+    if (!currentUsername) {
+      alert("로그인 후 이용할 수 있는 기능입니다.");
+      return;
+    }
+    if (!newReply.trim()) {
+      alert("답글 내용을 입력해주세요.");
+      return;
+    }
+    try {
+      // 대댓글 API는 대개 부모 댓글 ID(parentId)를 바디나 URL에 포함합니다.
+      await axiosInstance.post(`/api/community/${id}/comments`, {
+        content: newReply,
+        parentId: parentId // 백엔드 엔티티 구조에 맞춰 키값을 변경하세요
+      });
+      setNewReply("");
+      setReplyingCommentId(null);
+      fetchComments();
+    } catch (error) {
+      console.error("답글 작성 실패", error);
+      alert("오류가 발생했거나 활동 정지 상태입니다.");
     }
   };
 
@@ -299,23 +365,108 @@ export default function CommunityDetailPage() {
             )}
 
             <div className="comments-list">
-              {comments.map((comment) => (
-                <div key={comment.id} style={{ borderBottom: '1px solid #eee', padding: '15px 0' }}>
-                  <div style={{ fontWeight: 'bold', color: '#333' }}>
-                    {comment.author} 
-                    <span style={{ fontWeight: 'normal', color: '#999', fontSize: '0.8em', marginLeft: '10px' }}>
-                      {new Date(comment.createdDate).toLocaleString()} 
-                    </span>
-                    <button 
-                      onClick={() => openReportModal('COMMENT', comment.id)}
-                      style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '0.9em' }}
-                    >
-                      &nbsp; 🚨 신고
-                    </button>
+              {comments.map((comment) => {
+                // 💡 [조건] 대댓글 계층 구조 시 시각적인 여백(마진)을 줌 (백엔드에 parentId 필드가 있다고 가정)
+                const isReply = !!comment.parentId; 
+
+                return (
+                  <div 
+                    key={comment.id} 
+                    style={{ 
+                      borderBottom: '1px solid #eee', 
+                      padding: '15px 0',
+                      marginLeft: isReply ? '40px' : '0px', // 대댓글은 오른쪽으로 들여쓰기
+                      backgroundColor: isReply ? '#fcfcfc' : 'transparent'
+                    }}
+                  >
+                    {/* 댓글 헤더 */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <div style={{ fontWeight: 'bold', color: '#333' }}>
+                        {isReply && <span style={{ color: '#10b981', marginRight: '5px' }}>↳</span>}
+                        {comment.author} 
+                        <span style={{ fontWeight: 'normal', color: '#999', fontSize: '0.8em', marginLeft: '10px' }}>
+                          {new Date(comment.createdDate).toLocaleString()} 
+                        </span>
+                      </div>
+                      
+                      {/* 댓글 관리 버튼 (신고 / 수정 / 삭제) */}
+                      <div style={{ fontSize: '0.9em' }}>
+                        {!isReply && (
+                          <button 
+                            onClick={() => {
+                              setReplyingCommentId(replyingCommentId === comment.id ? null : comment.id);
+                              setNewReply('');
+                            }}
+                            style={{ background: 'none', border: 'none', color: '#3b82f6', cursor: 'pointer', marginRight: '8px' }}
+                          >
+                            답글
+                          </button>
+                        )}
+                        
+                        {/* 본인 댓글이면 수정/삭제 노출, 타인 글이면 신고 노출 */}
+                        {comment.authorEmail === currentUsername ? (
+                          <>
+                            <button 
+                              onClick={() => {
+                                setEditingCommentId(comment.id);
+                                setEditingCommentContent(comment.content);
+                              }}
+                              style={{ background: 'none', border: 'none', color: '#4b5563', cursor: 'pointer', marginRight: '8px' }}
+                            >
+                              수정
+                            </button>
+                            <button 
+                              onClick={() => handleCommentDelete(comment.id)}
+                              style={{ background: 'none', border: 'none', color: '#9ca3af', cursor: 'pointer' }}
+                            >
+                              삭제
+                            </button>
+                          </>
+                        ) : (
+                          <button 
+                            onClick={() => openReportModal('COMMENT', comment.id)}
+                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer' }}
+                          >
+                            🚨 신고
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* 댓글 본문 영역 (수정 모드 여부에 따라 다르게 렌더링) */}
+                    {editingCommentId === comment.id ? (
+                      <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+                        <input 
+                          type="text"
+                          value={editingCommentContent}
+                          onChange={(e) => setEditingCommentContent(e.target.value)}
+                          style={{ flex: 1, padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
+                        />
+                        <button onClick={() => handleCommentUpdate(comment.id)} style={{ padding: '6px 12px', backgroundColor: '#3b82f6', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>저장</button>
+                        <button onClick={() => setEditingCommentId(null)} style={{ padding: '6px 12px', backgroundColor: '#e5e7eb', color: 'black', border: '1px solid #ccc', borderRadius: '4px', cursor: 'pointer' }}>취소</button>
+                      </div>
+                    ) : (
+                      <div style={{ marginTop: '8px', color: '#555', lineHeight: '1.4' }}>{comment.content}</div>
+                    )}
+
+                    {/* 대댓글(답글) 입력창 */}
+                    {replyingCommentId === comment.id && (
+                      <div style={{ display: 'flex', gap: '10px', marginTop: '15px', marginLeft: '20px' }}>
+                        <input 
+                          type="text"
+                          placeholder="답글을 입력하세요..."
+                          value={newReply}
+                          onChange={(e) => setNewReply(e.target.value)}
+                          style={{ flex: 1, padding: '10px', borderRadius: '4px', border: '1px solid #ddd' }}
+                          onKeyDown={(e) => { if(e.key === 'Enter') handleReplySubmit(comment.id); }}
+                        />
+                        <button onClick={() => handleReplySubmit(comment.id)} style={{ padding: '0 20px', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>등록</button>
+                      </div>
+                    )}
                   </div>
-                  <div style={{ marginTop: '8px', color: '#555', lineHeight: '1.4' }}>{comment.content}</div>
-                </div>
-              ))}
+                );
+              })}
+
               {comments.length === 0 && (
                 <div style={{ textAlign: 'center', color: '#999', padding: '30px 0', backgroundColor: '#f9fafb', borderRadius: '8px' }}>
                   아직 댓글이 없습니다. 첫 댓글을 남겨보세요!
@@ -358,27 +509,27 @@ export default function CommunityDetailPage() {
             backgroundColor: 'white', padding: '25px', borderRadius: '8px', width: '400px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
           }}>
             <h3 style={{ fontfamily: 'Pretendard', fontWeight: 'bold', marginTop: 0, marginBottom: '15px', color: '#ef4444' }}>🚨 신고하기</h3>
-            <p style={{ fontSize: '0.9em', color: '#555', marginBottom: '10px' }}>
+            <p style={{ fontSize: '0.8em', color: '#555', marginBottom: '10px' }}>
               부적절한 내용인가요? 신고 사유를 명확히 적어주세요.
             </p>
             <textarea
               value={reportReason}
               onChange={(e) => setReportReason(e.target.value)}
-              placeholder="예: 욕설 및 비방, 불법 광고, 도배 등"
-              style={{ width: '100%', height: '100px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', marginBottom: '15px' }}
+              placeholder="ex) 욕설 및 비방, 불법 광고, 도배 등"
+              style={{ fontSize: '12px',width: '100%', height: '100px', padding: '10px', borderRadius: '4px', border: '1px solid #ccc', marginBottom: '15px' }}
             />
             <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
               <button 
                 onClick={() => setShowReportModal(false)}
-                style={{ padding: '8px 16px', border: '1px solid #ccc', backgroundColor: 'white', borderRadius: '4px', cursor: 'pointer' }}
+                style={{ fontfamily: 'Pretendard', fontWeight:'700', padding: '8px 16px', border: '1px solid #ccc', backgroundColor: '#d8d6d6', borderRadius: '4px', cursor: 'pointer' }}
               >
                 취소
               </button>
               <button 
                 onClick={handleReportSubmit}
-                style={{ padding: '8px 16px', border: 'none', backgroundColor: '#ef4444', color: 'white', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                style={{ fontfamily: 'Pretendard', fontWeight:'700', width:'30%', padding: '8x 16px', border: 'none', backgroundColor: '#f3aab4', borderRadius: '4px', cursor: 'pointer' }}
               >
-                신고 제출
+                신고하기
               </button>
             </div>
           </div>

@@ -1,5 +1,6 @@
 package com.team2.faultFind_backend.post.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team2.faultFind_backend.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.*;
@@ -45,9 +46,11 @@ public class Post {
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isNotice = false; // 공지사항 여부
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDate;
 
     // DB에 저장되기 직전에 자동으로 현재 시간을 입력해 줍니다.
+
     @PrePersist
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
