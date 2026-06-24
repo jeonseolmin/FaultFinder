@@ -41,7 +41,6 @@ public class MyPageController {
             Map<String, Object> map = new java.util.HashMap<>();
             map.put("id", c.getId());
             map.put("content", c.getContent());
-            map.put("createdDate", c.getCreatedDate());
             // 무한 루프 없이 게시글 번호와 제목만 쏙 빼서 담아줍니다.
             map.put("postId", c.getPost().getId());
             map.put("postTitle", c.getPost().getTitle());

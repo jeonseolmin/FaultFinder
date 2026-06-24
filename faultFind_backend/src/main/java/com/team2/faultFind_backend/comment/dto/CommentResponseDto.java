@@ -24,7 +24,6 @@ public class CommentResponseDto {
         this.content = comment.getContent();
         this.author = comment.getAuthor();
         this.authorEmail = comment.getAuthorEmail();
-        this.createdDate = comment.getCreatedDate();
 
         // 부모 엔티티가 존재하면 부모의 ID를 세팅, 없으면 null
         this.parentId = (comment.getParent() != null) ? comment.getParent().getId() : null;
