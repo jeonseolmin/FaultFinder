@@ -6,6 +6,7 @@ import UserManagement from "../../components/Admin/UserManagement";
 import PostManagement from "../../components/Admin/PostManagement";
 import ReportManagement from "../../components/Admin/ReportManagement";
 import "./Admin.css";
+
 export default function AdminPage() {
   const navigate = useNavigate();
 
@@ -135,54 +136,47 @@ export default function AdminPage() {
   }
 
   return (
-      <div style={{ maxWidth: "1000px", margin: "40px auto", padding: "20px" }}>
-        <div
-            style={{
-              backgroundColor: "#1f2937",
-              padding: "30px",
-              borderRadius: "12px",
-              marginBottom: "30px",
-              textAlign: "center",
-              color: "white",
-            }}
-        >
-          <div className="admin-header">
-            <h2>관리자 페이지</h2>
-            <p>모든 유저, 게시글, 신고 내역을 관리합니다.</p>
-          </div>
+    <div className="admin-container">
+      <AdminTabs
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        userCount={data.users.length}
+        postCount={data.posts.length}
+        reportCount={reports.length}
+      />
+
+      <main className="admin-content">
+        <div className="admin-header">
+          <h2>관리자 대시보드</h2>
+          <p>모든 유저, 게시글, 신고 내역을 통합 관리합니다.</p>
         </div>
 
-        <AdminTabs
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            userCount={data.users.length}
-            postCount={data.posts.length}
-            reportCount={reports.length}
-        />
-
-        {activeTab === "users" && (
+        <div className="table-container">
+          {activeTab === "users" && (
             <UserManagement
-                users={data.users}
-                onDeleteUser={handleDeleteUser}
-                onSuspendUser={handleSuspendUser}
+              users={data.users}
+              onDeleteUser={handleDeleteUser}
+              onSuspendUser={handleSuspendUser}
             />
-        )}
+          )}
 
-        {activeTab === "posts" && (
+          {activeTab === "posts" && (
             <PostManagement
-                posts={data.posts}
-                onDeletePost={handleDeletePost}
-                navigate={navigate}
+              posts={data.posts}
+              onDeletePost={handleDeletePost}
+              navigate={navigate}
             />
-        )}
+          )}
 
-        {activeTab === "reports" && (
+          {activeTab === "reports" && (
             <ReportManagement
-                reports={reports}
-                onDeleteReportedTarget={handleDeleteReportedTarget}
-                navigate={navigate}
+              reports={reports}
+              onDeleteReportedTarget={handleDeleteReportedTarget}
+              navigate={navigate}
             />
-        )}
-      </div>
+          )}
+        </div>
+      </main>
+    </div>
   );
 }
