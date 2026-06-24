@@ -1,8 +1,6 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
-import RightSidebar from '../../components/Community/RightSideBar.jsx';
 import '../../components/Community/Community.css'; 
 import './AccidentType.css';
 

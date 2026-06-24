@@ -1,5 +1,6 @@
 package com.team2.faultFind_backend.accidentdetail.entity;
 
+import com.team2.faultFind_backend.accident.entity.Accident;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,6 +15,15 @@ public class AccidentDetails {
     @Column(name="case_code")
     private String caseCode;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "case_code",
+            referencedColumnName = "case_code",
+            insertable = false,
+            updatable = false
+    )
+    private Accident accident;
+
     @Column(name="accident_situation" , columnDefinition = "TEXT")
     private String accidentSituation;
 
@@ -23,13 +33,6 @@ public class AccidentDetails {
     @Column(name="modifier_explanation", columnDefinition = "TEXT")
     private String modifierExplanation;
 
-    @Column(name="usage_note", columnDefinition = "TEXT")
-    private String usageNote;
-
     @Column(name="legal_reference", columnDefinition = "TEXT")
     private String legalReference;
-
-    @Column(name="precedent", columnDefinition = "TEXT")
-    private String precedent;
-
 }
