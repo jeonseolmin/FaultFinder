@@ -1,0 +1,39 @@
+.password-found {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.password-found-title {
+    color: #10b981;
+    margin-bottom: 15px;
+}
+
+.password-found-desc {
+    color: #4b5563;
+    margin-bottom: 10px;
+}
+
+.temp-password-box {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ef4444;
+    letter-spacing: 5px;
+    padding: 15px;
+    background-color: #fef2f2;
+    border-radius: 8px;
+    border: 1px dashed #f87171;
+}
+
+.temp-password-notice {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 15px;
+}
+
+.auth-action {
+    margin-top: 20px;
+}
+
+.auth-links-top {
+    margin-top: 20px;
+}
