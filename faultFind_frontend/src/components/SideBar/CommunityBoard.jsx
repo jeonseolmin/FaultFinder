@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance.js";
 import LeftSidebar from "./LeftSideBar.jsx";
-
+import './Community.css'
 export default function CommunityBoard() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
@@ -111,61 +111,61 @@ export default function CommunityBoard() {
 
         {/* 게시글 테이블 영역 */}
         <table className="board-table">
-          <thead>
-            <tr>
-              <th style={{ width: '8%', minWidth: '50px' }}>No</th>
-              <th style={{ width: '10%', minWidth: '80px' }}>카테고리</th>
-              <th style={{ width: '37%' }}>제목</th>
-              <th style={{ width: '9%', minWidth: '80px' }}>게시자</th>
-              <th style={{ width: '21%', minWidth: '100px' }}>날짜</th>
-              <th style={{ width: '5%', minWidth: '60px' }}>조회수</th>
-              <th style={{ width: '5%', minWidth: '60px' }}>댓글</th>
-              <th style={{ width: '5%', minWidth: '60px' }}>좋아요</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(posts) && posts.length > 0 ? (
-              posts.map((post) => {
-                const isNoticePost = post.isNotice || post.notice;
-                
-                return (
-                  <tr 
-                    key={post.id}
-                    onClick={() => navigate(`/community/${post.id}`)} 
-                    className="board-row" 
-                    style={{ 
-                      cursor: 'pointer',
-                      backgroundColor: isNoticePost ? '#eff6ff' : 'transparent' 
-                    }}
-                  >
-                    <td>
-                      {isNoticePost ? (
-                        <span className="badge-notice">공지</span>
-                      ) : (
-                        post.id
-                      )}
-                    </td>
-                    <td>{categoryLabels[post.category] || post.category}</td>
-                    <td style={{ textAlign: 'left', fontWeight: isNoticePost ? '700' : '500', color: isNoticePost ? '#1e3a8a' : 'inherit' }}>
-                      {post.title}
-                    </td>
-                    <td>{post.author}</td>
-                    <td>{post.createdDate ? post.createdDate.split('T')[0] : ''}</td>
-                    <td>{post.viewCount || 0}</td>
-                    <td>{post.commentCount || 0}</td>
-                    <td style={{ fontWeight: 'bold', color: '#3b82f6' }}>{post.likeCount || 0}</td>
-                  </tr>
-                );
-              })
-            ) : (
-              <tr>
-                <td colSpan="8" style={{ padding: '50px 0', color: '#888', fontSize: '16px' }}>
-                  등록된 게시글이 없습니다.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+  <thead>
+    <tr>
+      <th>No</th>
+      <th>카테고리</th>
+      <th>제목</th>
+      <th>게시자</th>
+      <th>날짜</th>
+      <th>조회수</th>
+      <th>댓글</th>
+      <th>좋아요</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Array.isArray(posts) && posts.length > 0 ? (
+      posts.map((post) => {
+        const isNoticePost = post.isNotice || post.notice;
+        
+        return (
+          <tr 
+            key={post.id}
+            onClick={() => navigate(`/community/${post.id}`)} 
+            /* 공지사항일 경우 notice-row 클래스를 추가합니다 */
+            className={`board-row ${isNoticePost ? 'notice-row' : ''}`}
+          >
+            <td>
+              {isNoticePost ? (
+                <span className="badge-notice">공지</span>
+              ) : (
+                post.id
+              )}
+            </td>
+            <td>{categoryLabels[post.category] || post.category}</td>
+            {/* 인라인 스타일 대신 title-cell 클래스 적용 */}
+            <td className="title-cell">
+              {post.title}
+            </td>
+            <td>{post.author}</td>
+            <td>{post.createdDate ? post.createdDate.split('T')[0] : ''}</td>
+            <td>{post.viewCount || 0}</td>
+            <td>{post.commentCount || 0}</td>
+            {/* 인라인 스타일 대신 like-cell 클래스 적용 */}
+            <td className="like-cell">{post.likeCount || 0}</td>
+          </tr>
+        );
+      })
+    ) : (
+      <tr>
+        {/* 인라인 스타일 대신 no-posts-cell 클래스 적용 */}
+        <td colSpan="8" className="no-posts-cell">
+          등록된 게시글이 없습니다.
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
       </div>
     </div>
   );
