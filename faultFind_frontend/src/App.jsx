@@ -21,6 +21,7 @@ import FindPasswordPage from "./pages/Auth/FindPasswordPage.jsx";
 import FreeBoard from "./pages/Community/FreeBoard";
 import QnaBoard from "./pages/Community/QnaBoard";
 import ReviewBoard from "./pages/Community/ReviewBoard";
+import CommunityBoard from './components/Community/CommunityBoard';
 
 export default function App() {
   const location = useLocation();
@@ -44,7 +45,7 @@ export default function App() {
           <Route path="/cases" element={<AccidentTypePage />} />
           <Route path="/cases/:typeId" element={<AccidentTypeDetailPage />} />
           <Route path="/fault-ratios" element={<FaultSearchPage />} />
-          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/community" element={<CommunityBoard />} />
 
           <Route path="/login" element={<LoginPage />} />
           <Route path="/oauth-success" element={<OAuthSuccess />} />
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="/community/free" element={<FreeBoard />} />
           <Route path="/community/qna" element={<QnaBoard />} />
           <Route path="/community/reviews" element={<ReviewBoard />} />
+          <Route path="/community" element={<CommunityBoard />} />
         </Routes>
       </div>
     </div>

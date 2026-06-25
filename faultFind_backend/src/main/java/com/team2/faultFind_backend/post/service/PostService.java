@@ -133,4 +133,23 @@ public class PostService {
     public List<Post> getPostsByCategory(String category) {
         return postRepository.findByCategory(category);
     }
+
+    // 카테고리 및 검색 조건별 조회 로직 추가
+    public List<Post> searchPosts(String category, String searchType, String keyword) {
+        // 카테고리가 없거나 "all"이면 전체 검색으로 간주
+        boolean isAllPosts = (category == null || category.trim().isEmpty() || category.equals("all"));
+
+        if (searchType.equals("title")) {
+            return isAllPosts ? postRepository.findByTitleContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndTitleContainingIgnoreCase(category, keyword);
+        } else if (searchType.equals("content")) {
+            return isAllPosts ? postRepository.findByContentContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndContentContainingIgnoreCase(category, keyword);
+        } else if (searchType.equals("author")) {
+            return isAllPosts ? postRepository.findByAuthorContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword);
+        }
+
+        return isAllPosts ? postRepository.findAll() : postRepository.findByCategory(category);
+    }
 }

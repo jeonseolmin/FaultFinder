@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LeftSidebar from "../../components/Community/LeftSideBar.jsx";
+import LeftSidebar from "../../components/SideBar/LeftSideBar.jsx";
 import "../../components/Community/Community.css";
 import "./FaultSearch.css";
 

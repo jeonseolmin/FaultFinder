@@ -1,5 +1,4 @@
-import React from "react";
-import CategoryBoard from "../../components/Community/CategoryBoard";
+import CategoryBoard from "../../components/CategoryBoard/CategoryBoard";
 
 export default function ReviewBoard() {
   return (

@@ -14,4 +14,17 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p ORDER BY p.isNotice DESC, p.createdDate DESC")
     List<Post> findAllNoticeFirst();
     List<Post> findByCategory(String category);
+
+    // 제목에 검색어가 포함된 카테고리별 게시글 조회
+    List<Post> findByCategoryAndTitleContainingIgnoreCase(String category, String title);
+
+    // 내용에 검색어가 포함된 카테고리별 게시글 조회
+    List<Post> findByCategoryAndContentContainingIgnoreCase(String category, String content);
+
+    // 작성자에 검색어가 포함된 카테고리별 게시글 조회
+    List<Post> findByCategoryAndAuthorContainingIgnoreCase(String category, String author);
+
+    List<Post> findByTitleContainingIgnoreCase(String title);
+    List<Post> findByContentContainingIgnoreCase(String content);
+    List<Post> findByAuthorContainingIgnoreCase(String author);
 }

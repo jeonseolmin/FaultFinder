@@ -68,3 +68,63 @@
   color: #111827;
   text-decoration: underline;
 }
+
+.policy-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+}
+
+.policy-modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.policy-modal-header {
+  margin: 0 0 20px 0;
+  font-size: 1.3em;
+  color: #1e293b;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 15px;
+}
+
+.policy-modal-body {
+  white-space: pre-wrap;
+  color: #475569;
+  font-size: 0.95em;
+  line-height: 1.6;
+  max-height: 350px;
+  overflow-y: auto;
+  margin-bottom: 25px;
+  padding-right: 5px;
+}
+
+.policy-modal-footer {
+  text-align: right;
+}
+
+.policy-modal-close-btn {
+  padding: 10px 24px;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.policy-modal-close-btn:hover {
+  background-color: #dc2626;
+}
