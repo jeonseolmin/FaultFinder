@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LeftSidebar from "../../components/SideBar/LeftSideBar.jsx";
-import "../../components/Community/Community.css";
+import "../../components/SideBar/Community.css";
 import "./FaultSearch.css";
 
 function FaultSearchPage() {

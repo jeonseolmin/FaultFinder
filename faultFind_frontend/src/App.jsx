@@ -18,10 +18,10 @@ import MyPage from "./pages/Mypage/MyPage";
 import AdminPage from "./pages/Admin/AdminPage.jsx";
 import FaultSearchPage from "./pages/FaultSearch/FaultSearchPage.jsx";
 import FindPasswordPage from "./pages/Auth/FindPasswordPage.jsx";
-import FreeBoard from "./pages/Community/FreeBoard";
-import QnaBoard from "./pages/Community/QnaBoard";
-import ReviewBoard from "./pages/Community/ReviewBoard";
-import CommunityBoard from './components/Community/CommunityBoard';
+import FreeBoard from "./components/SideBar/FreeBoard.jsx";
+import QnaBoard from "./components/SideBar/QnaBoard.jsx";
+import ReviewBoard from "./components/SideBar/ReviewBoard.jsx";
+import CommunityBoard from './components/SideBar/CommunityBoard.jsx';
 
 export default function App() {
   const location = useLocation();

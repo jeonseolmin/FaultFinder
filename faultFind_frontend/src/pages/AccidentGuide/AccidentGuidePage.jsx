@@ -2,7 +2,7 @@ import React from 'react';
 
 // 🌟 사이드바 및 CSS 불러오기
 import LeftSidebar from '../../components/SideBar/LeftSideBar.jsx';
-import '../../components/Community/Community.css'; 
+import '../../components/SideBar/Community.css';
 import "./AccidentGuide.css";
 
 // 🌟 react-icons 불러오기

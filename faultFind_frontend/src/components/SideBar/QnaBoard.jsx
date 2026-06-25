@@ -1,4 +1,4 @@
-import CategoryBoard from "../../components/CategoryBoard/CategoryBoard";
+import CategoryBoard from "../CategoryBoard/CategoryBoard.jsx";
 
 export default function QnaBoard() {
   return (

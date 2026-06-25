@@ -202,7 +202,8 @@ export default function CommunityDetailPage() {
           <div className="detail-header">
             <h2>{post.title}</h2>
             <div className="post-meta">
-              <span>작성자: {post.author}</span> | <span>{post.createdDate}</span> 
+              <span>작성자: {post.author}</span> | 
+              <span>{post.createdDate ? post.createdDate.substring(0, 19).replace('T', ' ') : ''}</span> 
               <span className="meta-view">조회수 {post.viewCount || 0}</span>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'; 
 
 import LeftSidebar from '../../components/SideBar/LeftSideBar.jsx';
-import CommunityBoard from '../../components/Community/CommunityBoard.jsx';
+import CommunityBoard from '../../components/SideBar/CommunityBoard.jsx';
 import AccidentGuidePage from '../AccidentGuide/AccidentGuidePage.jsx';
 import './CommunityPage.css'; 
 
