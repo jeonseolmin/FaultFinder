@@ -67,7 +67,7 @@ spring:
     hibernate:
       # Entity 변경사항을 기반으로 테이블 자동 생성/수정
       # 개발 단계에서 사용
-      ddl-auto: validate
+      ddl-auto: update
 
     properties:
       hibernate:
