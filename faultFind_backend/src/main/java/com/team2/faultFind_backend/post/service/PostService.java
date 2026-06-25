@@ -128,4 +128,9 @@ public class PostService {
             return true; // 추가됨(true) 반환
         }
     }
+
+    // 카테고리별로 게시글을 불러오는 로직 추가
+    public List<Post> getPostsByCategory(String category) {
+        return postRepository.findByCategory(category);
+    }
 }

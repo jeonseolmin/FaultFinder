@@ -17,9 +17,12 @@ public class PostController {
 
     private final PostService postService;
 
-    // 1. 게시글 목록 불러오기 (공지 상단 고정)
     @GetMapping
-    public ResponseEntity<List<Post>> getPostList() {
+    public ResponseEntity<List<Post>> getPosts(@RequestParam(required = false) String category) {
+        if (category != null && !category.isEmpty()) {
+            return ResponseEntity.ok(postService.getPostsByCategory(category));
+        }
+        // 파라미터가 없으면 기존처럼 전체 게시글을 리턴합니다.
         return ResponseEntity.ok(postService.getAllPosts());
     }
 
@@ -56,16 +59,13 @@ public class PostController {
         return ResponseEntity.ok("게시글이 성공적으로 삭제되었습니다.");
     }
 
-    // 7. 게시글 좋아요 토글 (추가 및 취소 통합)
+    // 7. 게시글 좋아요 토글
     @PostMapping("/{id}/like")
     public ResponseEntity<Boolean> toggleLike(
             @PathVariable Long id,
-            Authentication authentication // 다른 메서드와 동일하게 시큐리티 인증 객체 사용
+            Authentication authentication
     ) {
-        // authentication.getName() 은 로그인한 유저의 이메일을 반환합니다.
         boolean isNowLiked = postService.toggleLike(id, authentication.getName());
-
-        // 프론트엔드로 true(좋아요 됨) 또는 false(취소 됨) 전달
         return ResponseEntity.ok(isNowLiked);
     }
 }
