@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance';
 
-import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
-import RightSidebar from '../../components/Community/RightSideBar.jsx';
+import LeftSidebar from '../../components/SideBar/LeftSideBar.jsx';
+import RightSidebar from '../../components/SideBar/RightSideBar.jsx';
 import '../../components/Community/Community.css'; 
 import './AccidentTypeDetail.css';
 

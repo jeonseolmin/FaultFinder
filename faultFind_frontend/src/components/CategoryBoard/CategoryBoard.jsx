@@ -1,28 +1,37 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
-import LeftSidebar from "./LeftSidebar"; 
+import LeftSidebar from "../SideBar/LeftSideBar.jsx";
 
 export default function CategoryBoard({ category, title }) {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
+  // 검색 관련 상태 변수 추가
+  const [searchType, setSearchType] = useState("title");
+  const [keyword, setKeyword] = useState("");
+
+  // 실제 API 요청에 사용할 검색 조건 상태 (검색 버튼을 누를 때만 변경됨)
+  const [activeSearch, setActiveSearch] = useState({ type: "title", word: "" });
+
   useEffect(() => {
     const fetchCategoryPosts = async () => {
       try {
-        const response = await axiosInstance.get(`/api/community?category=${category}`);
+        // 검색 조건이 있으면 URL 뒤에 파라미터로 붙여서 보냄
+        let url = `/api/community?category=${category}`;
+        if (activeSearch.word) {
+          url += `&searchType=${activeSearch.type}&keyword=${encodeURIComponent(activeSearch.word)}`;
+        }
+
+        const response = await axiosInstance.get(url);
         
-        // 공지사항을 맨 위로 올리는 정렬 로직
         const sortedPosts = response.data.sort((a, b) => {
           const aNotice = a.isNotice || a.notice ? 1 : 0;
           const bNotice = b.isNotice || b.notice ? 1 : 0;
 
-          // 1. 공지사항 여부가 다르면 공지사항(1)이 앞으로 오도록 정렬 (-1 반환)
           if (aNotice !== bNotice) {
             return bNotice - aNotice;
           }
-
-          // 2. 둘 다 공지사항이거나 둘 다 일반글이면 최신글(ID가 큰 것) 순으로 정렬
           return b.id - a.id;
         });
 
@@ -33,20 +42,52 @@ export default function CategoryBoard({ category, title }) {
     };
 
     fetchCategoryPosts();
-  }, [category, title]);
+  }, [category, title, activeSearch]); // activeSearch가 바뀔 때마다 다시 서버에서 조회함
+
+  // 검색어 제출 함수
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setActiveSearch({ type: searchType, word: keyword });
+  };
 
   return (
     <div className="main-container">
-      
       <LeftSidebar activeTab="community" />
 
       <div className="board-list-container">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
           <h3>{title}</h3>
           <button onClick={() => navigate('/community/write')} className="btn-write" style={{ width: 'auto', padding: '10px 20px', fontSize: '14px' }}>
-            글 쓰기
+            ✍️ 글쓰기
           </button>
         </div>
+
+        {/* 이미 작성해두신 CSS 기반의 검색 바 UI 추가 */}
+        <form onSubmit={handleSearchSubmit} className="search-filter-bar">
+          <select 
+            className="select-box"
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+          >
+            <option value="title">제목</option>
+            <option value="content">내용</option>
+            <option value="author">작성자</option>
+          </select>
+          
+          <div className="search-input-wrapper">
+            <input 
+              type="text" 
+              className="search-input" 
+              placeholder="검색어를 입력해 주세요"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+            />
+          </div>
+          
+          <button type="submit" className="btn-write" style={{ width: 'auto', padding: '0 20px', borderRadius: '6px', fontSize: '14px', height: '42px' }}>
+            검색
+          </button>
+        </form>
 
         <table className="board-table">
           <thead>
@@ -91,11 +132,9 @@ export default function CategoryBoard({ category, title }) {
                       )}
                     </td>
                     <td>{categoryLabels[post.category] || post.category}</td>
-                    
                     <td style={{ textAlign: 'left', fontWeight: isNoticePost ? '700' : '500', color: isNoticePost ? '#1e3a8a' : 'inherit' }}>
                       {post.title}
                     </td>
-                    
                     <td style={{ textAlign: 'center' }}>{post.author}</td>
                     <td style={{ textAlign: 'center' }}>{post.createdDate ? post.createdDate.split('T')[0] : (post.createdAt ? post.createdAt.split('T')[0] : '')}</td>
                     <td style={{ textAlign: 'center' }}>{post.viewCount || 0}</td>
@@ -107,7 +146,7 @@ export default function CategoryBoard({ category, title }) {
             ) : (
               <tr>
                 <td colSpan="8" style={{ textAlign: 'center', padding: '50px 0', color: '#888', fontSize: '16px' }}>
-                  아직 등록된 게시글이 없습니다.
+                  검색 결과에 부합하는 게시글이 존재하지 않습니다.
                 </td>
               </tr>
             )}

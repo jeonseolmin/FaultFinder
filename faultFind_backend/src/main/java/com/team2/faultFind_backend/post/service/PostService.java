@@ -133,4 +133,16 @@ public class PostService {
     public List<Post> getPostsByCategory(String category) {
         return postRepository.findByCategory(category);
     }
+
+    // 카테고리 및 검색 조건별 조회 로직 추가
+    public List<Post> searchPosts(String category, String searchType, String keyword) {
+        if (searchType.equals("title")) {
+            return postRepository.findByCategoryAndTitleContainingIgnoreCase(category, keyword);
+        } else if (searchType.equals("content")) {
+            return postRepository.findByCategoryAndContentContainingIgnoreCase(category, keyword);
+        } else if (searchType.equals("author")) {
+            return postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword);
+        }
+        return postRepository.findByCategory(category);
+    }
 }

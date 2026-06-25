@@ -1,9 +1,9 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom'; 
 
-import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
+import LeftSidebar from '../../components/SideBar/LeftSideBar.jsx';
 import BoardList from '../../components/Community/BoardList.jsx';
-import RightSidebar from '../../components/Community/RightSideBar.jsx';
+import RightSidebar from '../../components/SideBar/RightSideBar.jsx';
 // 🌟 우리가 만든 사고대처 컴포넌트를 불러옵니다! (경로는 실제 파일 위치에 맞게 맞춰주세요)
 import AccidentGuidePage from '../AccidentGuide/AccidentGuidePage.jsx';
 import '../../components/Community/Community.css'; 

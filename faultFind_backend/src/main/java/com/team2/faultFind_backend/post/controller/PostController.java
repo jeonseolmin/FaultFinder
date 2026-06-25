@@ -18,11 +18,28 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<List<Post>> getPosts(@RequestParam(required = false) String category) {
-        if (category != null && !category.isEmpty()) {
+    public ResponseEntity<List<Post>> getPosts(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String searchType,
+            @RequestParam(required = false) String keyword) {
+
+        // 1. 카테고리와 검색어가 모두 존재할 때
+        if (category != null && !category.isEmpty() && keyword != null && !keyword.isEmpty()) {
+            // "all" 카테고리(전체)에서 검색할 때의 처리 로직 추가
+            if (category.equals("all")) {
+                // 전체 카테고리 검색 메서드가 서비스에 없다면 새로 만들어야 할 수도 있습니다.
+                // 임시로 기존 searchPosts를 쓰되, 서비스 로직에 맞게 조정 필요.
+                return ResponseEntity.ok(postService.searchPosts("", searchType, keyword));
+            }
+            return ResponseEntity.ok(postService.searchPosts(category, searchType, keyword));
+        }
+
+        // 2. 카테고리 필터링만 적용할 때
+        if (category != null && !category.isEmpty() && !category.equals("all")) {
             return ResponseEntity.ok(postService.getPostsByCategory(category));
         }
-        // 파라미터가 없으면 기존처럼 전체 게시글을 리턴합니다.
+
+        // 3. 아무런 조건이 없을 때 (전체 반환)
         return ResponseEntity.ok(postService.getAllPosts());
     }
 

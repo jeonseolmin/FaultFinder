@@ -21,6 +21,7 @@ import FindPasswordPage from "./pages/Auth/FindPasswordPage.jsx";
 import FreeBoard from "./pages/Community/FreeBoard";
 import QnaBoard from "./pages/Community/QnaBoard";
 import ReviewBoard from "./pages/Community/ReviewBoard";
+import CommunityBoard from './components/Community/CommunityBoard';
 
 export default function App() {
   const location = useLocation();
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="/community/free" element={<FreeBoard />} />
           <Route path="/community/qna" element={<QnaBoard />} />
           <Route path="/community/reviews" element={<ReviewBoard />} />
+          <Route path="/community" element={<CommunityBoard />} />
         </Routes>
       </div>
     </div>
