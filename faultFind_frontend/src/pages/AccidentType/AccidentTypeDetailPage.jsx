@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance';
 
+<<<<<<< HEAD
 import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
-import RightSidebar from '../../components/Community/RightSideBar.jsx';
+=======
+import LeftSidebar from '../../components/SideBar/LeftSideBar.jsx';
+import RightSidebar from '../../components/SideBar/RightSideBar.jsx';
+>>>>>>> fac9b820cfd38d717ccd01f15a0ddb0d7d240e40
 import '../../components/Community/Community.css'; 
 import './AccidentTypeDetail.css';
 
@@ -159,7 +163,7 @@ export default function AccidentTypeDetailPage() {
           </button>
         </div>
 
-        <RightSidebar />
+
         
       </main>
     </div>

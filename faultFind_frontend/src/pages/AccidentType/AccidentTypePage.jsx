@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
+import LeftSidebar from '../../components/SideBar/LeftSideBar.jsx';
 import '../../components/Community/Community.css'; 
 import './AccidentType.css';
 

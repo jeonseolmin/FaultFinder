@@ -1,5 +1,5 @@
 import { useState } from "react";
-import LeftSidebar from "../../components/Community/LeftSideBar.jsx";
+import LeftSidebar from "../../components/SideBar/LeftSideBar.jsx";
 import "../../components/Community/Community.css";
 import "./FaultSearch.css";
 
@@ -77,7 +77,8 @@ function FaultSearchPage() {
                   <option value="">사고 유형 선택 (선택)</option>
                   <option value="car_to_car">차량 대 차량</option>
                   <option value="car_to_human">차량 대 보행자</option>
-                  <option value="car_to_bike">차량 대 이륜차</option>
+                  <option value="car_to_motorcycle">차량 대 이륜차</option>
+                  <option value="car_to_bicycle">차량 대 자전거</option>
                 </select>
                 <button className="btn-analyze"
                   onClick={handleAnalyzeClick}
@@ -110,10 +111,10 @@ function FaultSearchPage() {
               {showResult && (
                 <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
                   {/* 도넛 차트 및 퍼센트 영역 */}
-                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '40px', marginBottom: '30px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '40px', marginBottom: '30px', marginTop: '27px' }}>
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '2.5em', fontWeight: 'bold', color: '#3b82f6' }}>70%</div>
-                      <div style={{ color: '#4b5563', fontSize: '0.9em' }}>A 차량 (직진)</div>
+                      <div style={{ fontSize: '40px', fontWeight: 'bold', color: '#3b82f6' }}>70%</div>
+                      <div style={{ color: '#4b5563', fontSize: '13px' }}>A 차량 (직진)</div>
                     </div>
 
                     {/* CSS conic-gradient를 활용한 깔끔한 도넛 차트 */}
@@ -126,21 +127,21 @@ function FaultSearchPage() {
                     </div>
 
                     <div style={{ textAlign: 'center' }}>
-                      <div style={{ fontSize: '2.5em', fontWeight: 'bold', color: '#ef4444' }}>30%</div>
-                      <div style={{ color: '#4b5563', fontSize: '0.9em' }}>B 차량 (진입)</div>
+                      <div style={{ fontSize: '40px', fontWeight: 'bold', color: '#ef4444' }}>30%</div>
+                      <div style={{ color: '#4b5563', fontSize: '13px' }}>B 차량 (진입)</div>
                     </div>
                   </div>
 
                   {/* 분석 요약 텍스트 */}
-                  <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', border: '1px solid #fde68a', marginBottom: '30px' }}>
-                    <h4 style={{ margin: '0 0 10px 0', fontSize: '1em', color: '#1f2937' }}>분석 요약</h4>
-                    <p style={{ margin: 0, fontSize: '0.95em', color: '#4b5563', lineHeight: '1.5' }}>
+                  <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', border: '3px solid #BCCCDC', marginBottom: '30px' }}>
+                    <h4 style={{ margin: '0 0 10px 0', fontSize: '18px', fontWeight: 'bold', color: '#1f2937' }}>분석 요약</h4>
+                    <p style={{ margin: 0, fontSize: '15px', color: '#4b5563', lineHeight: '1.5' }}>
                       A 차량이 도로 우선권을 가지므로 B 차량의 과실이 더 큽니다. 단, 안전운전 의무에 따른 일부 과실이 인정됩니다.
                     </p>
                   </div>
 
                   {/* 4개의 하단 액션 버튼 */}
-                  <div style={{ display: 'flex', gap: '15px', justifyContent: 'space-between', marginTop: 'auto' }}>
+                  <div style={{ display: 'flex', gap: '13px', justifyContent: 'space-between', marginTop: 'auto' }}>
                     {['상세 분석 보기', '관련 판례 보기', '관련 법률 보기', '보험처리 가이드'].map((btnText, idx) => (
                       <button key={idx} style={{ flex: 1, padding: '15px 10px', backgroundColor: 'white', border: '1px solid #e5e7eb', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85em', color: '#4b5563', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', transition: 'all 0.2s' }}
                         onMouseOver={(e) => e.currentTarget.style.borderColor = '#3b82f6'}

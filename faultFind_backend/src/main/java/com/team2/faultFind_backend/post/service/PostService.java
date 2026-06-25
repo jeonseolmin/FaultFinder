@@ -48,13 +48,19 @@ public class PostService {
     // 2. 전체 게시글 조회 (공지 우선 정렬)
     @Transactional(readOnly = true)
     public List<PostResponse> getAllPosts() {
-        return postRepository.findAllNoticeFirst();
+        return postRepository.findAllNoticeFirst()
+                .stream()
+                .map(PostResponse::from)
+                .toList();
     }
 
     // 3. 인기글 TOP 5 조회
     @Transactional(readOnly = true)
     public List<PostResponse> getPopularPosts() {
-        return postRepository.findTop5ByOrderByLikeCountDesc();
+        return postRepository.findTop5ByOrderByLikeCountDesc()
+                .stream()
+                .map(PostResponse::from)
+                .toList();
     }
 
     // 4. 게시글 상세 조회 (조회수 증가)
@@ -139,5 +145,29 @@ public class PostService {
 
     public void deleteById(Long id) {
         postRepository.deleteById(id);
+    }
+
+    // 카테고리별로 게시글을 불러오는 로직 추가
+    public List<Post> getPostsByCategory(String category) {
+        return postRepository.findByCategory(category);
+    }
+
+    // 카테고리 및 검색 조건별 조회 로직 추가
+    public List<Post> searchPosts(String category, String searchType, String keyword) {
+        // 카테고리가 없거나 "all"이면 전체 검색으로 간주
+        boolean isAllPosts = (category == null || category.trim().isEmpty() || category.equals("all"));
+
+        if (searchType.equals("title")) {
+            return isAllPosts ? postRepository.findByTitleContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndTitleContainingIgnoreCase(category, keyword);
+        } else if (searchType.equals("content")) {
+            return isAllPosts ? postRepository.findByContentContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndContentContainingIgnoreCase(category, keyword);
+        } else if (searchType.equals("author")) {
+            return isAllPosts ? postRepository.findByAuthorContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword);
+        }
+
+        return isAllPosts ? postRepository.findAll() : postRepository.findByCategory(category);
     }
 }

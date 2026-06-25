@@ -18,6 +18,10 @@ import MyPage from "./pages/Mypage/MyPage";
 import AdminPage from "./pages/Admin/AdminPage.jsx";
 import FaultSearchPage from "./pages/FaultSearch/FaultSearchPage.jsx";
 import FindPasswordPage from "./pages/Auth/FindPasswordPage.jsx";
+import FreeBoard from "./pages/Community/FreeBoard";
+import QnaBoard from "./pages/Community/QnaBoard";
+import ReviewBoard from "./pages/Community/ReviewBoard";
+import CommunityBoard from './components/Community/CommunityBoard';
 
 export default function App() {
   const location = useLocation();
@@ -27,7 +31,6 @@ export default function App() {
   return (
     // 2. 기존의 빈 태그(<>) 대신, 전체 화면을 관리할 app-wrapper 클래스로 감쌉니다.
     <div className="app-wrapper">
-      
       {/* 상단 고정 네비게이션 */}
       <Navbar />
 
@@ -42,8 +45,8 @@ export default function App() {
           <Route path="/cases" element={<AccidentTypePage />} />
           <Route path="/cases/:typeId" element={<AccidentTypeDetailPage />} />
           <Route path="/fault-ratios" element={<FaultSearchPage />} />
-          <Route path="/community" element={<CommunityPage />} />
-          
+          <Route path="/community" element={<CommunityBoard />} />
+
           <Route path="/login" element={<LoginPage />} />
           <Route path="/oauth-success" element={<OAuthSuccess />} />
           <Route path="/signup" element={<SignupPage />} />
@@ -55,9 +58,12 @@ export default function App() {
           <Route path="/posts" element={<CommunityPage />} />
           <Route path="/community/edit/:id" element={<CommunityEditPage />} />
           <Route path="/find-password" element={<FindPasswordPage />} />
+          <Route path="/community/free" element={<FreeBoard />} />
+          <Route path="/community/qna" element={<QnaBoard />} />
+          <Route path="/community/reviews" element={<ReviewBoard />} />
+          <Route path="/community" element={<CommunityBoard />} />
         </Routes>
       </div>
-      
     </div>
   );
 }
