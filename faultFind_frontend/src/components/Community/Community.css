@@ -1,11 +1,11 @@
 .post-detail-container {
-  background: #fff;
-  border: 1px solid #eaeaea;
-  border-radius: 12px;
-  padding: 40px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-  max-width: 900px;
-  margin: 50px auto;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    max-width: 900px;
+    margin: 50px auto;
 }
 
 .detail-header h2 {
@@ -281,4 +281,89 @@
     background-color: #ef4444;
     color: white;
     border: none;
+}
+
+.edit-page-container {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    max-width: 900px;
+    margin: 50px auto;
+}
+
+.edit-page-container h2 {
+    font-size: 24px;
+    color: #222;
+    margin-bottom: 20px;
+}
+
+.edit-form-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-page-title-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.edit-page-content-textarea {
+    width: 100%;
+    padding: 12px;
+    min-height: 400px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 15px;
+    resize: vertical;
+}
+
+.edit-page-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn-base {
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.btn-save {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #ef4444;
+    color: white;
+    border: 1px solid #ef4444;
+}
+
+.community-page {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.main-container {
+    font-family: "Pretendard", -apple-system, sans-serif;
+    max-width: 1280px;
+    margin: 30px auto;
+    display: flex;
+    gap: 24px;
+    padding: 0 20px;
+    align-items: flex-start;
 }
