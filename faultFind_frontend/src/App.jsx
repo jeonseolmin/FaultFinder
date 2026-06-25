@@ -4,12 +4,12 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Layout/Navbar/Navbar.jsx";
 import MainPage from "./pages/Main/MainPage.jsx";
 
-import CommunityPage from './pages/Community/CommunityPage.jsx';
+import CommunityPage from './components/Community/CommunityPage.jsx';
 import LoginPage from "./pages/Auth/LoginPage.jsx";
 import SignupPage from "./pages/Auth/SignupPage.jsx";
 import CommunityWritePage from "./pages/Community/CommunityWritePage.jsx";
-import CommunityDetailPage from './pages/Community/CommunityDetailPage.jsx';
-import CommunityEditPage from './pages/Community/CommunityEditPage.jsx';
+import CommunityDetailPage from './components/Community/CommunityDetailPage.jsx';
+import CommunityEditPage from './components/Community/CommunityEditPage.jsx';
 import AccidentGuidePage from "./pages/AccidentGuide/AccidentGuidePage.jsx";
 import AccidentTypePage from "./pages/AccidentType/AccidentTypePage.jsx";
 import AccidentTypeDetailPage from "./pages/AccidentType/AccidentTypeDetailPage.jsx";
