@@ -13,4 +13,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findTop5ByOrderByLikeCountDesc();
     @Query("SELECT p FROM Post p ORDER BY p.isNotice DESC, p.createdDate DESC")
     List<Post> findAllNoticeFirst();
+    List<Post> findByCategory(String category);
 }
