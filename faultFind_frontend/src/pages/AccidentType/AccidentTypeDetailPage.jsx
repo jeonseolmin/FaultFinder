@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance';
 
 import LeftSidebar from '../../components/Community/LeftSideBar.jsx';
-import RightSidebar from '../../components/Community/RightSideBar.jsx';
 import '../../components/Community/Community.css'; 
 import './AccidentTypeDetail.css';
 
@@ -159,7 +158,7 @@ export default function AccidentTypeDetailPage() {
           </button>
         </div>
 
-        <RightSidebar />
+
         
       </main>
     </div>
