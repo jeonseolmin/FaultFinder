@@ -1,4 +1,4 @@
-import CommunityDetail from '../../components/Community/CommunityDetail';
+import CommunityDetailPage from '../../components/Community/CommunityDetailPage';
 
 export default function CommunityDetailPage() {
   return (
