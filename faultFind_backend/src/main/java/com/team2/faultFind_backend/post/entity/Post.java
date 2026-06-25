@@ -2,6 +2,7 @@ package com.team2.faultFind_backend.post.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team2.faultFind_backend.comment.entity.Comment;
+import com.team2.faultFind_backend.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Post {
+public class Post extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,16 +46,6 @@ public class Post {
     @Builder.Default
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isNotice = false; // 공지사항 여부
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime createdDate;
-
-    // DB에 저장되기 직전에 자동으로 현재 시간을 입력해 줍니다.
-
-    @PrePersist
-    public void prePersist() {
-        this.createdDate = LocalDateTime.now();
-    }
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();

@@ -14,6 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -124,5 +128,31 @@ public class UserService {
             sb.append(chars.charAt(index));
         }
         return sb.toString();
+    }
+
+    public UserResponse findByEmail(String email) {
+        return UserResponse.
+                from(userRepository.findByEmail(email)
+                .orElseThrow(()->new IllegalArgumentException("다른 email 입니다.")));
+    }
+
+    public List<UserResponse> findAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserResponse::from)
+                .toList();
+    }
+
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public UserResponse findById(Long id) {
+        return UserResponse.
+                from(userRepository.findById(id)
+                        .orElseThrow(()->new IllegalArgumentException("다른 email 입니다.")));
+    }
+
+    public void save(UserResponse user) {
     }
 }

@@ -31,7 +31,6 @@ public class Comment extends BaseEntity {
     // 게시글 엔티티와 다대일(N:1) 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    @JsonIgnore // JSON 변환 시 무한 루프 도는 현상을 방지
     private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,6 +1,7 @@
 package com.team2.faultFind_backend.post.service;
 
-import com.team2.faultFind_backend.post.dto.PostDto;
+import com.team2.faultFind_backend.post.dto.PostRequest;
+import com.team2.faultFind_backend.post.dto.PostResponse;
 import com.team2.faultFind_backend.post.entity.Post;
 import com.team2.faultFind_backend.post.entity.PostLike;
 import com.team2.faultFind_backend.post.repository.PostRepository;
@@ -24,7 +25,7 @@ public class PostService {
     private final PostLikeRepository postLikeRepository;
 
     // 1. 게시글 작성
-    public void createPost(PostDto postDto, String email) {
+    public void createPost(PostRequest postRequest, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("가입된 회원이 아닙니다."));
 
@@ -33,12 +34,12 @@ public class PostService {
         }
 
         Post post = Post.builder()
-                .category(postDto.getCategory())
-                .title(postDto.getTitle())
-                .content(postDto.getContent())
+                .category(postRequest.getCategory())
+                .title(postRequest.getTitle())
+                .content(postRequest.getContent())
                 .author(user.getUserName())
                 .authorEmail(user.getEmail())
-                .isNotice(postDto.isNotice())
+                .isNotice(postRequest.isNotice())
                 .build();
 
         postRepository.save(post);
@@ -46,26 +47,26 @@ public class PostService {
 
     // 2. 전체 게시글 조회 (공지 우선 정렬)
     @Transactional(readOnly = true)
-    public List<Post> getAllPosts() {
+    public List<PostResponse> getAllPosts() {
         return postRepository.findAllNoticeFirst();
     }
 
     // 3. 인기글 TOP 5 조회
     @Transactional(readOnly = true)
-    public List<Post> getPopularPosts() {
+    public List<PostResponse> getPopularPosts() {
         return postRepository.findTop5ByOrderByLikeCountDesc();
     }
 
     // 4. 게시글 상세 조회 (조회수 증가)
-    public Post getPost(Long id) {
+    public PostResponse getPost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
         post.setViewCount(post.getViewCount() + 1);
-        return post;
+        return PostResponse.from(post);
     }
 
     // 5. 게시글 수정
-    public void updatePost(Long id, PostDto postDto, String email) {
+    public void updatePost(Long id, PostRequest postRequest, String email) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
@@ -73,9 +74,9 @@ public class PostService {
             throw new RuntimeException("글을 수정할 권한이 없습니다.");
         }
 
-        post.setTitle(postDto.getTitle());
-        post.setContent(postDto.getContent());
-        post.setCategory(postDto.getCategory());
+        post.setTitle(postRequest.getTitle());
+        post.setContent(postRequest.getContent());
+        post.setCategory(postRequest.getCategory());
     }
 
     // 6. 게시글 삭제
@@ -127,5 +128,16 @@ public class PostService {
             post.setLikeCount(post.getLikeCount() + 1); // 좋아요 수 1 증가
             return true; // 추가됨(true) 반환
         }
+    }
+
+    public List<PostResponse> findAll() {
+        return postRepository.findAll()
+                .stream()
+                .map(PostResponse::from)
+                .toList();
+    }
+
+    public void deleteById(Long id) {
+        postRepository.deleteById(id);
     }
 }

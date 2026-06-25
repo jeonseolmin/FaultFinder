@@ -21,10 +21,13 @@ export default function AdminPage() {
         setLoading(true);
 
         const response = await axiosInstance.get("/api/admin/dashboard");
-        setData(response.data);
+        setData({
+          users: response.data.users || [],
+          posts: response.data.posts || [],
+        });
 
         const reportsResponse = await axiosInstance.get("/api/admin/reports");
-        setReports(reportsResponse.data);
+        setReports(reportsResponse.data || []);
       } catch (error) {
         console.error("관리자 데이터 불러오기 실패", error);
         alert("관리자 권한이 없거나 접근할 수 없습니다.");
@@ -140,9 +143,9 @@ export default function AdminPage() {
       <AdminTabs
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        userCount={data.users.length}
-        postCount={data.posts.length}
-        reportCount={reports.length}
+        userCount={data.users?.length || 0}
+        postCount={data.posts?.length || 0}
+        reportCount={reports?.length || 0}
       />
 
       <main className="admin-content">

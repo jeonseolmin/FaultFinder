@@ -36,4 +36,15 @@ public class CommentController {
         return ResponseEntity.ok("댓글이 성공적으로 작성되었습니다.");
 
     }
+
+    @PutMapping("/{postId}/comments/{commentId}")
+    public ResponseEntity<String> updateComment(
+            @PathVariable Long postId,
+            @PathVariable Long commentId,
+            @RequestBody CommentRequestDto commentRequestDto,
+            Authentication authentication){
+            commentService.updateComment(postId,commentId,commentRequestDto, authentication.getName());
+        return ResponseEntity.ok("댓글이 성공적으로 수정되었습니다.");
+    }
+
 }
