@@ -55,7 +55,7 @@ function Navbar() {
               <Link to="/cases/car-to-pedestrian">차량 대 보행자</Link>
             </li>
             <li>
-              <Link to="/cases/car-to-bike">차량 대 이륜차</Link>
+              <Link to="/cases/car-to-motorcycle">차량 대 이륜차</Link>
             </li>
             <li>
               <Link to="/cases/car-to-bicycle">차량 대 자전거</Link>
@@ -86,7 +86,7 @@ function Navbar() {
               <Link to="/community/qna">Q&A</Link>
             </li>
             <li>
-              <Link to="/community/review">사고후기</Link>
+              <Link to="/community/reviews">사고후기</Link>
             </li>
           </ul>
         </li>

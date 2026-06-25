@@ -1,10 +1,9 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'; 
 
 import LeftSidebar from '../../components/SideBar/LeftSideBar.jsx';
-import CommunityBoard from '../../components/Community/CommunityBoard.jsx';
-import RightSidebar from '../../components/SideBar/RightSideBar.jsx';
+import CommunityBoard from '../../components/SideBar/CommunityBoard.jsx';
 import AccidentGuidePage from '../AccidentGuide/AccidentGuidePage.jsx';
-import '../../components/Community/Community.css'; 
+import './CommunityPage.css'; 
 
 export default function CommunityPage() {
   const location = useLocation(); 
@@ -22,23 +21,18 @@ export default function CommunityPage() {
 
   const activeTab = getActiveTab();
 
-  // 🌟 핵심: 가운데 알맹이를 주소에 따라 다르게 리턴해주는 함수를 만듭니다.
   const renderMainContent = () => {
     if (location.pathname === '/guides') {
-      return <AccidentGuidePage />; // 주소가 사고대처면 사고대처 화면을!
+      return <AccidentGuidePage />;
     }
-    // 그 외(커뮤니티 등)는 기본적으로 게시판을 보여줍니다.
-    return <CommunityBoard activeTab={activeTab} />;
+    return <CommunityBoard activeTab={activeTab} />; 
   };
 
   return (
     <div className="community-page">
       <main className="main-container">
         <LeftSidebar activeTab={activeTab} />
-        
-        {/* 꽉 막혀있던 <BoardList /> 대신, 방금 만든 함수를 넣어줍니다! */}
         {renderMainContent()}
-        
       </main>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../api/axiosInstance";
-import LeftSidebar from "../SideBar/LeftSideBar.jsx";
+import axiosInstance from "../../api/axiosInstance.js";
+import LeftSidebar from "./LeftSideBar.jsx";
 
 export default function CommunityBoard() {
   const navigate = useNavigate();
