@@ -9,6 +9,9 @@ import com.team2.faultFind_backend.post.repository.PostLikeRepository;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -148,51 +151,50 @@ public class PostService {
     }
 
     // 카테고리별로 게시글을 불러오는 로직 추가
-    public List<PostResponse> getPostsByCategory(String category) {
-        return postRepository.findByCategory(category)
-                .stream()
-                .map(PostResponse::from)
-                .toList();
+    public Page<PostResponse> getPostsByCategory(String category, Pageable pageable) {
+        return postRepository.findByCategory(category,pageable)
+                .map(PostResponse::from);
     }
 
     // 카테고리 및 검색 조건별 조회 로직 추가
-    public List<PostResponse> searchPosts(String category, String searchType, String keyword) {
-        // 카테고리가 없거나 "all"이면 전체 검색으로 간주
-        boolean isAllPosts = (category == null || category.trim().isEmpty() || category.equals("all"));
-        List<PostResponse>  postResponsesToTitleContainingIgnoreCase = postRepository
-                .findByTitleContainingIgnoreCase(keyword)
-                .stream()
-                .map(PostResponse::from)
-                .toList();
+    public Page<PostResponse> searchPosts(
+            String category,
+            String searchType,
+            String keyword,
+            Pageable pageable
+    ) {
+        boolean isAllPosts = category == null
+                || category.trim().isEmpty()
+                || category.equals("all");
 
-        List<PostResponse>  postResponsesToCategoryAndTitleContainingIgnoreCase =
-                postRepository
-                .findByCategoryAndTitleContainingIgnoreCase(category, keyword)
-                .stream()
-                .map(PostResponse::from)
-                .toList();
+        Page<Post> posts;
 
-        if (searchType.equals("title")) {
-            return isAllPosts ? postResponsesToTitleContainingIgnoreCase
-                    :  postResponsesToCategoryAndTitleContainingIgnoreCase;
-        } else if (searchType.equals("content")) {
-            return isAllPosts ? postResponsesToTitleContainingIgnoreCase
-                    :  postResponsesToCategoryAndTitleContainingIgnoreCase;
-        } else if (searchType.equals("author")) {
-            return  isAllPosts ? postResponsesToTitleContainingIgnoreCase
-                    :  postResponsesToCategoryAndTitleContainingIgnoreCase;
+        if ("title".equals(searchType)) {
+            posts = isAllPosts
+                    ? postRepository.findByTitleContainingIgnoreCase(keyword, pageable)
+                    : postRepository.findByCategoryAndTitleContainingIgnoreCase(category, keyword, pageable);
+        } else if ("content".equals(searchType)) {
+            posts = isAllPosts
+                    ? postRepository.findByContentContainingIgnoreCase(keyword, pageable)
+                    : postRepository.findByCategoryAndContentContainingIgnoreCase(category, keyword, pageable);
+        } else if ("author".equals(searchType)) {
+            posts = isAllPosts
+                    ? postRepository.findByAuthorContainingIgnoreCase(keyword, pageable)
+                    : postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword, pageable);
+        } else {
+            posts = isAllPosts
+                    ? postRepository.findAllByOrderByIsNoticeDescCreatedAtDesc(pageable)
+                    : postRepository.findByCategoryOrderByIsNoticeDescCreatedAtDesc(category, pageable);
         }
 
-        return isAllPosts ?
-                postRepository
-                .findAll()
-                .stream()
-                .map(PostResponse::from)
-                .toList()
-                :
-                postRepository.findByCategory(category)
-                .stream()
-                .map(PostResponse::from)
-                .toList();
+        return posts.map(PostResponse::from);
+    }
+
+    public Page<PostResponse> getPosts(int page,int size){
+        Pageable pageable = PageRequest.of(page,size);
+
+        return postRepository
+                .findAllByOrderByIsNoticeDescCreatedAtDesc(pageable)
+                .map(PostResponse::from);
     }
 }

@@ -4,6 +4,9 @@ import com.team2.faultFind_backend.post.dto.PostRequest;
 import com.team2.faultFind_backend.post.dto.PostResponse;
 import com.team2.faultFind_backend.post.service.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -19,40 +22,30 @@ public class PostController {
 
     // 1. 게시글 목록 불러오기 (공지 상단 고정)
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getPosts(
+    public ResponseEntity<Page<PostResponse>> getPosts(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String searchType,
-            @RequestParam(required = false) String keyword) {
+            @RequestParam(required = false) String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
 
-        // 카테고리와 검색어가 모두 존재할 때
-        if (category != null && !category.isEmpty() && keyword != null && !keyword.isEmpty()) {
-            // "all" 카테고리(전체)에서 검색할 때의 처리 로직 추가
-            if (category.equals("all")) {
-                // 전체 카테고리 검색 메서드가 서비스에 없다면 새로 만들어야 할 수도 있습니다.
-                // 임시로 기존 searchPosts를 쓰되, 서비스 로직에 맞게 조정 필요.
-                return ResponseEntity.ok(postService.searchPosts("", searchType, keyword));
-            }
-            return ResponseEntity.ok(postService.searchPosts(category, searchType, keyword));
-        }
-
-        // 카테고리 필터링만 적용할 때
-        if (category != null && !category.isEmpty() && !category.equals("all")) {
-            return ResponseEntity.ok(postService.getPostsByCategory(category));
-        }
-
-        // 검색어가 입력되었을 때 (카테고리 유무 상관없이 service로 넘김)
         if (keyword != null && !keyword.trim().isEmpty()) {
-            return ResponseEntity.ok(postService.searchPosts(category, searchType, keyword));
+            return ResponseEntity.ok(
+                    postService.searchPosts(category, searchType, keyword, pageable)
+            );
         }
 
-        //  검색어는 없고, 특정 카테고리 탭(자유, QnA 등)을 눌렀을 때
         if (category != null && !category.trim().isEmpty() && !category.equals("all")) {
-            return ResponseEntity.ok(postService.getPostsByCategory(category));
+            return ResponseEntity.ok(
+                    postService.getPostsByCategory(category, pageable)
+            );
         }
 
-        // 아무 조건이 없을 때 (메인 커뮤니티 첫 화면)
-        return ResponseEntity.ok(postService.getAllPosts());
+        return ResponseEntity.ok(postService.getAllPosts(pageable));
     }
+
 
     // 2. 홈 화면 인기글 TOP 5 불러오기
     @GetMapping("/popular")
