@@ -23,7 +23,7 @@ public class PostController {
             @RequestParam(required = false) String searchType,
             @RequestParam(required = false) String keyword) {
 
-        // 1. 카테고리와 검색어가 모두 존재할 때
+        // 카테고리와 검색어가 모두 존재할 때
         if (category != null && !category.isEmpty() && keyword != null && !keyword.isEmpty()) {
             // "all" 카테고리(전체)에서 검색할 때의 처리 로직 추가
             if (category.equals("all")) {
@@ -34,13 +34,24 @@ public class PostController {
             return ResponseEntity.ok(postService.searchPosts(category, searchType, keyword));
         }
 
-        // 2. 카테고리 필터링만 적용할 때
+        // 카테고리 필터링만 적용할 때
         if (category != null && !category.isEmpty() && !category.equals("all")) {
             return ResponseEntity.ok(postService.getPostsByCategory(category));
         }
 
-        // 3. 아무런 조건이 없을 때 (전체 반환)
+        // 검색어가 입력되었을 때 (카테고리 유무 상관없이 service로 넘김)
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            return ResponseEntity.ok(postService.searchPosts(category, searchType, keyword));
+        }
+
+        //  검색어는 없고, 특정 카테고리 탭(자유, QnA 등)을 눌렀을 때
+        if (category != null && !category.trim().isEmpty() && !category.equals("all")) {
+            return ResponseEntity.ok(postService.getPostsByCategory(category));
+        }
+
+        // 아무 조건이 없을 때 (메인 커뮤니티 첫 화면)
         return ResponseEntity.ok(postService.getAllPosts());
+
     }
 
     // 2. 홈 화면 인기글 TOP 5 불러오기

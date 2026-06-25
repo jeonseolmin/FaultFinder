@@ -136,13 +136,20 @@ public class PostService {
 
     // 카테고리 및 검색 조건별 조회 로직 추가
     public List<Post> searchPosts(String category, String searchType, String keyword) {
+        // 카테고리가 없거나 "all"이면 전체 검색으로 간주
+        boolean isAllPosts = (category == null || category.trim().isEmpty() || category.equals("all"));
+
         if (searchType.equals("title")) {
-            return postRepository.findByCategoryAndTitleContainingIgnoreCase(category, keyword);
+            return isAllPosts ? postRepository.findByTitleContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndTitleContainingIgnoreCase(category, keyword);
         } else if (searchType.equals("content")) {
-            return postRepository.findByCategoryAndContentContainingIgnoreCase(category, keyword);
+            return isAllPosts ? postRepository.findByContentContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndContentContainingIgnoreCase(category, keyword);
         } else if (searchType.equals("author")) {
-            return postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword);
+            return isAllPosts ? postRepository.findByAuthorContainingIgnoreCase(keyword)
+                    : postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword);
         }
-        return postRepository.findByCategory(category);
+
+        return isAllPosts ? postRepository.findAll() : postRepository.findByCategory(category);
     }
 }

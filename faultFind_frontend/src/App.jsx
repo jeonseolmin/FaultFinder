@@ -45,7 +45,7 @@ export default function App() {
           <Route path="/cases" element={<AccidentTypePage />} />
           <Route path="/cases/:typeId" element={<AccidentTypeDetailPage />} />
           <Route path="/fault-ratios" element={<FaultSearchPage />} />
-          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/community" element={<CommunityBoard />} />
 
           <Route path="/login" element={<LoginPage />} />
           <Route path="/oauth-success" element={<OAuthSuccess />} />

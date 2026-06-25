@@ -58,7 +58,7 @@ export default function CategoryBoard({ category, title }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
           <h3>{title}</h3>
           <button onClick={() => navigate('/community/write')} className="btn-write" style={{ width: 'auto', padding: '10px 20px', fontSize: '14px' }}>
-            ✍️ 글쓰기
+            글쓰기
           </button>
         </div>
 
