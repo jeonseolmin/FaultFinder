@@ -19,7 +19,7 @@ public class PostController {
 
     // 1. 게시글 목록 불러오기 (공지 상단 고정)
     @GetMapping
-    public ResponseEntity<List<Post>> getPosts(
+    public ResponseEntity<List<PostResponse>> getPosts(
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String searchType,
             @RequestParam(required = false) String keyword) {

@@ -148,26 +148,51 @@ public class PostService {
     }
 
     // 카테고리별로 게시글을 불러오는 로직 추가
-    public List<Post> getPostsByCategory(String category) {
-        return postRepository.findByCategory(category);
+    public List<PostResponse> getPostsByCategory(String category) {
+        return postRepository.findByCategory(category)
+                .stream()
+                .map(PostResponse::from)
+                .toList();
     }
 
     // 카테고리 및 검색 조건별 조회 로직 추가
-    public List<Post> searchPosts(String category, String searchType, String keyword) {
+    public List<PostResponse> searchPosts(String category, String searchType, String keyword) {
         // 카테고리가 없거나 "all"이면 전체 검색으로 간주
         boolean isAllPosts = (category == null || category.trim().isEmpty() || category.equals("all"));
+        List<PostResponse>  postResponsesToTitleContainingIgnoreCase = postRepository
+                .findByTitleContainingIgnoreCase(keyword)
+                .stream()
+                .map(PostResponse::from)
+                .toList();
+
+        List<PostResponse>  postResponsesToCategoryAndTitleContainingIgnoreCase =
+                postRepository
+                .findByCategoryAndTitleContainingIgnoreCase(category, keyword)
+                .stream()
+                .map(PostResponse::from)
+                .toList();
 
         if (searchType.equals("title")) {
-            return isAllPosts ? postRepository.findByTitleContainingIgnoreCase(keyword)
-                    : postRepository.findByCategoryAndTitleContainingIgnoreCase(category, keyword);
+            return isAllPosts ? postResponsesToTitleContainingIgnoreCase
+                    :  postResponsesToCategoryAndTitleContainingIgnoreCase;
         } else if (searchType.equals("content")) {
-            return isAllPosts ? postRepository.findByContentContainingIgnoreCase(keyword)
-                    : postRepository.findByCategoryAndContentContainingIgnoreCase(category, keyword);
+            return isAllPosts ? postResponsesToTitleContainingIgnoreCase
+                    :  postResponsesToCategoryAndTitleContainingIgnoreCase;
         } else if (searchType.equals("author")) {
-            return isAllPosts ? postRepository.findByAuthorContainingIgnoreCase(keyword)
-                    : postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword);
+            return  isAllPosts ? postResponsesToTitleContainingIgnoreCase
+                    :  postResponsesToCategoryAndTitleContainingIgnoreCase;
         }
 
-        return isAllPosts ? postRepository.findAll() : postRepository.findByCategory(category);
+        return isAllPosts ?
+                postRepository
+                .findAll()
+                .stream()
+                .map(PostResponse::from)
+                .toList()
+                :
+                postRepository.findByCategory(category)
+                .stream()
+                .map(PostResponse::from)
+                .toList();
     }
 }
