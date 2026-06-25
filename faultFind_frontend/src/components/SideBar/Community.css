@@ -618,13 +618,13 @@ body {
 }
 
 .board-table th:nth-child(1) { width: 8%; min-width: 50px; }
-.board-table th:nth-child(2) { width: 10%; min-width: 80px; }
-.board-table th:nth-child(3) { width: 37%; }
+.board-table th:nth-child(2) { width: 18%; min-width: 85px; }
+.board-table th:nth-child(3) { width: 35%; }
 .board-table th:nth-child(4) { width: 9%; min-width: 80px; }
 .board-table th:nth-child(5) { width: 21%; min-width: 100px; }
-.board-table th:nth-child(6) { width: 5%; min-width: 60px; }
-.board-table th:nth-child(7) { width: 5%; min-width: 60px; }
-.board-table th:nth-child(8) { width: 5%; min-width: 60px; }
+.board-table th:nth-child(6) { width: 4%; min-width: 60px; }
+.board-table th:nth-child(7) { width: 4%; min-width: 60px; }
+.board-table th:nth-child(8) { width: 4%; min-width: 60px; }
 
 .board-row {
   cursor: pointer;
