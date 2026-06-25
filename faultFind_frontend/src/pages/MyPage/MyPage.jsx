@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance'; 
 import './MyPage.css';
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const [data, setData] = useState({ user: null, posts: [], comments: [] });
+  const [data, setData] = useState({
+    user: {
+      userName:"",
+      email:""
+    },
+    posts: [],
+    comments: []
+  });
   const [loading, setLoading] = useState(true);
   
   const [activeTab, setActiveTab] = useState('posts'); 
@@ -37,7 +44,8 @@ export default function MyPage() {
         const payload = JSON.parse(window.atob(token.split('.')[1]));
         return payload.role;
       } catch (e) {
-        return null;
+        alert(e);
+        return ;
       }
     };
 
@@ -89,10 +97,10 @@ export default function MyPage() {
       <aside className="mypage-sidebar">
         <div className="mypage-profile">
           <div className="profile-avatar">
-            {data.user.name.charAt(0)}
+            {(data.user?.userName ?? "").charAt(0)}
           </div>
-          <h2 className="profile-name">{data.user.name}</h2>
-          <p className="profile-email">{data.user.email}</p>
+          <h2 className="profile-name">{data.user?.userName}</h2>
+          <p className="profile-email">{data.user?.email}</p>
         </div>
 
         <nav className="mypage-nav">
@@ -100,13 +108,13 @@ export default function MyPage() {
             className={`nav-btn ${activeTab === 'posts' ? 'active' : ''}`}
             onClick={() => setActiveTab('posts')}
           >
-            내가 쓴 글 <span className="badge">{data.posts.length}</span>
+            내가 쓴 글 <span className="badge">{data.posts?.length}</span>
           </button>
           <button 
             className={`nav-btn ${activeTab === 'comments' ? 'active' : ''}`}
             onClick={() => setActiveTab('comments')}
           >
-            내가 쓴 댓글 <span className="badge">{data.comments.length}</span>
+            내가 쓴 댓글 <span className="badge">{data.comments?.length}</span>
           </button>
           <button 
             className={`nav-btn ${activeTab === 'password' ? 'active-danger' : ''}`}
@@ -143,7 +151,7 @@ export default function MyPage() {
               {data.posts.map(post => (
                 <div key={post.id} className="list-item" onClick={() => navigate(`/community/${post.id}`)}>
                   <span className="item-title">{post.title}</span>
-                  <span className="item-date">{new Date(post.createdDate).toLocaleDateString()}</span>
+                  <span className="item-date">{new Date(post.createdAt).toLocaleDateString()}</span>
                 </div>
               ))}
             </div>
@@ -158,7 +166,7 @@ export default function MyPage() {
                   <div className="item-meta">
                     <span className="meta-highlight">원문: {comment.postTitle}</span>
                     <span className="meta-divider">|</span>
-                    {new Date(comment.createdDate).toLocaleDateString()}
+                    {new Date(comment.createdAt).toLocaleDateString()}
                   </div>
                 </div>
               ))}
