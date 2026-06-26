@@ -1,6 +1,5 @@
 package com.team2.faultFind_backend.post.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.team2.faultFind_backend.post.entity.Post;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class PostResponse {
     private int commentCount;
     private int likeCount;
 
-    private boolean isNotice;
+    private boolean notice;
     private LocalDateTime createdAt;
 
     public static PostResponse from(Post post) {
@@ -36,7 +35,7 @@ public class PostResponse {
                 .viewCount(post.getViewCount())
                 .commentCount(post.getCommentCount())
                 .likeCount(post.getLikeCount())
-                .isNotice(post.isNotice())
+                .notice(post.isNotice())
                 .createdAt(post.getCreatedAt())
                 .build();
     }
