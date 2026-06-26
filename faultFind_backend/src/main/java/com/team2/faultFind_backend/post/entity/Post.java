@@ -44,8 +44,8 @@ public class Post extends BaseEntity {
     private int likeCount = 0;
 
     @Builder.Default
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    private boolean isNotice = false; // 공지사항 여부
+    @Column(name ="is_notice", nullable = false, columnDefinition = "boolean default false")
+    private boolean notice = false; // 공지사항 여부
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();

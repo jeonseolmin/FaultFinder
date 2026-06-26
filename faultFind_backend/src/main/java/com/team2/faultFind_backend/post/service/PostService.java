@@ -10,7 +10,6 @@ import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +41,7 @@ public class PostService {
                 .content(postRequest.getContent())
                 .author(user.getUserName())
                 .authorEmail(user.getEmail())
-                .isNotice(postRequest.isNotice())
+                .notice(postRequest.isNotice())
                 .build();
 
         postRepository.save(post);
@@ -52,7 +51,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public Page<PostResponse> getAllPosts(Pageable pageable) {
         return postRepository
-                .findAllByOrderByIsNoticeDescCreatedAtDesc(pageable)
+                .findAllByOrderByNoticeDescCreatedAtDesc(pageable)
                 .map(PostResponse::from);
     }
 
@@ -182,8 +181,8 @@ public class PostService {
                     : postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword, pageable);
         } else {
             posts = isAllPosts
-                    ? postRepository.findAllByOrderByIsNoticeDescCreatedAtDesc(pageable)
-                    : postRepository.findByCategoryOrderByIsNoticeDescCreatedAtDesc(category, pageable);
+                    ? postRepository.findAllByOrderByNoticeDescCreatedAtDesc(pageable)
+                    : postRepository.findByCategoryOrderByNoticeDescCreatedAtDesc(category, pageable);
         }
 
         return posts.map(PostResponse::from);

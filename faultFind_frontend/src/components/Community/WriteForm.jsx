@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance.js";
 import "./Write.css";
@@ -10,7 +10,7 @@ export default function WriteForm() {
     category: "free",
     title: "",
     content: "",
-    isNotice: false,
+    notice: null,
   });
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -92,7 +92,7 @@ export default function WriteForm() {
             <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', margin: 0 }}>
               <input 
                 type="checkbox" 
-                name="isNotice" 
+                name="notice"
                 className="write-notice-checkbox"
                 checked={formData.isNotice} 
                 onChange={handleChange} 

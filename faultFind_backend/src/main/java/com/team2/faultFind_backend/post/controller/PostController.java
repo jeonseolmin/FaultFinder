@@ -30,7 +30,7 @@ public class PostController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "isNotice")
+        Sort sort = Sort.by(Sort.Direction.DESC, "notice")
                 .and(Sort.by(Sort.Direction.DESC, "id"));
 
         Pageable pageable = PageRequest.of(page, size, sort);
@@ -66,6 +66,7 @@ public class PostController {
     // 4. 게시글 작성
     @PostMapping
     public ResponseEntity<String> writePost(@RequestBody  PostRequest postRequest, Authentication authentication) {
+        System.out.println("isNotice : "+postRequest.isNotice());
         postService.createPost(postRequest, authentication.getName());
         return ResponseEntity.ok("게시글이 성공적으로 등록되었습니다.");
     }
