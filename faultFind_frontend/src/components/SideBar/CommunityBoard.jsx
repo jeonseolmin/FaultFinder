@@ -52,6 +52,19 @@ export default function CommunityBoard() {
           params,
         });
 
+        // 본인이 작성한 글을 위로 배열
+        const fetchedPosts = response.data.content ?? [];
+        
+        const sortedPosts = fetchedPosts.sort((a, b) => {
+          const aNotice = a.isNotice || a.notice ? 1 : 0;
+          const bNotice = b.isNotice || b.notice ? 1 : 0;
+
+          if (aNotice !== bNotice) {
+            return bNotice - aNotice;
+          }
+          return b.id - a.id; 
+        });
+
         setPosts(response.data.content ?? []);
         setTotalPages(response.data.totalPages ?? 0);
       } catch (error) {
@@ -228,7 +241,11 @@ export default function CommunityBoard() {
                         </td>
 
                         <td>{categoryLabels[post.category] || post.category}</td>
-                        <td className="title-cell">{post.title}</td>
+                        <td className="title-cell" title={post.title}>
+                          {post.title && post.title.length > 10
+                          ? post.title.substring(0, 10) + '...' 
+                          : post.title}
+                        </td>
                         <td>{post.author}</td>
                         <td>
                           {post.createdAt

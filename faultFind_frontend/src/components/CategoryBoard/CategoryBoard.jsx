@@ -37,6 +37,19 @@ export default function CategoryBoard({ category, title }) {
           },
         });
 
+        const fetchedPosts = response.data.content ?? [];
+        
+        // 공지사항을 맨 위로, 나머지는 최신순으로 정렬하는 로직
+        const sortedPosts = fetchedPosts.sort((a, b) => {
+          const aNotice = a.isNotice || a.notice ? 1 : 0;
+          const bNotice = b.isNotice || b.notice ? 1 : 0;
+
+          if (aNotice !== bNotice) {
+            return bNotice - aNotice; // 공지사항이면 1순위로
+          }
+          return b.id - a.id; // 나머지는 ID 기준 최신순
+        });
+
         setPosts(response.data.content ?? []);
         setTotalPages(response.data.totalPages ?? 0);
       } catch (error) {
@@ -153,7 +166,7 @@ export default function CategoryBoard({ category, title }) {
             <thead>
             <tr>
               <th style={{ width: "8%", minWidth: "50px", textAlign: "center", whiteSpace: "nowrap" }}>No</th>
-              <th style={{ width: "10%", minWidth: "80px", textAlign: "center", whiteSpace: "nowrap" }}>카테고리</th>
+              <th style={{ width: "12%", minWidth: "80px", textAlign: "center", whiteSpace: "nowrap" }}>카테고리</th>
               <th style={{ width: "37%", textAlign: "center" }}>제목</th>
               <th style={{ width: "9%", minWidth: "80px", textAlign: "center" }}>게시자</th>
               <th style={{ width: "21%", minWidth: "100px", textAlign: "center", whiteSpace: "nowrap" }}>날짜</th>
@@ -199,14 +212,10 @@ export default function CategoryBoard({ category, title }) {
 
                         <td>{categoryLabels[post.category] || post.category}</td>
 
-                        <td
-                            style={{
-                              textAlign: "left",
-                              fontWeight: isNoticePost ? "700" : "500",
-                              color: isNoticePost ? "#1e3a8a" : "inherit",
-                            }}
-                        >
-                          {post.title}
+                        <td className={`title-cell ${isNoticePost ? 'notice-title' : ''}`} title={post.title}>
+                          {post.title && post.title.length > 10 
+                            ? post.title.substring(0, 10) + '...' 
+                            : post.title}
                         </td>
 
                         <td style={{ textAlign: "center" }}>{post.author}</td>
