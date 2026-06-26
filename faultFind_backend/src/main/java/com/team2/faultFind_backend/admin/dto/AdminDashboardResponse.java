@@ -4,13 +4,14 @@ import com.team2.faultFind_backend.post.dto.PostResponse;
 import com.team2.faultFind_backend.user.dto.UserResponse;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
+
 
 @Getter
 @Builder
 public class AdminDashboardResponse {
 
-    private List<UserResponse> users;
-    private List<PostResponse> posts;
+    private Page<UserResponse> users;
+    private Page<PostResponse> posts;
 }
