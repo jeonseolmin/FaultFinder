@@ -1,55 +1,99 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../api/axiosInstance'; 
-import './MyPage.css';
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
+import "./MyPage.css";
 
 export default function MyPage() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const postPage = Number(searchParams.get("postPage") || 0);
+  const commentPage = Number(searchParams.get("commentPage") || 0);
+  const pageSize = 8;
+
   const [data, setData] = useState({
     user: {
-      userName:"",
-      email:""
+      userName: "",
+      email: "",
     },
-    posts: [],
-    comments: []
+    posts: {
+      content: [],
+      totalElements: 0,
+      totalPages: 0,
+      number: 0,
+    },
+    comments: {
+      content: [],
+      totalElements: 0,
+      totalPages: 0,
+      number: 0,
+    },
   });
-  const [loading, setLoading] = useState(true);
-  
-  const [activeTab, setActiveTab] = useState('posts'); 
 
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("posts");
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     const fetchMyPageData = async () => {
       try {
-        const response = await axiosInstance.get('/api/mypage/info');
+        const response = await axiosInstance.get("/api/mypage/info", {
+          params: {
+            postPage,
+            postSize: pageSize,
+            commentPage,
+            commentSize: pageSize,
+          },
+        });
+
         setData(response.data);
       } catch (error) {
         console.error("마이페이지 정보 불러오기 실패", error);
         alert("로그인이 필요합니다.");
-        navigate('/login');
+        navigate("/login");
       } finally {
         setLoading(false);
       }
     };
+
     fetchMyPageData();
-  }, [navigate]);
+  }, [postPage, commentPage, navigate]);
+
+  const changePostPage = (nextPage) => {
+    setSearchParams({
+      postPage: String(nextPage),
+      commentPage: String(commentPage),
+    });
+  };
+
+  const changeCommentPage = (nextPage) => {
+    setSearchParams({
+      postPage: String(postPage),
+      commentPage: String(nextPage),
+    });
+  };
 
   const getUserRoleFromToken = () => {
-      const token = localStorage.getItem("accessToken") || localStorage.getItem("token") || localStorage.getItem("Authorization");
-      if (!token) return null;
-      try {
-        const payload = JSON.parse(window.atob(token.split('.')[1]));
-        return payload.role;
-      } catch (e) {
-        alert(e);
-        return ;
-      }
-    };
+    const token =
+        localStorage.getItem("accessToken") ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("Authorization");
 
-    const userRole = getUserRoleFromToken();
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(window.atob(token.split(".")[1]));
+      return payload.role;
+    } catch (e) {
+      console.error("토큰 파싱 실패", e);
+      return null;
+    }
+  };
+
+  const userRole = getUserRoleFromToken();
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
@@ -65,22 +109,24 @@ export default function MyPage() {
     }
 
     try {
-      await axiosInstance.put('/api/users/password', {
-        currentPassword: currentPassword,
-        newPassword: newPassword
+      await axiosInstance.put("/api/users/password", {
+        currentPassword,
+        newPassword,
       });
 
       alert("비밀번호가 성공적으로 변경되었습니다! 다시 로그인해주세요.");
+
       localStorage.removeItem("accessToken");
       localStorage.removeItem("token");
       localStorage.removeItem("Authorization");
       localStorage.removeItem("email");
-      navigate('/login');
 
+      navigate("/login");
     } catch (error) {
       console.error("비밀번호 변경 실패:", error);
+
       if (error.response && error.response.status === 400) {
-        alert(error.response.data); 
+        alert(error.response.data);
       } else {
         alert("비밀번호 변경에 실패했습니다. 현재 비밀번호를 확인해주세요.");
       }
@@ -89,133 +135,214 @@ export default function MyPage() {
 
   if (loading) return <div className="mypage-loading">로딩 중...</div>;
   if (!data.user) return null;
+  const renderPagination = (pageData, onPageChange) => {
+    if (!pageData) return null;
+
+    const current = pageData.number;
+    const total = pageData.totalPages;
+
+    let start = Math.max(0, current - 2);
+    let end = Math.min(total - 1, current + 2);
+
+    if (end - start < 4) {
+      if (start === 0) end = Math.min(total - 1, 4);
+      else if (end === total - 1) start = Math.max(0, total - 5);
+    }
+
+    return (
+        <div className="pagination">
+          <button disabled={current === 0} onClick={() => onPageChange(current - 1)}>
+            이전
+          </button>
+
+          {Array.from(
+              { length: Math.max(total, 1) },
+              (_, i) => i
+          )
+              .slice(start, end + 1)
+              .map((page) => (
+                  <button
+                      key={page}
+                      className={page === current ? "active" : ""}
+                      onClick={() => onPageChange(page)}
+                  >
+                    {page + 1}
+                  </button>
+              ))}
+
+          <button
+              disabled={current >= total - 1}
+              onClick={() => onPageChange(current + 1)}
+          >
+            다음
+          </button>
+        </div>
+    );
+  };
+  const posts = data.posts?.content ?? [];
+  const comments = data.comments?.content ?? [];
 
   return (
-    <div className="mypage-dashboard">
-      
-      {/* 좌측 사이드바 영역 */}
-      <aside className="mypage-sidebar">
-        <div className="mypage-profile">
-          <div className="profile-avatar">
-            {(data.user?.userName ?? "").charAt(0)}
+      <div className="mypage-dashboard">
+        <aside className="mypage-sidebar">
+          <div className="mypage-profile">
+            <div className="profile-avatar">
+              {(data.user?.userName ?? "").charAt(0)}
+            </div>
+
+            <h2 className="profile-name">{data.user?.userName}</h2>
+            <p className="profile-email">{data.user?.email}</p>
           </div>
-          <h2 className="profile-name">{data.user?.userName}</h2>
-          <p className="profile-email">{data.user?.email}</p>
-        </div>
 
-        <nav className="mypage-nav">
-          <button 
-            className={`nav-btn ${activeTab === 'posts' ? 'active' : ''}`}
-            onClick={() => setActiveTab('posts')}
-          >
-            내가 쓴 글 <span className="badge">{data.posts?.length}</span>
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'comments' ? 'active' : ''}`}
-            onClick={() => setActiveTab('comments')}
-          >
-            내가 쓴 댓글 <span className="badge">{data.comments?.length}</span>
-          </button>
-          <button 
-            className={`nav-btn ${activeTab === 'password' ? 'active-danger' : ''}`}
-            onClick={() => setActiveTab('password')}
-          >
-            비밀번호 변경
-          </button>
-        </nav>
+          <nav className="mypage-nav">
+            <button
+                className={`nav-btn ${activeTab === "posts" ? "active" : ""}`}
+                onClick={() => setActiveTab("posts")}
+            >
+              내가 쓴 글{" "}
 
-        {userRole === 'ROLE_ADMIN' && (
-          <div className="admin-section">
-            <button className="btn-admin-enter" onClick={() => navigate('/admin')}>
-              관리자 대시보드 입장
             </button>
+
+            <button
+                className={`nav-btn ${activeTab === "comments" ? "active" : ""}`}
+                onClick={() => setActiveTab("comments")}
+            >
+              내가 쓴 댓글{" "}
+            </button>
+
+            <button
+                className={`nav-btn ${
+                    activeTab === "password" ? "active-danger" : ""
+                }`}
+                onClick={() => setActiveTab("password")}
+            >
+              비밀번호 변경
+            </button>
+          </nav>
+
+          {userRole === "ROLE_ADMIN" && (
+              <div className="admin-section">
+                <button
+                    className="btn-admin-enter"
+                    onClick={() => navigate("/admin")}
+                >
+                  관리자 대시보드 입장
+                </button>
+              </div>
+          )}
+        </aside>
+
+        <main className="mypage-content">
+          <div className="content-header">
+            <h2>
+              {activeTab === "posts" && "내가 쓴 글 내역"}
+              {activeTab === "comments" && "내가 쓴 댓글 내역"}
+              {activeTab === "password" && "계정 보안 설정"}
+            </h2>
           </div>
-        )}
-      </aside>
 
-      {/* 우측 메인 콘텐츠 영역 */}
-      <main className="mypage-content">
-        <div className="content-header">
-          <h2>
-            {activeTab === 'posts' && '내가 쓴 글 내역'}
-            {activeTab === 'comments' && '내가 쓴 댓글 내역'}
-            {activeTab === 'password' && '계정 보안 설정'}
-          </h2>
-        </div>
+          <div className="content-body">
+            {activeTab === "posts" && (
+                <>
+                  <div className="list-container">
+                    {posts.length === 0 && (
+                        <div className="empty-state">작성한 글이 없습니다.</div>
+                    )}
 
-        <div className="content-body">
-          
-          {activeTab === 'posts' && (
-            <div className="list-container">
-              {data.posts.length === 0 ? <div className="empty-state">작성한 글이 없습니다.</div> : null}
-              {data.posts.map(post => (
-                <div key={post.id} className="list-item" onClick={() => navigate(`/community/${post.id}`)}>
-                  <span className="item-title">{post.title}</span>
-                  <span className="item-date">{new Date(post.createdAt).toLocaleDateString()}</span>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {activeTab === 'comments' && (
-            <div className="list-container">
-              {data.comments.length === 0 ? <div className="empty-state">작성한 댓글이 없습니다.</div> : null}
-              {data.comments.map(comment => (
-                <div key={comment.id} className="list-item flex-column" onClick={() => navigate(`/community/${comment.postId}`)}>
-                  <div className="item-content">{comment.content}</div>
-                  <div className="item-meta">
-                    <span className="meta-highlight">원문: {comment.postTitle}</span>
-                    <span className="meta-divider">|</span>
-                    {new Date(comment.createdAt).toLocaleDateString()}
+                    {posts.map((post) => (
+                        <div
+                            key={post.id}
+                            className="list-item"
+                            onClick={() => navigate(`/community/${post.id}`)}
+                        >
+                          <span className="item-title">{post.title}</span>
+                          <span className="item-date">
+            {post.createdAt
+                ? new Date(post.createdAt).toLocaleDateString()
+                : ""}
+          </span>
+                        </div>
+                    ))}
                   </div>
+
+                  {renderPagination(data.posts, changePostPage)}
+                </>
+            )}
+
+            {activeTab === "comments" && (
+                <>
+                  <div className="list-container">
+                    {comments.length === 0 && (
+                        <div className="empty-state">작성한 댓글이 없습니다.</div>
+                    )}
+
+                    {comments.map((comment) => (
+                        <div
+                            key={comment.id}
+                            className="list-item flex-column"
+                            onClick={() => navigate(`/community/${comment.postId}`)}
+                        >
+                          <div className="item-content">{comment.content}</div>
+
+                          <div className="item-meta">
+                            <span className="meta-highlight">원문: {comment.postTitle}</span>
+                            <span className="meta-divider">|</span>
+                            {comment.createdAt
+                                ? new Date(comment.createdAt).toLocaleDateString()
+                                : ""}
+                          </div>
+                        </div>
+                    ))}
+                  </div>
+
+                  {renderPagination(data.comments, changeCommentPage)}
+                </>
+            )}
+
+            {activeTab === "password" && (
+                <div className="password-change-section">
+                  <form onSubmit={handleChangePassword} className="password-form">
+                    <div className="form-group">
+                      <label>현재 비밀번호 (또는 임시 비밀번호)</label>
+                      <input
+                          type="password"
+                          value={currentPassword}
+                          onChange={(e) => setCurrentPassword(e.target.value)}
+                          placeholder="현재 비밀번호를 입력해주세요"
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>새 비밀번호</label>
+                      <input
+                          type="password"
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          placeholder="4자 이상 입력해주세요"
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>새 비밀번호 확인</label>
+                      <input
+                          type="password"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          placeholder="새 비밀번호를 다시 입력해주세요"
+                          required
+                      />
+                    </div>
+
+                    <button type="submit" className="btn-change-pw">
+                      비밀번호 변경 완료
+                    </button>
+                  </form>
                 </div>
-              ))}
-            </div>
-          )}
-
-          {activeTab === 'password' && (
-            <div className="password-change-section">
-              <form onSubmit={handleChangePassword} className="password-form">
-                <div className="form-group">
-                  <label>현재 비밀번호 (또는 임시 비밀번호)</label>
-                  <input 
-                    type="password" 
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder="현재 비밀번호를 입력해주세요"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>새 비밀번호</label>
-                  <input 
-                    type="password" 
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="4자 이상 입력해주세요"
-                    required
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label>새 비밀번호 확인</label>
-                  <input 
-                    type="password" 
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="새 비밀번호를 다시 입력해주세요"
-                    required
-                  />
-                </div>
-
-                <button type="submit" className="btn-change-pw">비밀번호 변경 완료</button>
-              </form>
-            </div>
-          )}
-
-        </div>
-      </main>
-    </div>
+            )}
+          </div>
+        </main>
+      </div>
   );
 }

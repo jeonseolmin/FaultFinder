@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosInstance.js';
 import './Community.css';
@@ -105,7 +105,7 @@ export default function CommunityDetailPage() {
         const res = await axiosInstance.get('/api/users/me'); 
         setUserStatus({ isSuspended: res.data.isSuspended || res.data.suspended });
       } catch (e) {
-        console.log("로그인하지 않았거나 유저 정보를 가져올 수 없습니다.");
+        console.log(e+"로그인하지 않았거나 유저 정보를 가져올 수 없습니다.");
       }
     };
     

@@ -280,3 +280,57 @@
 .btn-change-pw:hover {
   background-color: #dc2626;
 }
+
+
+/* ===========================
+   Pagination
+=========================== */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.pagination button {
+  min-width: 38px;
+  height: 38px;
+  padding: 0 14px;
+
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+
+  background: #fff;
+  color: #555;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all .2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #f5f7fa;
+  border-color: #3b82f6;
+  color: #2563eb;
+}
+
+.pagination button.active {
+  background: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+.pagination button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.pagination button:first-child,
+.pagination button:last-child {
+  min-width: 60px;
+}

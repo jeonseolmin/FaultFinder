@@ -29,11 +29,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     Page<Post> findByCategoryOrderByIsNoticeDescCreatedAtDesc(String category, Pageable pageable);
 
-    Page<Post> findAllNoticeFirst();
-
-    Page<Post> findTop5ByOrderByLikeCountDesc();
+    List<Post> findTop5ByOrderByLikeCountDesc();
 
     Page<Post> findByCategory(String category,Pageable pageable);
 
-    Page <Post> findByAuthorEmailOrderByIdDesc(String email);
+    Page <Post> findByAuthorEmailOrderByIdDesc(String email, Pageable pageable);
 }

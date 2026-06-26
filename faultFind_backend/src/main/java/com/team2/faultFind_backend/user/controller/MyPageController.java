@@ -13,10 +13,14 @@ import com.team2.faultFind_backend.user.dto.UserResponse;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -33,23 +37,28 @@ public class MyPageController {
     private final CommentRepository commentRepository;
 
     @GetMapping("/info")
-    public ResponseEntity<MyPageResponseDto> getMyPageData(Authentication authentication) {
+    public ResponseEntity<MyPageResponseDto> getMyPageData(
+            Authentication authentication,
+            @RequestParam(defaultValue = "0") int postPage,
+            @RequestParam(defaultValue = "5") int postSize,
+            @RequestParam(defaultValue = "0") int commentPage,
+            @RequestParam(defaultValue = "5") int commentSize
+    ) {
         String email = authentication.getName();
 
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
-        List<PostResponse> myPosts = postRepository
-                .findByAuthorEmailOrderByIdDesc(user.getEmail())
-                .stream()
-                .map(PostResponse::from)
-                .toList();
+        Pageable postPageable = PageRequest.of(postPage, postSize);
+        Pageable commentPageable = PageRequest.of(commentPage, commentSize);
 
-        List<MyCommentResponse> myComments = commentRepository
-                .findByAuthorEmailOrderByIdDesc(user.getEmail())
-                .stream()
-                .map(MyCommentResponse::from)
-                .toList();
+        Page<PostResponse> myPosts = postRepository
+                .findByAuthorEmailOrderByIdDesc(user.getEmail(), postPageable)
+                .map(PostResponse::from);
+
+        Page<MyCommentResponse> myComments = commentRepository
+                .findByAuthorEmailOrderByIdDesc(user.getEmail(), commentPageable)
+                .map(MyCommentResponse::from);
 
         MyPageResponseDto response = MyPageResponseDto.builder()
                 .user(UserResponse.from(user))

@@ -3,6 +3,7 @@ package com.team2.faultFind_backend.user.dto;
 import com.team2.faultFind_backend.post.dto.PostResponse;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -12,7 +13,6 @@ public class MyPageResponseDto {
 
     private UserResponse user;
 
-    private List<PostResponse> posts;
-
-    private List<MyCommentResponse> comments;
+    private Page<PostResponse> posts;
+    private Page<MyCommentResponse> comments;
 }

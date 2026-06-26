@@ -50,11 +50,10 @@ public class PostService {
 
     // 2. 전체 게시글 조회 (공지 우선 정렬)
     @Transactional(readOnly = true)
-    public List<PostResponse> getAllPosts() {
-        return postRepository.findAllNoticeFirst()
-                .stream()
-                .map(PostResponse::from)
-                .toList();
+    public Page<PostResponse> getAllPosts(Pageable pageable) {
+        return postRepository
+                .findAllByOrderByIsNoticeDescCreatedAtDesc(pageable)
+                .map(PostResponse::from);
     }
 
     // 3. 인기글 TOP 5 조회
@@ -188,13 +187,5 @@ public class PostService {
         }
 
         return posts.map(PostResponse::from);
-    }
-
-    public Page<PostResponse> getPosts(int page,int size){
-        Pageable pageable = PageRequest.of(page,size);
-
-        return postRepository
-                .findAllByOrderByIsNoticeDescCreatedAtDesc(pageable)
-                .map(PostResponse::from);
     }
 }
