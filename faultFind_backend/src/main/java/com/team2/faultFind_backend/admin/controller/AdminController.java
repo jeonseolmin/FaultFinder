@@ -7,6 +7,8 @@ import com.team2.faultFind_backend.post.service.PostService;
 import com.team2.faultFind_backend.user.dto.UserResponse;
 import com.team2.faultFind_backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -24,10 +26,22 @@ public class AdminController {
     private final AdminService adminService;
 
     @GetMapping("/dashboard")
-    public ResponseEntity<AdminDashboardResponse> getAdminDashboard(Authentication authentication) {
-        String email = authentication.getName();
+    public ResponseEntity<AdminDashboardResponse> getAdminDashboard(
+            Authentication authentication,
+            @RequestParam(defaultValue = "0") int userPage,
+            @RequestParam(defaultValue = "10") int userSize,
+            @RequestParam(defaultValue = "0") int postPage,
+            @RequestParam(defaultValue = "10") int postSize) {
 
-        AdminDashboardResponse response = adminService.getDashboard(email);
+        String email = authentication.getName();
+        Pageable userPageable = PageRequest.of(userPage, userSize);
+        Pageable postPageable = PageRequest.of(postPage, postSize);
+
+        AdminDashboardResponse response = adminService.getDashboard(
+                email,
+                userPageable,
+                postPageable
+        );
 
         return ResponseEntity.ok(response);
     }

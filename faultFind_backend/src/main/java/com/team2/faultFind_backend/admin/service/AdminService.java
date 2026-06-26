@@ -8,6 +8,8 @@ import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.entity.UserRole;
 import com.team2.faultFind_backend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +24,11 @@ public class AdminService {
     private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
-    public AdminDashboardResponse getDashboard(String email) {
+    public AdminDashboardResponse getDashboard(
+            String email,
+            Pageable userPageable,
+            Pageable postPageable
+    ) {
         User loginUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
 
@@ -30,15 +36,11 @@ public class AdminService {
             throw new IllegalArgumentException("관리자 권한이 없습니다.");
         }
 
-        List<UserResponse> users = userRepository.findAll()
-                .stream()
-                .map(UserResponse::from)
-                .toList();
+        Page<UserResponse> users = userRepository.findAll(userPageable)
+                .map(UserResponse::from);
 
-        List<PostResponse> posts = postRepository.findAll()
-                .stream()
-                .map(PostResponse::from)
-                .toList();
+        Page<PostResponse> posts = postRepository.findAll(postPageable)
+                .map(PostResponse::from);
 
         return AdminDashboardResponse.builder()
                 .users(users)

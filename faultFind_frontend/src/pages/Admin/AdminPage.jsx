@@ -9,25 +9,48 @@ import "./Admin.css";
 
 export default function AdminPage() {
   const navigate = useNavigate();
-
   const [data, setData] = useState({ users: [], posts: [] });
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("users");
+  const [userPage, setUserPage] = useState(0);
+  const [postPage, setPostPage] = useState(0);
+  const [reportPage, setReportPage] = useState(0);
+
+  const pageSize = 10;
+
+  const changeUserPage = (page) => setUserPage(page);
+  const changePostPage = (page) => setPostPage(page);
+  const changeReportPage = (page) => setReportPage(page);
+
 
   useEffect(() => {
     const fetchAdminData = async () => {
       try {
         setLoading(true);
 
-        const response = await axiosInstance.get("/api/admin/dashboard");
-        setData({
-          users: response.data.users || [],
-          posts: response.data.posts || [],
+        const response = await axiosInstance.get("/api/admin/dashboard", {
+          params: {
+            userPage,
+            userSize: pageSize,
+            postPage,
+            postSize: pageSize,
+          },
         });
 
-        const reportsResponse = await axiosInstance.get("/api/admin/reports");
-        setReports(reportsResponse.data || []);
+        setData({
+          users: response.data.users,
+          posts: response.data.posts,
+        });
+
+        const reportsResponse = await axiosInstance.get("/api/admin/reports", {
+          params: {
+            page: reportPage,
+            size: pageSize,
+          },
+        });
+
+        setReports(reportsResponse.data);
       } catch (error) {
         console.error("관리자 데이터 불러오기 실패", error);
         alert("관리자 권한이 없거나 접근할 수 없습니다.");
@@ -38,7 +61,7 @@ export default function AdminPage() {
     };
 
     fetchAdminData();
-  }, [navigate]);
+  }, [navigate, userPage, postPage, reportPage]);
 
   const handleDeleteUser = async (id) => {
     if (!window.confirm("정말 이 유저를 강제 탈퇴시키겠습니까?")) return;
@@ -49,7 +72,11 @@ export default function AdminPage() {
 
       setData((prev) => ({
         ...prev,
-        users: prev.users.filter((user) => user.id !== id),
+        users: {
+          ...prev.users,
+          content: prev.users.content.filter((user) => user.id !== id),
+          totalElements: prev.users.totalElements - 1,
+        },
       }));
     } catch (error) {
       console.error(error);
@@ -68,9 +95,12 @@ export default function AdminPage() {
 
       setData((prev) => ({
         ...prev,
-        users: prev.users.map((u) =>
-            u.id === user.id ? { ...u, suspended: !u.suspended } : u
-        ),
+        users: {
+          ...prev.users,
+          content: prev.users.content.map((u) =>
+              u.id === user.id ? { ...u, suspended: !u.suspended } : u
+          ),
+        },
       }));
     } catch (error) {
       console.error(error);
@@ -87,11 +117,16 @@ export default function AdminPage() {
 
       setData((prev) => ({
         ...prev,
-        posts: prev.posts.filter((post) => post.id !== id),
+        posts: {
+          ...prev.posts,
+          content: prev.posts.content.filter((post) => post.id !== id),
+          totalElements: prev.posts.totalElements - 1,
+        },
       }));
 
       setReports((prev) =>
-          prev.filter((report) => !(report.targetType === "POST" && report.targetId === id))
+          Array.isArray(prev) ?
+              prev.filter((r) => !(r.targetType === "POST" && r.targetId === id)) : prev
       );
     } catch (error) {
       console.error(error);
@@ -112,7 +147,13 @@ export default function AdminPage() {
 
         setData((prev) => ({
           ...prev,
-          posts: prev.posts.filter((post) => post.id !== report.targetId),
+          posts: {
+            ...prev.posts,
+            content: prev.posts.content.filter(
+                (post) => post.id !== report.targetId
+            ),
+            totalElements: prev.posts.totalElements - 1,
+          },
         }));
       }
 
@@ -141,11 +182,11 @@ export default function AdminPage() {
   return (
     <div className="admin-container">
       <AdminTabs
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        userCount={data.users?.length || 0}
-        postCount={data.posts?.length || 0}
-        reportCount={reports?.length || 0}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          userCount={data.users?.totalElements ?? 0}
+          postCount={data.posts?.totalElements ?? 0}
+          reportCount={Array.isArray(reports) ? reports.length : reports?.totalElements ?? 0}
       />
 
       <main className="admin-content">
@@ -156,27 +197,33 @@ export default function AdminPage() {
 
         <div className="table-container">
           {activeTab === "users" && (
-            <UserManagement
-              users={data.users}
-              onDeleteUser={handleDeleteUser}
-              onSuspendUser={handleSuspendUser}
-            />
+              <UserManagement
+                  users={data.users?.content ?? []}
+                  pageData={data.users}
+                  onDeleteUser={handleDeleteUser}
+                  onSuspendUser={handleSuspendUser}
+                  onPageChange={changeUserPage}
+              />
           )}
 
           {activeTab === "posts" && (
-            <PostManagement
-              posts={data.posts}
-              onDeletePost={handleDeletePost}
-              navigate={navigate}
-            />
+              <PostManagement
+                  posts={data.posts?.content ?? []}
+                  pageData={data.posts}
+                  onDeletePost={handleDeletePost}
+                  navigate={navigate}
+                  onPageChange={changePostPage}
+              />
           )}
 
           {activeTab === "reports" && (
-            <ReportManagement
-              reports={reports}
-              onDeleteReportedTarget={handleDeleteReportedTarget}
-              navigate={navigate}
-            />
+              <ReportManagement
+                  reports={Array.isArray(reports) ? reports : reports?.content ?? []}
+                  pageData={Array.isArray(reports) ? null : reports}
+                  onDeleteReportedTarget={handleDeleteReportedTarget}
+                  navigate={navigate}
+                  onPageChange={changeReportPage}
+              />
           )}
         </div>
       </main>
