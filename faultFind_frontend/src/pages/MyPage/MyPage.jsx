@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
+import Pagination from "../../Common/Pagination.jsx";
 import "./MyPage.css";
 
 export default function MyPage() {
@@ -135,50 +136,6 @@ export default function MyPage() {
 
   if (loading) return <div className="mypage-loading">로딩 중...</div>;
   if (!data.user) return null;
-  const renderPagination = (pageData, onPageChange) => {
-    if (!pageData) return null;
-
-    const current = pageData.number;
-    const total = pageData.totalPages;
-
-    let start = Math.max(0, current - 2);
-    let end = Math.min(total - 1, current + 2);
-
-    if (end - start < 4) {
-      if (start === 0) end = Math.min(total - 1, 4);
-      else if (end === total - 1) start = Math.max(0, total - 5);
-    }
-
-    return (
-        <div className="pagination">
-          <button disabled={current === 0} onClick={() => onPageChange(current - 1)}>
-            이전
-          </button>
-
-          {Array.from(
-              { length: Math.max(total, 1) },
-              (_, i) => i
-          )
-              .slice(start, end + 1)
-              .map((page) => (
-                  <button
-                      key={page}
-                      className={page === current ? "active" : ""}
-                      onClick={() => onPageChange(page)}
-                  >
-                    {page + 1}
-                  </button>
-              ))}
-
-          <button
-              disabled={current >= total - 1}
-              onClick={() => onPageChange(current + 1)}
-          >
-            다음
-          </button>
-        </div>
-    );
-  };
   const posts = data.posts?.content ?? [];
   const comments = data.comments?.content ?? [];
 
@@ -265,7 +222,10 @@ export default function MyPage() {
                     ))}
                   </div>
 
-                  {renderPagination(data.posts, changePostPage)}
+                  <Pagination
+                      pageData={data.posts}
+                      onPageChange={changePostPage}
+                  />
                 </>
             )}
 
@@ -295,7 +255,10 @@ export default function MyPage() {
                     ))}
                   </div>
 
-                  {renderPagination(data.comments, changeCommentPage)}
+                  <Pagination
+                      pageData={data.comments}
+                      onPageChange={changeCommentPage}
+                  />
                 </>
             )}
 

@@ -1,6 +1,7 @@
 package com.team2.faultFind_backend.comment.controller;
 
 import com.team2.faultFind_backend.comment.dto.CommentRequestDto;
+import com.team2.faultFind_backend.comment.dto.CommentResponseDto;
 import com.team2.faultFind_backend.comment.service.CommentService;
 import com.team2.faultFind_backend.comment.entity.Comment;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class CommentController {
 
     // 댓글 목록 조회 (GET /api/community/{id}/comments)
     @GetMapping("/{id}/comments")
-    public ResponseEntity<List<Comment>> getComments(@PathVariable Long id) {
-        List<Comment> comments = commentService.getComments(id);
+    public ResponseEntity<List<CommentResponseDto>> getComments(@PathVariable Long id) {
+        List<CommentResponseDto> comments = commentService.getComments(id);
         return ResponseEntity.ok(comments);
     }
 

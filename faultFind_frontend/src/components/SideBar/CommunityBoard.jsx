@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance.js";
 import LeftSidebar from "./LeftSideBar.jsx";
 import "./Community.css";
+import Pagination from "../../Common/Pagination.jsx";
 
 export default function CommunityBoard() {
   const navigate = useNavigate();
@@ -235,7 +236,11 @@ export default function CommunityBoard() {
             )}
             </tbody>
           </table>
-          {renderPagination(page, totalPages, changePage)}
+          <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={changePage}
+          />
         </div>
       </div>
   );

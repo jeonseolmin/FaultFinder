@@ -1,4 +1,4 @@
-import CommunityEditPage from '../../components/Community/CommunityEditPage';
+import CommunityEdit from '../../components/Community/CommunityEditPage';
 
 export default function CommunityEditPage() {
   return (
