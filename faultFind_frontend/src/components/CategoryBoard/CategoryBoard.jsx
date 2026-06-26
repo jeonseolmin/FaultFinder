@@ -136,7 +136,7 @@ export default function CategoryBoard({ category, title }) {
                       {post.title}
                     </td>
                     <td style={{ textAlign: 'center' }}>{post.author}</td>
-                    <td style={{ textAlign: 'center' }}>{post.createdDate ? post.createdDate.split('T')[0] : (post.createdAt ? post.createdAt.split('T')[0] : '')}</td>
+                    <td style={{ textAlign: 'center' }}>{post.createdAt ? post.createdAt.split('T')[0] : (post.createdAt ? post.createdAt.split('T')[0] : '')}</td>
                     <td style={{ textAlign: 'center' }}>{post.viewCount || 0}</td>
                     <td style={{ textAlign: 'center' }}>{post.commentCount || 0}</td>
                     <td style={{ textAlign: 'center', fontWeight: 'bold', color: '#3b82f6' }}>{post.likeCount || 0}</td>
