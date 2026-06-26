@@ -21,6 +21,17 @@ export default function CommunityBoard() {
   const [searchType, setSearchType] = useState(initialSearchType);
   const [keyword, setKeyword] = useState(initialKeyword);
 
+  const handleWriteClick = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("accessToken") || localStorage.getItem("token") || localStorage.getItem("Authorization");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate('/login');
+    } else {
+      navigate('/community/write');
+    }
+  };
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -141,6 +152,9 @@ export default function CommunityBoard() {
               }}
           >
             <h3>전체 게시글</h3>
+            <button onClick={handleWriteClick} className="btn-write board-write-btn">
+            글쓰기
+          </button>
 
           </div>
 
