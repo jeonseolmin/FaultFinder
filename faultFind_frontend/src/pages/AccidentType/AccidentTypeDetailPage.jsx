@@ -135,7 +135,7 @@ export default function AccidentTypeDetailPage() {
                         <p><strong>B차량:</strong> {scenario.partyBName}</p>
                       </div>
                       <div className="scenario-ratio">
-                        기본 {scenario.baseFaultA} : {scenario.baseFaultB}
+                        🅰 &ensp;{scenario.baseFaultA}&ensp; : &ensp;{scenario.baseFaultB} &ensp;🅱
                       </div>
                     </div>
                   )}
