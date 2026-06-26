@@ -10,7 +10,7 @@ export default function WriteForm() {
     category: "free",
     title: "",
     content: "",
-    notice: null,
+    notice: false,
   });
 
   const [isAdmin, setIsAdmin] = useState(false);
@@ -94,7 +94,7 @@ export default function WriteForm() {
                 type="checkbox" 
                 name="notice"
                 className="write-notice-checkbox"
-                checked={formData.isNotice} 
+                checked={formData.notice}
                 onChange={handleChange} 
                 style={{ width: '20px', height: '20px', marginRight: '10px', cursor: 'pointer' }}
               />

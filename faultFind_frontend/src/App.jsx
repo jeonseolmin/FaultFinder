@@ -1,15 +1,13 @@
-import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-
 import Navbar from "./components/Layout/Navbar/Navbar.jsx";
 import MainPage from "./pages/Main/MainPage.jsx";
 
-import CommunityPage from './components/Community/CommunityPage.jsx';
+import CommunityPage from './pages/Community/CommunityPage.jsx';
 import LoginPage from "./pages/Auth/LoginPage.jsx";
 import SignupPage from "./pages/Auth/SignupPage.jsx";
 import CommunityWritePage from "./pages/Community/CommunityWritePage.jsx";
-import CommunityDetailPage from './components/Community/CommunityDetailPage.jsx';
-import CommunityEditPage from './components/Community/CommunityEditPage.jsx';
+import CommunityDetailPage from './pages/Community/CommunityDetailPage.jsx';
+import EditPostForm from './components/Community/EditPostForm.jsx';
 import AccidentGuidePage from "./pages/AccidentGuide/AccidentGuidePage.jsx";
 import AccidentTypePage from "./pages/AccidentType/AccidentTypePage.jsx";
 import AccidentTypeDetailPage from "./pages/AccidentType/AccidentTypeDetailPage.jsx";
@@ -46,17 +44,15 @@ export default function App() {
           <Route path="/cases/:typeId" element={<AccidentTypeDetailPage />} />
           <Route path="/fault-ratios" element={<FaultSearchPage />} />
           <Route path="/community" element={<CommunityBoard />} />
-
           <Route path="/login" element={<LoginPage />} />
           <Route path="/oauth-success" element={<OAuthSuccess />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/admin" element={<AdminPage />} />
-
           <Route path="/community/write" element={<CommunityWritePage />} />
           <Route path="/community/:id" element={<CommunityDetailPage />} />
           <Route path="/posts" element={<CommunityPage />} />
-          <Route path="/community/edit/:id" element={<CommunityEditPage />} />
+          <Route path="/community/edit/:id" element={<EditPostForm />} />
           <Route path="/find-password" element={<FindPasswordPage />} />
           <Route path="/community/free" element={<FreeBoard />} />
           <Route path="/community/qna" element={<QnaBoard />} />
