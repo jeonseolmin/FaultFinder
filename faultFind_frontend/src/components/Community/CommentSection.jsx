@@ -9,7 +9,9 @@ export default function CommentSection({
                                            setNewComment,
                                            onCommentSubmit,
                                            onReport,
+                                            onReplySubmit
                                        }) {
+
     return (
         <div className="comments-section">
             <h3 className="comments-title">💬 댓글 ({comments.length})</h3>
@@ -26,7 +28,11 @@ export default function CommentSection({
                 />
             )}
 
-            <CommentList comments={comments} onReport={onReport} />
+            <CommentList
+                comments={comments}
+                onReport={onReport}
+                onReplySubmit={onReplySubmit}
+            />
         </div>
     );
 }

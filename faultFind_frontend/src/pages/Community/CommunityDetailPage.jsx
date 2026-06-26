@@ -71,50 +71,53 @@ export default function CommunityDetailPage() {
     };
 
     const currentUsername = getLoginUser();
+    const fetchComments = async () => {
+        try {
+            const response = await axiosInstance.get(`/api/community/${id}/comments`);
+            setComments(response.data);
+        } catch (error) {
+            console.error("댓글 불러오기 실패", error);
+        }
+    };
+    const fetchPostDetail = async () => {
+        try {
+            setLoading(true);
+            const response = await axiosInstance.get(`/api/community/${id}`);
+            setPost(response.data);
+            setEditTitle(response.data.title);
+            setEditContent(response.data.content);
+
+            if (response.data.isLiked !== undefined) {
+                setIsLiked(response.data.isLiked);
+            }
+
+        } catch (error) {
+            console.error("게시글을 불러오는데 실패했습니다.", error);
+            alert("존재하지 않거나 삭제된 게시글입니다.");
+            navigate(-1);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+    const fetchUserInfo = async () => {
+        try {
+            const res = await axiosInstance.get('/api/users/me');
+            setUserStatus({ isSuspended: res.data.isSuspended || res.data.suspended });
+        } catch (e) {
+            console.log(e+"로그인하지 않았거나 유저 정보를 가져올 수 없습니다.");
+        }
+    };
 
     useEffect(() => {
-        const fetchPostDetail = async () => {
-            try {
-                setLoading(true);
-                const response = await axiosInstance.get(`/api/community/${id}`);
-                setPost(response.data);
-                setEditTitle(response.data.title);
-                setEditContent(response.data.content);
-
-                if (response.data.isLiked !== undefined) {
-                    setIsLiked(response.data.isLiked);
-                }
-
-            } catch (error) {
-                console.error("게시글을 불러오는데 실패했습니다.", error);
-                alert("존재하지 않거나 삭제된 게시글입니다.");
-                navigate(-1);
-            } finally {
-                setLoading(false);
-            }
+        const init = async () =>{
+            fetchComments();
+            fetchUserInfo();
+            fetchPostDetail();
         };
-
-        const fetchComments = async () => {
-            try {
-                const response = await axiosInstance.get(`/api/community/${id}/comments`);
-                setComments(response.data);
-            } catch (error) {
-                console.error("댓글 불러오기 실패", error);
-            }
-        };
-
-        const fetchUserInfo = async () => {
-            try {
-                const res = await axiosInstance.get('/api/users/me');
-                setUserStatus({ isSuspended: res.data.isSuspended || res.data.suspended });
-            } catch (e) {
-                console.log(e+"로그인하지 않았거나 유저 정보를 가져올 수 없습니다.");
-            }
-        };
-
-        fetchUserInfo();
-        fetchComments();
-        fetchPostDetail();
+        init();
     }, [id, navigate]);
 
     const handleLike = async () => {
@@ -167,6 +170,29 @@ export default function CommunityDetailPage() {
             alert("수정 권한이 없거나 오류가 발생했습니다.");
         }
     };
+    const handleReplySubmit = async (parentId, content) => {
+        if (!currentUsername) {
+            alert("로그인 후 이용할 수 있는 기능입니다.");
+            return;
+        }
+
+        if (!content.trim()) {
+            alert("답글 내용을 입력해주세요.");
+            return;
+        }
+
+        try {
+            await axiosInstance.post(`/api/community/${id}/comments`, {
+                content,
+                parentId,
+            });
+
+            await fetchComments();
+        } catch (error) {
+            console.error("답글 등록 실패:", error);
+            alert("답글 등록 중 오류가 발생했습니다.");
+        }
+    };
 
     const handleCommentSubmit = async () => {
         if (!currentUsername) {
@@ -181,12 +207,12 @@ export default function CommunityDetailPage() {
 
         try {
             await axiosInstance.post(`/api/community/${id}/comments`, {
-                content: newComment
+                content: newComment,
+                parentId: null,
             });
-            setNewComment("");
 
-            const response = await axiosInstance.get(`/api/community/${id}/comments`);
-            setComments(response.data);
+            setNewComment("");
+            await fetchComments();
         } catch (error) {
             console.error("댓글 작성 실패", error);
             alert("현재 활동 정지 상태입니다.");
@@ -223,6 +249,7 @@ export default function CommunityDetailPage() {
                         setNewComment={setNewComment}
                         onCommentSubmit={handleCommentSubmit}
                         onReport={openReportModal}
+                        onReplySubmit={handleReplySubmit}
                     />
                 </>
             ) : (
