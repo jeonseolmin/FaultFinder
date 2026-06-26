@@ -203,7 +203,7 @@ export default function CommunityDetailPage() {
             <h2>{post.title}</h2>
             <div className="post-meta">
               <span>작성자: {post.author}</span> | 
-              <span>{post.createdDate ? post.createdDate.substring(0, 19).replace('T', ' ') : ''}</span> 
+              <span>{post.createdAt ? post.createdAt.substring(0, 19).replace('T', ' ') : ''}</span> 
               <span className="meta-view">조회수 {post.viewCount || 0}</span>
             </div>
           </div>
@@ -270,7 +270,7 @@ export default function CommunityDetailPage() {
                   <div className="comment-meta">
                     {comment.author} 
                     <span className="comment-date">
-                      {new Date(comment.createdDate).toLocaleString()} 
+                      {new Date(comment.createdAt).toLocaleString()} 
                     </span>
                     <button 
                       onClick={() => openReportModal('COMMENT', comment.id)}

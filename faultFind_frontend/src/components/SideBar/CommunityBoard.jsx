@@ -160,7 +160,7 @@ export default function CommunityBoard() {
                     <td className="title-cell">{post.title}</td>
                     <td>{post.author}</td>
                     <td>
-                      {post.createdDate ? post.createdDate.split("T")[0] : ""}
+                      {post.createdAt ? post.createdAt.split("T")[0] : ""}
                     </td>
                     <td>{post.viewCount || 0}</td>
                     <td>{post.commentCount || 0}</td>
