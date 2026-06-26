@@ -82,6 +82,17 @@ export default function CategoryBoard({ category, title }) {
     qna: "Q&A",
   };
 
+  const handleWriteClick = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("accessToken") || localStorage.getItem("token") || localStorage.getItem("Authorization");
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate('/login');
+    } else {
+      navigate('/community/write');
+    }
+  };
+
   return (
       <div className="main-container">
         <LeftSidebar activeTab="community" />
@@ -97,11 +108,7 @@ export default function CategoryBoard({ category, title }) {
           >
             <h3>{title}</h3>
 
-            <button
-                onClick={() => navigate("/community/write")}
-                className="btn-write"
-                style={{ width: "auto", padding: "10px 20px", fontSize: "14px" }}
-            >
+            <button onClick={handleWriteClick} className="btn-write board-write-btn">
               글쓰기
             </button>
           </div>

@@ -367,3 +367,34 @@
     padding: 0 20px;
     align-items: flex-start;
 }
+
+/* 사이드바 메인 글쓰기 버튼 (기존 속성에 border, cursor 추가) */
+.btn-write {
+  background-color: #1a56db;
+  color: #fff;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 6px rgba(26, 86, 219, 0.2);
+  border: none;         /* ✨ 인라인에서 빼온 속성 */
+  cursor: pointer;      /* ✨ 인라인에서 빼온 속성 */
+  text-decoration: none;/* ✨ 인라인에서 빼온 속성 */
+  transition: background-color 0.2s;
+}
+
+.btn-write:hover {
+  background-color: #1545b3;
+}
+
+/* 게시판 상단 우측 글쓰기 버튼 (작은 사이즈) */
+.board-write-btn {
+  width: auto;
+  padding: 10px 20px;
+  font-size: 14px;
+}

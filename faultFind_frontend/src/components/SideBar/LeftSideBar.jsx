@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; 
 import { HiMiniChatBubbleLeftEllipsis } from "react-icons/hi2";
 import { FaCarSide, FaShieldHalved, FaPencil } from "react-icons/fa6";
 import { FaBalanceScale } from "react-icons/fa";
@@ -80,10 +80,23 @@ const PolicyModal = ({ isOpen, onClose, info }) => {
 };
 
 export default function LeftSidebar({ activeTab }) {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 현재 탭에 맞는 정보 매핑 (없으면 기본값 커뮤니티)
   const info = SIDEBAR_INFO[activeTab] || SIDEBAR_INFO["community"];
+
+  const handleWriteClick = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("accessToken") || localStorage.getItem("token") || localStorage.getItem("Authorization");
+    
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      navigate('/login'); // 로그인 페이지 주소
+    } else {
+      navigate('/community/write');
+    }
+  };
 
   return (
       <aside className="left-sidebar">
@@ -148,9 +161,9 @@ export default function LeftSidebar({ activeTab }) {
         </div>
 
         {/* 글쓰기 버튼 */}
-        <Link to="/community/write" className="btn-write" style={{ textDecoration: "none", display: "flex", justifyContent: "center" }}>
-          <span><FaPencil color="#cebe81" /></span> 글쓰기
-        </Link>
+        <button onClick={handleWriteClick} className="btn-write">
+        <span className="icon"><FaPencil color="#cebe81" /></span> 글쓰기
+      </button>
 
         {/* 분리된 모달 컴포넌트 렌더링 */}
         <PolicyModal
