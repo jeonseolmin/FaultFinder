@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import axiosInstance from "../../api/axiosInstance";
@@ -143,37 +143,61 @@ export default function SignupForm() {
 
                 <div className="agreements-container" style={{ margin: "25px 0", textAlign: "left", fontSize: "0.9rem" }}>
                   <div style={{ paddingBottom: "12px", borderBottom: "1px solid #e5e7eb", marginBottom: "12px" }}>
-                    <label style={{ fontWeight: "bold", cursor: "pointer", display: "flex", alignItems: "center" }}>
-                      <input type="checkbox" name="all" checked={agreements.all} onChange={handleAllAgreementChange} style={{ marginRight: "8px", width: "16px", height: "16px" }} />
-                      모든 약관에 확인 및 동의합니다.
-                    </label>
+                    <div style={{ fontWeight: "bold", display: "flex", alignItems: "center" }}>
+                      <input 
+                        type="checkbox" 
+                        name="all" 
+                        checked={agreements.all} 
+                        onChange={handleAllAgreementChange} 
+                        style={{ marginRight: "8px", width: "16px", height: "16px", cursor: "pointer" }} 
+                      />
+                      <span>모든 약관에 확인 및 동의합니다.</span>
+                    </div>
                   </div>
 
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px", color: "#4b5563" }}>
-                    <label style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <input type="checkbox" name="terms" checked={agreements.terms} onChange={handleAgreementChange} style={{ marginRight: "8px" }} />
-                        [필수] 이용약관 동의
+                        <input 
+                          type="checkbox" 
+                          name="terms" 
+                          checked={agreements.terms} 
+                          onChange={handleAgreementChange} 
+                          style={{ marginRight: "8px", cursor: "pointer" }} 
+                        />
+                        <span>[필수] 이용약관 동의</span>
                       </div>
-                      <span onClick={(e) => { e.preventDefault(); setModalContent({ title: "이용약관 동의", text: TERMS_TEXT }); }} style={{ color: "#3b82f6", textDecoration: "underline", fontSize: "0.8rem" }}>
+                      <span onClick={(e) => { e.preventDefault(); setModalContent({ title: "이용약관 동의", text: TERMS_TEXT }); }} style={{ color: "#3b82f6", textDecoration: "underline", fontSize: "0.8rem", cursor: "pointer" }}>
                         내용보기
                       </span>
-                    </label>
+                    </div>
 
-                    <label style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <div style={{ display: "flex", alignItems: "center" }}>
-                        <input type="checkbox" name="privacy" checked={agreements.privacy} onChange={handleAgreementChange} style={{ marginRight: "8px" }} />
-                        [필수] 개인정보 수집 및 이용 동의
+                        <input 
+                          type="checkbox" 
+                          name="privacy" 
+                          checked={agreements.privacy} 
+                          onChange={handleAgreementChange} 
+                          style={{ marginRight: "8px", cursor: "pointer" }} 
+                        />
+                        <span>[필수] 개인정보 수집 및 이용 동의</span>
                       </div>
-                      <span onClick={(e) => { e.preventDefault(); setModalContent({ title: "개인정보 수집 및 이용 동의", text: PRIVACY_TEXT }); }} style={{ color: "#3b82f6", textDecoration: "underline", fontSize: "0.8rem" }}>
+                      <span onClick={(e) => { e.preventDefault(); setModalContent({ title: "개인정보 수집 및 이용 동의", text: PRIVACY_TEXT }); }} style={{ color: "#3b82f6", textDecoration: "underline", fontSize: "0.8rem", cursor: "pointer" }}>
                         내용보기
                       </span>
-                    </label>
+                    </div>
 
-                    <label style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
-                      <input type="checkbox" name="marketing" checked={agreements.marketing} onChange={handleAgreementChange} style={{ marginRight: "8px" }} />
-                      [선택] 마케팅 정보 수신 동의
-                    </label>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <input 
+                        type="checkbox" 
+                        name="marketing" 
+                        checked={agreements.marketing} 
+                        onChange={handleAgreementChange} 
+                        style={{ marginRight: "8px", cursor: "pointer" }} 
+                      />
+                      <span>[선택] 마케팅 정보 수신 동의</span>
+                    </div>
                   </div>
                 </div>
 
