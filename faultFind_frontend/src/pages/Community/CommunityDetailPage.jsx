@@ -28,6 +28,47 @@ export default function CommunityDetailPage() {
         setReportReason('');
         setShowReportModal(true);
     };
+    const handleCommentDelete = async (commentId) => {
+
+        if (!window.confirm("댓글을 삭제하시겠습니까?"))
+            return;
+
+        try {
+
+            await axiosInstance.delete(
+                `/api/community/comments/${commentId}`
+            );
+
+            await fetchComments();
+
+        } catch (error) {
+            console.error(error);
+            alert("댓글 삭제 실패");
+        }
+    };
+    const handleCommentUpdate = async (commentId, content) => {
+
+        if (!content.trim()) {
+            alert("댓글 내용을 입력해주세요.");
+            return;
+        }
+
+        try {
+
+            await axiosInstance.put(
+                `/api/community/comments/${commentId}`,
+                {
+                    content,
+                }
+            );
+
+            await fetchComments();
+
+        } catch (error) {
+            console.error(error);
+            alert("댓글 수정 실패");
+        }
+    };
 
     const handleReportSubmit = async () => {
         if (!reportReason.trim()) {
@@ -247,9 +288,12 @@ export default function CommunityDetailPage() {
                         userStatus={userStatus}
                         newComment={newComment}
                         setNewComment={setNewComment}
+                        currentUsername={currentUsername}
                         onCommentSubmit={handleCommentSubmit}
-                        onReport={openReportModal}
                         onReplySubmit={handleReplySubmit}
+                        onUpdate={handleCommentUpdate}
+                        onDelete={handleCommentDelete}
+                        onReport={openReportModal}
                     />
                 </>
             ) : (

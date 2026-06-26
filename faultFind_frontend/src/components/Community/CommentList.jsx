@@ -1,7 +1,7 @@
 import "./Community.css";
 import CommentItem from "./CommentItem/CommentItem";
 
-export default function CommentList({ comments, onReport, onReplySubmit }) {
+export default function CommentList({ comments, onReport, onReplySubmit,onUpdate,onDelete }) {
     const parentComments = comments.filter((comment) => comment.parentId === null);
 
     const getReplies = (parentId) => {
@@ -25,6 +25,8 @@ export default function CommentList({ comments, onReport, onReplySubmit }) {
                     replies={getReplies(comment.id)}
                     onReport={onReport}
                     onReplySubmit={onReplySubmit}
+                    onUpdate={onUpdate}
+                    onDelete={onDelete}
                 />
             ))}
         </div>

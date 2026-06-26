@@ -4,12 +4,15 @@ import CommentList from "./CommentList";
 
 export default function CommentSection({
                                            comments,
+                                           currentUsername,
                                            userStatus,
                                            newComment,
                                            setNewComment,
                                            onCommentSubmit,
                                            onReport,
-                                            onReplySubmit
+                                            onReplySubmit,
+                                           onUpdate,
+                                           onDelete
                                        }) {
 
     return (
@@ -30,8 +33,11 @@ export default function CommentSection({
 
             <CommentList
                 comments={comments}
+                currentUsername={currentUsername}
                 onReport={onReport}
                 onReplySubmit={onReplySubmit}
+                onUpdate={onUpdate}
+                onDelete={onDelete}
             />
         </div>
     );
