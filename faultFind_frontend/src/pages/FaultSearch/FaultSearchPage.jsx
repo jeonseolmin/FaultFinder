@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import LeftSidebar from "./LeftSidebar"; // 경로에 맞게 임포트하세요
-import "./FaultSearch.css"; // 작성한 CSS 파일 연결
+import LeftSidebar from "../../components/SideBar/LeftSideBar";
+import "./FaultSearch.css";
 
 function FaultSearchPage() {
   const [situationText, setSituationText] = useState("");
