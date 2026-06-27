@@ -38,22 +38,16 @@ export default function LoginForm() {
     }
   };
 
-  // 구글 로그인 핸들러
   const handleGoogleLogin = () => {
-    window.location.href = 
-    "http://3.27.17.82/login/oauth2/authorization/google";
+    window.location.href = "/oauth2/authorization/google";
   };
 
-  // 카카오 로그인 핸들러
   const handleKakaoLogin = () => {
-    window.location.href = 
-    "http://3.27.17.82/login/oauth2/code/kakao";
+    window.location.href = "/oauth2/authorization/kakao";
   };
 
-  // 네이버 로그인 핸들러
   const handleNaverLogin = () => {
-  window.location.href =
-    "http://3.27.17.82login/oauth2/code/naver";
+    window.location.href = "/oauth2/authorization/naver";
   };
 
   // ***********
