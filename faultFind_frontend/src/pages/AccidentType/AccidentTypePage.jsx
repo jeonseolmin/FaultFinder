@@ -4,7 +4,7 @@ import LeftSidebar from '../../components/SideBar/LeftSideBar.jsx';
 import '../../components/SideBar/Community.css';
 import './AccidentType.css';
 
-import { ACCIDENT_TYPES } from '../../data/accidentTypeData.js';
+import { ACCIDENT_TYPES } from '../../data/AccidentTypeData.js';
 
 export default function AccidentTypePage() {
   const navigate = useNavigate();
