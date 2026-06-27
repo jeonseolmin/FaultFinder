@@ -57,11 +57,9 @@ spring:
     # PostgreSQL 접속 주소
     url:  jdbc:postgresql://postgres:5432/fault_find_db
 
-    # 환경변수 DB_USER가 없으면 postgres 사용
-    username: ${DB_USER:postgres}
+    username: ${DB_USER}
 
-    # 환경변수 DB_PW가 없으면 1111 사용
-    password: ${DB_PW:1111}
+    password: ${DB_PW}
 
   jpa:
     hibernate:
