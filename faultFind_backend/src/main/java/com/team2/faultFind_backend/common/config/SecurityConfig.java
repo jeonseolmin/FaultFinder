@@ -141,7 +141,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
                     config.setAllowedOrigins(
-                            List.of("http://localhost:3000")
+                            List.of("http://localhost:3000",
+                                    "http://3.27.17.82")
                     );
                     config.setAllowedMethods(
                             List.of("*")
