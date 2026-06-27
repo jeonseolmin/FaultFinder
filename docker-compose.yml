@@ -20,6 +20,9 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
+    
+    env_file:
+      - .env
 
     build:
       context: ./faultFind_backend

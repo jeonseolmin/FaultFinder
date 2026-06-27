@@ -47,13 +47,13 @@ export default function LoginForm() {
   // 카카오 로그인 핸들러
   const handleKakaoLogin = () => {
     window.location.href = 
-    "http://localhost:8080/oauth2/authorization/kakao";
+    "http://3.27.17.82:8080/login/oauth2/code/kakao";
   };
 
   // 네이버 로그인 핸들러
   const handleNaverLogin = () => {
   window.location.href =
-    "http://localhost:8080/oauth2/authorization/naver";
+    "http://3.27.17.82:8080/login/oauth2/code/naver";
   };
 
   // ***********

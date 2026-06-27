@@ -3,7 +3,6 @@ spring:
     oauth2:
       client:
         registration:
-#          GOOGLE
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
@@ -11,7 +10,6 @@ spring:
               - email
               - profile
 
-          #     KAKAO
           kakao:
             client-id: ${KAKAO_CLIENT_ID}
             client-secret: ${KAKAO_CLIENT_SECRET}
@@ -22,7 +20,6 @@ spring:
               - profile_nickname
             client-name: Kakao
 
-          #       NAVER
           naver:
             client-id: ${NAVER_CLIENT_ID}
             client-secret: ${NAVER_CLIENT_SECRET}
@@ -47,42 +44,30 @@ spring:
             user-name-attribute: response
 
   application:
-    # 애플리케이션 이름
     name: fault_find_backend
 
   datasource:
-    # PostgreSQL JDBC 드라이버
     driver-class-name: org.postgresql.Driver
-
-    # PostgreSQL 접속 주소
-    url:  jdbc:postgresql://postgres:5432/fault_find_db
-
-    username: ${DB_USER}
-
-    password: ${DB_PW}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/fault_find_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:1234}
 
   jpa:
     hibernate:
-      # Entity 변경사항을 기반으로 테이블 자동 생성/수정
-      # 개발 단계에서 사용
       ddl-auto: update
-
     properties:
       hibernate:
-        # 실행되는 SQL 출력
         show_sql: true
-
-        # SQL 포맷팅
         format_sql: true
 
   autoconfigure:
     exclude:
-      # Spring Security 자동 설정 비활성화
       - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-  jwt:
-    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbb
-    access-expiration: 3600000
+
+jwt:
+  secret: ${JWT_SECRET}
+  access-expiration: ${JWT_ACCESS_EXPIRATION:3600000}
+
 logging:
   level:
-    # SQL 파라미터 바인딩 값 출력
     org.hibernate.orm.jdbc.bind: trace
