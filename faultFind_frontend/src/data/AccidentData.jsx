@@ -1,6 +1,5 @@
 // src/data/accidentData.jsx (확장자 변경 필수!)
-import React from 'react';
-import { FaCarCrash, FaCamera, FaPhoneAlt, FaHospital, FaVideo } from 'react-icons/fa';
+import { FaCarCrash, FaCamera, FaPhoneAlt} from 'react-icons/fa';
 import { MdOutlineSecurity } from 'react-icons/md';
 
 // 🌟 예시: ACTION_STEPS 데이터에 react-icons 적용
