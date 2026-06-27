@@ -138,12 +138,12 @@ public class SecurityConfig {
 
         // cors 설정
         http
+                .csrf((auth) -> auth.disable());
+
+        http
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-//                    config.setAllowedOrigins(
-//                            List.of("http://localhost:3000",
-//                                    "http://3.27.17.82")
-//                    );
+
                     config.setAllowedOriginPatterns(
                             List.of(
                                     "http://localhost:3000",
@@ -156,17 +156,15 @@ public class SecurityConfig {
                             List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                     );
 
-                    config.setAllowedHeaders(
-                            List.of("*")
-                    );
-
-                    config.setExposedHeaders(
-                            List.of("Authorization")
-                    );
-
+                    config.setAllowedHeaders(List.of("*"));
+                    config.setExposedHeaders(List.of("Authorization"));
                     config.setAllowCredentials(true);
+
                     return config;
                 }));
+
+        http
+                .formLogin((auth) -> auth.disable());
 
         return http.build();
     }
