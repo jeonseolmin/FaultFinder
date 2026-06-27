@@ -1,15 +1,21 @@
 package com.team2.faultFind_backend.post.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.team2.faultFind_backend.comment.entity.Comment;
 import com.team2.faultFind_backend.common.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "posts")
 @Getter
 @Setter
-@Table(name = "posts")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Post extends BaseEntity {
 
     @Id
@@ -25,19 +31,22 @@ public class Post extends BaseEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private String author;
+    private String author;      // 닉네임 (화면 표시용)
+    private String authorEmail; // 이메일 (권한 검사용)
 
-    private String authorEmail;
+    @Builder.Default
+    private int viewCount = 0;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private int viewCount;
+    @Builder.Default
+    private int commentCount = 0;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private int likeCount;
+    @Builder.Default
+    private int likeCount = 0;
 
-    @Column(columnDefinition = "integer default 0", nullable = false)
-    private int commentCount;
+    @Builder.Default
+    @Column(name ="is_notice", nullable = false, columnDefinition = "boolean default false")
+    private boolean notice = false; // 공지사항 여부
 
-
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
 }

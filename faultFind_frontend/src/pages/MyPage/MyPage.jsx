@@ -1,87 +1,311 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../../api/axiosInstance'; // 경로 맞게 수정!
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import axiosInstance from "../../api/axiosInstance";
+import Pagination from "../../Common/Pagination.jsx";
+import "./MyPage.css";
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const [data, setData] = useState({ user: null, posts: [], comments: [] });
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const postPage = Number(searchParams.get("postPage") || 0);
+  const commentPage = Number(searchParams.get("commentPage") || 0);
+  const pageSize = 8;
+
+  const [data, setData] = useState({
+    user: {
+      userName: "",
+      email: "",
+    },
+    posts: {
+      content: [],
+      totalElements: 0,
+      totalPages: 0,
+      number: 0,
+    },
+    comments: {
+      content: [],
+      totalElements: 0,
+      totalPages: 0,
+      number: 0,
+    },
+  });
+
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('posts'); // 'posts' or 'comments'
+  const [activeTab, setActiveTab] = useState("posts");
+
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     const fetchMyPageData = async () => {
       try {
-        const response = await axiosInstance.get('/api/mypage/info');
+        const response = await axiosInstance.get("/api/mypage/info", {
+          params: {
+            postPage,
+            postSize: pageSize,
+            commentPage,
+            commentSize: pageSize,
+          },
+        });
+
         setData(response.data);
       } catch (error) {
         console.error("마이페이지 정보 불러오기 실패", error);
         alert("로그인이 필요합니다.");
-        navigate('/login');
+        navigate("/login");
       } finally {
         setLoading(false);
       }
     };
-    fetchMyPageData();
-  }, [navigate]);
 
-  if (loading) return <div style={{ textAlign: 'center', padding: '50px' }}>로딩 중...</div>;
+    fetchMyPageData();
+  }, [postPage, commentPage, navigate]);
+
+  const changePostPage = (nextPage) => {
+    setSearchParams({
+      postPage: String(nextPage),
+      commentPage: String(commentPage),
+    });
+  };
+
+  const changeCommentPage = (nextPage) => {
+    setSearchParams({
+      postPage: String(postPage),
+      commentPage: String(nextPage),
+    });
+  };
+
+  const getUserRoleFromToken = () => {
+    const token =
+        localStorage.getItem("accessToken") ||
+        localStorage.getItem("token") ||
+        localStorage.getItem("Authorization");
+
+    if (!token) return null;
+
+    try {
+      const payload = JSON.parse(window.atob(token.split(".")[1]));
+      return payload.role;
+    } catch (e) {
+      console.error("토큰 파싱 실패", e);
+      return null;
+    }
+  };
+
+  const userRole = getUserRoleFromToken();
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmPassword) {
+      alert("새 비밀번호가 서로 일치하지 않습니다.");
+      return;
+    }
+
+    if (newPassword.length < 4) {
+      alert("새 비밀번호는 4자리 이상이어야 합니다.");
+      return;
+    }
+
+    try {
+      await axiosInstance.put("/api/users/password", {
+        currentPassword,
+        newPassword,
+      });
+
+      alert("비밀번호가 성공적으로 변경되었습니다! 다시 로그인해주세요.");
+
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("token");
+      localStorage.removeItem("Authorization");
+      localStorage.removeItem("email");
+
+      navigate("/login");
+    } catch (error) {
+      console.error("비밀번호 변경 실패:", error);
+
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data);
+      } else {
+        alert("비밀번호 변경에 실패했습니다. 현재 비밀번호를 확인해주세요.");
+      }
+    }
+  };
+
+  if (loading) return <div className="mypage-loading">로딩 중...</div>;
   if (!data.user) return null;
+  const posts = data.posts?.content ?? [];
+  const comments = data.comments?.content ?? [];
 
   return (
-    <div style={{ maxWidth: '800px', margin: '40px auto', padding: '20px' }}>
-      {/* 👤 상단 프로필 영역 */}
-      <div style={{ backgroundColor: '#f3f4f6', padding: '30px', borderRadius: '12px', marginBottom: '30px', textAlign: 'center' }}>
-        <h2 style={{ margin: '0 0 10px 0', color: '#1f2937' }}>{data.user.name} 님의 마이페이지</h2>
-        <p style={{ margin: '0', color: '#6b7280' }}>✉️ {data.user.email}</p>
-      </div>
+      <div className="mypage-dashboard">
+        <aside className="mypage-sidebar">
+          <div className="mypage-profile">
+            <div className="profile-avatar">
+              {(data.user?.userName ?? "").charAt(0)}
+            </div>
 
-      {/* 탭 메뉴 */}
-      <div style={{ display: 'flex', borderBottom: '2px solid #e5e7eb', marginBottom: '20px' }}>
-        <button 
-          onClick={() => setActiveTab('posts')}
-          style={{ flex: 1, padding: '15px', fontSize: '1.1em', fontWeight: 'bold', border: 'none', backgroundColor: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'posts' ? '3px solid #3b82f6' : 'none', color: activeTab === 'posts' ? '#3b82f6' : '#9ca3af' }}
-        >
-          내가 쓴 글 ({data.posts.length})
-        </button>
-        <button 
-          onClick={() => setActiveTab('comments')}
-          style={{ flex: 1, padding: '15px', fontSize: '1.1em', fontWeight: 'bold', border: 'none', backgroundColor: 'transparent', cursor: 'pointer', borderBottom: activeTab === 'comments' ? '3px solid #3b82f6' : 'none', color: activeTab === 'comments' ? '#3b82f6' : '#9ca3af' }}
-        >
-          내가 쓴 댓글 ({data.comments.length})
-        </button>
-      </div>
+            <h2 className="profile-name">{data.user?.userName}</h2>
+            <p className="profile-email">{data.user?.email}</p>
+          </div>
 
-      {/* 탭 내용 영역 */}
-      <div>
-        {/* 내가 쓴 글 목록 */}
-        {activeTab === 'posts' && (
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {data.posts.length === 0 ? <p style={{ textAlign: 'center', color: '#999' }}>작성한 글이 없습니다.</p> : null}
-            {data.posts.map(post => (
-              <li key={post.id} onClick={() => navigate(`/community/${post.id}`)} style={{ padding: '15px', borderBottom: '1px solid #eee', cursor: 'pointer', display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ fontWeight: 'bold' }}>{post.title}</span>
-                <span style={{ color: '#999', fontSize: '0.9em' }}>{new Date(post.createdDate).toLocaleDateString()}</span>
-              </li>
-            ))}
-          </ul>
-        )}
+          <nav className="mypage-nav">
+            <button
+                className={`nav-btn ${activeTab === "posts" ? "active" : ""}`}
+                onClick={() => setActiveTab("posts")}
+            >
+              내가 쓴 글{" "}
 
-        {/* 내가 쓴 댓글 목록 */}
-        {activeTab === 'comments' && (
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {data.comments.length === 0 ? <p style={{ textAlign: 'center', color: '#999' }}>작성한 댓글이 없습니다.</p> : null}
-            {data.comments.map(comment => (
-              // comment.post.id 대신 comment.postId 로 수정
-              <li key={comment.id} onClick={() => navigate(`/community/${comment.post.Id}`)} style={{ padding: '15px', borderBottom: '1px solid #eee', cursor: 'pointer' }}>
-                <div style={{ color: '#555', marginBottom: '8px' }}>{comment.content}</div>
-                <div style={{ fontSize: '0.85em', color: '#999' }}>
-                  <span style={{ color: '#3b82f6' }}>원문: {comment.postTitle}</span> | {new Date(comment.createdDate).toLocaleDateString()}
+            </button>
+
+            <button
+                className={`nav-btn ${activeTab === "comments" ? "active" : ""}`}
+                onClick={() => setActiveTab("comments")}
+            >
+              내가 쓴 댓글{" "}
+            </button>
+
+            <button
+                className={`nav-btn ${
+                    activeTab === "password" ? "active-danger" : ""
+                }`}
+                onClick={() => setActiveTab("password")}
+            >
+              비밀번호 변경
+            </button>
+          </nav>
+
+          {userRole === "ROLE_ADMIN" && (
+              <div className="admin-section">
+                <button
+                    className="btn-admin-enter"
+                    onClick={() => navigate("/admin")}
+                >
+                  관리자 대시보드 입장
+                </button>
+              </div>
+          )}
+        </aside>
+
+        <main className="mypage-content">
+          <div className="content-header">
+            <h2>
+              {activeTab === "posts" && "내가 쓴 글 내역"}
+              {activeTab === "comments" && "내가 쓴 댓글 내역"}
+              {activeTab === "password" && "계정 보안 설정"}
+            </h2>
+          </div>
+
+          <div className="content-body">
+            {activeTab === "posts" && (
+                <>
+                  <div className="list-container">
+                    {posts.length === 0 && (
+                        <div className="empty-state">작성한 글이 없습니다.</div>
+                    )}
+
+                    {posts.map((post) => (
+                        <div
+                            key={post.id}
+                            className="list-item"
+                            onClick={() => navigate(`/community/${post.id}`)}
+                        >
+                          <span className="item-title">{post.title}</span>
+                          <span className="item-date">
+            {post.createdAt
+                ? new Date(post.createdAt).toLocaleDateString()
+                : ""}
+          </span>
+                        </div>
+                    ))}
+                  </div>
+
+                  <Pagination
+                      pageData={data.posts}
+                      onPageChange={changePostPage}
+                  />
+                </>
+            )}
+
+            {activeTab === "comments" && (
+                <>
+                  <div className="list-container">
+                    {comments.length === 0 && (
+                        <div className="empty-state">작성한 댓글이 없습니다.</div>
+                    )}
+
+                    {comments.map((comment) => (
+                        <div
+                            key={comment.id}
+                            className="list-item flex-column"
+                            onClick={() => navigate(`/community/${comment.postId}`)}
+                        >
+                          <div className="item-content">{comment.content}</div>
+
+                          <div className="item-meta">
+                            <span className="meta-highlight">원문: {comment.postTitle}</span>
+                            <span className="meta-divider">|</span>
+                            {comment.createdAt
+                                ? new Date(comment.createdAt).toLocaleDateString()
+                                : ""}
+                          </div>
+                        </div>
+                    ))}
+                  </div>
+
+                  <Pagination
+                      pageData={data.comments}
+                      onPageChange={changeCommentPage}
+                  />
+                </>
+            )}
+
+            {activeTab === "password" && (
+                <div className="password-change-section">
+                  <form onSubmit={handleChangePassword} className="password-form">
+                    <div className="form-group">
+                      <label>현재 비밀번호 (또는 임시 비밀번호)</label>
+                      <input
+                          type="password"
+                          value={currentPassword}
+                          onChange={(e) => setCurrentPassword(e.target.value)}
+                          placeholder="현재 비밀번호를 입력해주세요"
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>새 비밀번호</label>
+                      <input
+                          type="password"
+                          value={newPassword}
+                          onChange={(e) => setNewPassword(e.target.value)}
+                          placeholder="4자 이상 입력해주세요"
+                          required
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>새 비밀번호 확인</label>
+                      <input
+                          type="password"
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          placeholder="새 비밀번호를 다시 입력해주세요"
+                          required
+                      />
+                    </div>
+
+                    <button type="submit" className="btn-change-pw">
+                      비밀번호 변경 완료
+                    </button>
+                  </form>
                 </div>
-              </li>
-            ))}
-          </ul>
-        )}
+            )}
+          </div>
+        </main>
       </div>
-    </div>
   );
 }

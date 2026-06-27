@@ -1,0 +1,251 @@
+/* 전체 레이아웃 세팅 */
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+}
+
+/* 좌측 사이드바 */
+.admin-sidebar {
+  width: 280px;
+  background-color: #111827;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 20px;
+  color: #ffffff;
+}
+
+.admin-profile {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  background-color: #ef4444;
+  color: #ffffff;
+  font-size: 32px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px auto;
+}
+
+.profile-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color :#af7373;
+  margin: 0 0 5px 0;
+}
+
+.profile-email {
+  font-size: 0.9rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #9ca3af;
+  background-color: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.nav-btn:hover {
+  background-color: #1f2937;
+  color: #ffffff;
+}
+
+.nav-btn.active {
+  background-color: #374151;
+  color: #ffffff;
+}
+
+.nav-btn.active-danger {
+  background-color: #7f1d1d;
+  color: #fca5a5;
+}
+
+.badge {
+  background-color: #374151;
+  color: #d1d5db;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.nav-btn.active .badge {
+  background-color: #4b5563;
+  color: #ffffff;
+}
+
+.badge-danger {
+  background-color: #991b1b;
+  color: #fecaca;
+}
+
+/* 우측 메인 콘텐츠 */
+.admin-content {
+  flex: 1;
+  padding: 60px;
+  overflow-y: auto;
+}
+
+.admin-header {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  color: #111827;
+}
+
+.admin-header h2 {
+  margin: 0 0 5px 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.admin-header p {
+  margin: 0;
+  color: #6b7280;
+}
+
+.table-container {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* 테이블 디자인 */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.admin-table thead tr {
+  background-color: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.admin-table th {
+  padding: 16px 12px;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+.admin-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s;
+}
+
+.admin-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.admin-table td {
+  padding: 16px 12px;
+  color: #1f2937;
+}
+
+/* 신고 테이블 전용 색상 */
+.report-table thead tr {
+  background-color: #fef2f2;
+  border-bottom: 2px solid #fecaca;
+}
+
+.report-table th {
+  color: #dc2626;
+}
+
+/* 관리 버튼 & 태그 영역 */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.btn-admin {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.btn-admin:hover { opacity: 0.8; }
+.btn-warning { background-color: #f59e0b; }
+.btn-success { background-color: #10b981; }
+.btn-danger { background-color: #ef4444; }
+.btn-gray { background-color: #6b7280; }
+
+.role-admin { color: #ef4444; font-weight: bold; }
+.post-link { cursor: pointer; color: #2563eb; text-decoration: underline; font-weight: 500; }
+
+.report-type {
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.report-type-post {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.report-type-comment {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.report-reason {
+  color: #dc2626;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.report-date {
+  color: #9ca3af;
+  font-size: 0.9em;
+}
+
+.empty-message, .admin-loading {
+  padding: 60px;
+  color: #9ca3af;
+  text-align: center;
+  font-size: 1.1rem;
+}

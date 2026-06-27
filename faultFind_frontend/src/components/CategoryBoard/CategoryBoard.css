@@ -1,0 +1,75 @@
+.category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.category-write-btn {
+    width: auto;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+
+.category-search-btn {
+    width: auto;
+    padding: 0 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    height: 42px;
+}
+
+.col-no { width: 8%; min-width: 50px; text-align: center; white-space: nowrap; }
+.col-category { width: 12%; min-width: 100px; text-align: center; white-space: nowrap; }
+.col-title { width: 37%; text-align: center; }
+.col-author { width: 9%; min-width: 80px; text-align: center; }
+.col-date { width: 19%; min-width: 100px; text-align: center; white-space: nowrap; }
+.col-view { width: 5%; min-width: 60px; text-align: center; white-space: nowrap; }
+.col-comment { width: 5%; min-width: 60px; text-align: center; white-space: nowrap; }
+.col-like { width: 5%; min-width: 60px; text-align: center; white-space: nowrap; }
+
+.board-row {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.board-row.notice-row {
+    background-color: #eff6ff;
+}
+
+.center-cell {
+    text-align: center;
+}
+
+.title-cell {
+    text-align: left;
+    font-weight: 500;
+    color: inherit;
+}
+
+.title-cell.notice-title {
+    font-weight: 700;
+    color: #1e3a8a;
+}
+
+.badge-notice {
+    background-color: #3b82f6;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.like-cell {
+    text-align: center;
+    font-weight: bold;
+    color: #3b82f6;
+}
+
+.empty-cell {
+    text-align: center;
+    padding: 50px 0;
+    color: #888;
+    font-size: 16px;
+}

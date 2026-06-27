@@ -1,0 +1,469 @@
+/* CommunityDetailPage.css */
+
+.post-detail-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+/* 🌟 헤더 영역 (제목, 작성자, 날짜) */
+.detail-header {
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.view-count {
+  margin-left: 10px;
+}
+.detail-header h2 {
+  margin: 0 0 15px 0;
+  font-size: 24px;
+  color: #1e293b;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.post-meta {
+  font-size: 14px;
+  color: #64748b;
+  display: flex;
+  gap: 10px;
+}
+
+/* 🌟 본문 영역 */
+.detail-content {
+  min-height: 300px;
+  font-size: 16px;
+  color: #334155;
+  line-height: 1.6;
+  white-space: pre-wrap; /* 줄바꿈을 유지해줍니다 */
+  margin-bottom: 40px;
+}
+
+/* 🌟 하단 버튼 영역 */
+.detail-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+}
+
+.author-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* 공통 버튼 스타일 */
+.btn-back, .btn-edit, .btn-delete, .btn-save, .btn-cancel {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-back { background-color: #f1f5f9; color: #475569; }
+.btn-back:hover { background-color: #e2e8f0; }
+
+.btn-edit { background-color: #f59e0b; color: #fff; }
+.btn-edit:hover { background-color: #d97706; }
+
+.btn-delete { background-color: #ef4444; color: #fff; }
+.btn-delete:hover { background-color: #dc2626; }
+
+/* 🌟 수정 모드 폼 화면 */
+.edit-form h3 {
+  margin-top: 0;
+  color: #1a56db;
+}
+
+.edit-title-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.edit-title-input:focus {
+  outline: none;
+  border-color: #1a56db;
+}
+
+.edit-content-textarea {
+  width: 100%;
+  height: 300px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  resize: vertical;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.edit-content-textarea:focus {
+  outline: none;
+  border-color: #1a56db;
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-save { background-color: #1a56db; color: #fff; }
+.btn-save:hover { background-color: #1e40af; }
+
+.btn-cancel { background-color: #94a3b8; color: #fff; }
+.btn-cancel:hover { background-color: #64748b; }
+
+/* CommunityDetailPage Style */
+.detail-content {
+  min-height: 200px;
+  padding: 20px 0;
+  font-size: 1.1em;
+  line-height: 1.6;
+}
+
+.detail-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.left-buttons,
+.right-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-back,
+.btn-like,
+.btn-report,
+.btn-edit,
+.btn-delete,
+.btn-save,
+.btn-cancel-edit {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.btn-back {
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.btn-like {
+  font-size: 12px;
+  padding: 9px 12px;
+  background-color: #f9faf9;
+  color: black;
+  border: none;
+}
+
+.btn-like.liked {
+  background-color: #98ebee;
+}
+
+.btn-report {
+  font-size: 12px;
+  padding: 9px 16px;
+  background-color: #faf9f8;
+  color: black;
+  border: none;
+}
+
+.btn-edit,
+.btn-save {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.btn-delete {
+  background-color: #6b7280;
+  color: white;
+  border: none;
+}
+
+.detail-divider {
+  margin: 40px 0;
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+.comments-title {
+  font-size: 22px;
+  font-family: "Pretendard";
+  margin-bottom: 20px;
+}
+
+.suspended-notice {
+  padding: 20px;
+  background-color: #fff7ed;
+  border: 1px solid #fed7aa;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  color: #9a3412;
+}
+
+.comment-input-box {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.comment-input-box input,
+.comment-edit-box input,
+.reply-input-box input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 1em;
+}
+
+.comment-input-box button,
+.reply-input-box button {
+  padding: 0 25px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment-item {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.comment-item.reply {
+  margin-left: 40px;
+  background-color: #fcfcfc;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #333;
+}
+
+.reply-arrow {
+  color: #10b981;
+  margin-right: 5px;
+}
+
+.comment-date {
+  font-weight: normal;
+  color: #999;
+  font-size: 0.8em;
+  margin-left: 10px;
+}
+
+.comment-actions {
+  font-size: 0.9em;
+}
+
+.comment-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.reply-btn {
+  color: #3b82f6;
+}
+
+.edit-comment-btn {
+  color: #4b5563;
+}
+
+.delete-comment-btn {
+  color: #9ca3af;
+}
+
+.report-comment-btn {
+  color: #ef4444;
+}
+
+.comment-content {
+  margin-top: 8px;
+  color: #555;
+  line-height: 1.4;
+}
+
+.comment-edit-box {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.comment-save-btn {
+  padding: 6px 12px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.comment-cancel-btn {
+  padding: 6px 12px;
+  background-color: #e5e7eb;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reply-input-box {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
+.empty-comments {
+  text-align: center;
+  color: #999;
+  padding: 30px 0;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.edit-form {
+  padding: 20px;
+  background-color: #f9fafb;
+  border-radius: 8px;
+}
+
+.edit-form h3 {
+  margin-bottom: 20px;
+}
+
+.edit-title-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.edit-content-textarea {
+  width: 100%;
+  padding: 10px;
+  min-height: 300px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-cancel-edit {
+  border: 1px solid #ccc;
+  background-color: #e5e7eb;
+  color: black;
+}
+
+
+
+
+/* 신고 모달 창 */
+.report-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.report-modal {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.report-modal h3 {
+  font-family: "Pretendard";
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #ef4444;
+}
+
+.report-modal p {
+  font-size: 0.8em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.report-modal textarea {
+  font-size: 12px;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+.report-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.report-cancel-btn {
+  font-family: "Pretendard";
+  font-weight: 700;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  background-color: #d8d6d6;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.report-submit-btn {
+  font-family: "Pretendard";
+  font-weight: 700;
+  width: 30%;
+  padding: 8px 16px;
+  border: none;
+  background-color: #f3aab4;
+  border-radius: 4px;
+  cursor: pointer;
+}
