@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./components/Layout/Navbar/Navbar.jsx";
 import MainPage from "./pages/Main/MainPage.jsx";
-
 import CommunityPage from './pages/Community/CommunityPage.jsx';
 import LoginPage from "./pages/Auth/LoginPage.jsx";
 import SignupPage from "./pages/Auth/SignupPage.jsx";
@@ -12,7 +11,7 @@ import AccidentGuidePage from "./pages/AccidentGuide/AccidentGuidePage.jsx";
 import AccidentTypePage from "./pages/AccidentType/AccidentTypePage.jsx";
 import AccidentTypeDetailPage from "./pages/AccidentType/AccidentTypeDetailPage.jsx";
 import OAuthSuccess from "./components/Auth/OAuthSuccess.jsx";
-import MyPage from "./pages/Mypage/MyPage";
+import MyPage from "./pages/MyPage/MyPage";
 import AdminPage from "./pages/Admin/AdminPage.jsx";
 import FaultSearchPage from "./pages/FaultSearch/FaultSearchPage.jsx";
 import FindPasswordPage from "./pages/Auth/FindPasswordPage.jsx";
