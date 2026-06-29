@@ -18,6 +18,6 @@ public class OAuth2FailureHandler extends SimpleUrlAuthenticationFailureHandler 
                     , AuthenticationException exception
             ) throws IOException {
         exception.printStackTrace();
-        response.sendRedirect("http:/15.134.31.11/login?error=oauth");
+        response.sendRedirect("http:/54.79.10.188/login?error=oauth");
     }
 }

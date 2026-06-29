@@ -147,8 +147,8 @@ public class SecurityConfig {
                     config.setAllowedOriginPatterns(
                             List.of(
                                     "http://localhost:3000",
-                                    "http://15.134.31.11",
-                                    "http://15.134.31.11:*"
+                                    "http://54.79.10.188",
+                                    "http://54.79.10.188:*"
                             )
                     );
 
