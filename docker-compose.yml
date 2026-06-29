@@ -18,6 +18,7 @@ services:
 
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./DB/import:/imports
 
   backend:
 
