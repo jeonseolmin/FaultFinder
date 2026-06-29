@@ -38,7 +38,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String token = jwtUtil.createJwt(email, role);
 
         response.sendRedirect(
-                "http://3.27.17.82/oauth-success?token=" + token
+                "http://15.134.31.11/oauth-success?token=" + token
         );
     }
 }
