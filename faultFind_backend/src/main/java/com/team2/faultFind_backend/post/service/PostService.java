@@ -3,6 +3,7 @@ package com.team2.faultFind_backend.post.service;
 import com.team2.faultFind_backend.post.dto.PostRequest;
 import com.team2.faultFind_backend.post.dto.PostResponse;
 import com.team2.faultFind_backend.post.entity.Post;
+import com.team2.faultFind_backend.post.entity.PostFile;
 import com.team2.faultFind_backend.post.entity.PostLike;
 import com.team2.faultFind_backend.post.repository.PostRepository;
 import com.team2.faultFind_backend.post.repository.PostLikeRepository;
@@ -13,9 +14,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -26,8 +30,8 @@ public class PostService {
     private final UserRepository userRepository;
     private final PostLikeRepository postLikeRepository;
 
-    // 1. 게시글 작성
-    public void createPost(PostRequest postRequest, String email) {
+    // 1. 게시글 작성 (MultipartFile 추가 및 첨부파일 저장 로직 병합)
+    public void createPost(PostRequest postRequest, MultipartFile file, String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("가입된 회원이 아닙니다."));
 
@@ -44,14 +48,49 @@ public class PostService {
                 .notice(postRequest.isNotice())
                 .build();
 
+        // 첨부 파일이 넘어왔다면 처리합니다.
+        if (file != null && !file.isEmpty()) {
+            try {
+                String uploadDir = "/home/ubuntu/uploads/"; // 서버 저장 경로
+
+                // 폴더가 없으면 자동으로 생성해주는 안전 장치
+                File dir = new File(uploadDir);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                String originalFilename = file.getOriginalFilename();
+                String savedFilename = UUID.randomUUID() + "_" + originalFilename;
+
+                // 물리적 파일 저장
+                File targetFile = new File(uploadDir + savedFilename);
+                file.transferTo(targetFile);
+
+                // 파일 기록(PostFile) 객체 생성
+                PostFile postFile = PostFile.builder()
+                        .originalFileName(originalFilename)
+                        .savedFileName(savedFilename)
+                        .fileUrl("/uploads/" + savedFilename)
+                        .fileSize(file.getSize())
+                        .build();
+
+                // 게시글에 파일 기록 연결 (Post 엔티티에 addFile 메서드가 있어야 함!)
+                post.addFile(postFile);
+
+            } catch (Exception e) {
+                throw new RuntimeException("파일 업로드 및 기록 실패", e);
+            }
+        }
+
+        // 게시글(과 연결된 첨부파일들)을 최종 저장합니다.
         postRepository.save(post);
     }
 
-    // 2. 전체 게시글 조회 (공지 우선 정렬)
+    // 2. 전체 게시글 조회
     @Transactional(readOnly = true)
     public Page<PostResponse> getAllPosts(Pageable pageable) {
         return postRepository
-                .findAllByOrderByNoticeDescCreatedAtDesc(pageable)
+                .findAll(pageable)
                 .map(PostResponse::from);
     }
 
@@ -111,29 +150,23 @@ public class PostService {
     // 8. 아이디당 한 번만 가능한 '좋아요 토글' 완성본
     @Transactional
     public boolean toggleLike(Long postId, String email) {
-        // 1. 게시글 존재 확인
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
-        // 2. 다른 메서드들처럼 이메일로 유저 정보를 정확히 가져옵니다.
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("가입된 회원이 아닙니다."));
 
-        // 3. 유저 엔티티에서 고유 ID를 꺼내 좋아요 장부를 조회합니다.
-        // (만약 유저 엔티티의 PK 필드명이 id가 아니라 userId라면 user.getUserId()로 수정하세요)
         Optional<PostLike> existingLike = postLikeRepository.findByPostIdAndUserId(postId, user.getId());
 
         if (existingLike.isPresent()) {
-            // 이미 좋아요를 누른 상태 -> 좋아요 취소!
             postLikeRepository.delete(existingLike.get());
-            post.setLikeCount(post.getLikeCount() - 1); // 좋아요 수 1 감소
-            return false; // 취소됨(false) 반환
+            post.setLikeCount(post.getLikeCount() - 1);
+            return false;
         } else {
-            // 좋아요를 누르지 않은 상태 -> 좋아요 추가!
             PostLike newLike = new PostLike(postId, user.getId());
             postLikeRepository.save(newLike);
-            post.setLikeCount(post.getLikeCount() + 1); // 좋아요 수 1 증가
-            return true; // 추가됨(true) 반환
+            post.setLikeCount(post.getLikeCount() + 1);
+            return true;
         }
     }
 
@@ -181,8 +214,8 @@ public class PostService {
                     : postRepository.findByCategoryAndAuthorContainingIgnoreCase(category, keyword, pageable);
         } else {
             posts = isAllPosts
-                    ? postRepository.findAllByOrderByNoticeDescCreatedAtDesc(pageable)
-                    : postRepository.findByCategoryOrderByNoticeDescCreatedAtDesc(category, pageable);
+                    ? postRepository.findAll(pageable)
+                    : postRepository.findByCategory(category, pageable);
         }
 
         return posts.map(PostResponse::from);
