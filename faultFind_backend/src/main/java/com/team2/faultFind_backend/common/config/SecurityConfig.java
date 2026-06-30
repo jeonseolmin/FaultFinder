@@ -148,7 +148,8 @@ public class SecurityConfig {
                             List.of(
                                     "http://localhost:3000",
                                     "http://54.79.10.188",
-                                    "http://54.79.10.188:*"
+                                    "http://54.79.10.188:*",
+                                    "https://faultfinder.link/"
                             )
                     );
 
