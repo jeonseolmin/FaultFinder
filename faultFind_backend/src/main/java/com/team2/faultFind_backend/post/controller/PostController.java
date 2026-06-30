@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -65,9 +66,13 @@ public class PostController {
 
     // 4. 게시글 작성
     @PostMapping
-    public ResponseEntity<String> writePost(@RequestBody  PostRequest postRequest, Authentication authentication) {
+    public ResponseEntity<String> writePost(
+            @ModelAttribute PostRequest postRequest,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            Authentication authentication
+    ) {
         System.out.println("isNotice : "+postRequest.isNotice());
-        postService.createPost(postRequest, authentication.getName());
+        postService.createPost(postRequest, file, authentication.getName());
         return ResponseEntity.ok("게시글이 성공적으로 등록되었습니다.");
     }
 

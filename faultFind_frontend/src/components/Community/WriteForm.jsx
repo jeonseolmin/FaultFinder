@@ -14,6 +14,9 @@ export default function WriteForm() {
   });
 
   const [isAdmin, setIsAdmin] = useState(false);
+  
+  // 1. 첨부파일 상태 추가
+  const [file, setFile] = useState(null); 
 
   // 컴포넌트 렌더링 시 토큰을 해독하여 관리자 권한 확인
   useEffect(() => {
@@ -47,6 +50,11 @@ export default function WriteForm() {
     });
   };
 
+  // 2. 첨부파일 변경 핸들러 추가
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); 
 
@@ -55,8 +63,25 @@ export default function WriteForm() {
       return;
     }
 
+    // 3. JSON 방식 대신 FormData(택배 상자) 방식으로 변경
+    const submitData = new FormData();
+    submitData.append("category", formData.category);
+    submitData.append("title", formData.title);
+    submitData.append("content", formData.content);
+    submitData.append("notice", formData.notice);
+
+    // 파일이 선택되었을 때만 FormData에 추가
+    if (file) {
+      submitData.append("file", file);
+    }
+
     try {
-      const response = await axiosInstance.post("/api/community", formData);
+      // ✨ 4. 헤더에 multipart/form-data 설정 추가
+      const response = await axiosInstance.post("/api/community", submitData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       alert(response.data); 
       navigate("/community");
     } catch (error) {
@@ -126,6 +151,17 @@ export default function WriteForm() {
             onChange={handleChange}
             placeholder="자유롭게 의견과 경험을 나누어 주세요."
           ></textarea>
+        </div>
+
+        {/* 5. 파일 업로드 input 요소 추가 */}
+        <div className="write-form-group">
+          <label>첨부 파일</label>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="write-input"
+            style={{ padding: '10px 0', border: 'none' }}
+          />
         </div>
 
         <div className="write-actions">
