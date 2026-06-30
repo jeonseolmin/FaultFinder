@@ -38,7 +38,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String token = jwtUtil.createJwt(email, role);
 
         response.sendRedirect(
-                "http://54.79.10.188/oauth-success?token=" + token
+                "https://faultfinder.link/oauth-success?token=" + token
         );
     }
 }
