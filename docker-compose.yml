@@ -53,6 +53,9 @@ services:
 
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
 
 volumes:
   postgres_data:
