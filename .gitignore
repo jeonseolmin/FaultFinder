@@ -227,4 +227,29 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+.env
+*.env
+# Python
+ai_server/.venv/
+**/__pycache__/
+*.pyc
+
+# React
+faultFind_frontend/dist/
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+DB/*.csv
+DB/imports/
+
+
+.env
+.env.local
+.env.production
 # End of https://www.toptal.com/developers/gitignore/api/windows,intellij,react,java,git

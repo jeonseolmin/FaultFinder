@@ -1,0 +1,358 @@
+/* AiFaultRatio.css */
+body {
+  min-width: 1200px;
+  overflow-x: auto;
+  background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
+  padding-bottom: 20px;
+  
+    
+}
+/* 전체 대레이아웃 (2단 분할 구조 대비) */
+.ai-fault-container {
+  /* font-family: 'Pretendard';
+  width: 100%; */
+     /* margin: 0; 1280px (max-w-7xl) */
+     /* margin-left: 30px;
+      margin-right: auto; */
+  /* padding: 2rem 1rem;  */
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* background: linear-gradient(to right, #f4f8ff 50%, transparent 100%); */
+  /* background-repeat: repeat; */
+  /* margin-left: 60px; */
+  /* max-width: 1200px; */
+  /* margin-bottom: 20px; */
+  /* margin-left: 50px; */
+  /* margin-right: 50px; */
+  /* padding-bottom: 10px; */
+  /* max-width: 100%;
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #f4f8ff 50%, transparent 100%);
+  margin: 0 auto 20px auto;
+  box-sizing: border-box; */
+  /* 🌟 자연스럽게 만드는 마법의 유리 효과 코드 */
+  background-color: rgba(255, 255, 255, 0.4); /* 흰색 배경을 40% 투명도로 설정 */
+  backdrop-filter: blur(8px);                 /* 배경 사진을 8px만큼 흐릿하게 만듦 (유리 효과 핵심) */
+  -webkit-backdrop-filter: blur(8px);         /* 사파리 브라우저 호환성 */
+
+  /* 🌟 테두리와 그림자를 더 부드럽게 */
+  border: 1px solid rgba(255, 255, 255, 0.2);  /* 얇고 투명한 테두리 추가 */
+  border-radius: 20px;                         /* 모서리를 더 부드럽게 */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);    /* 기존 그림자가 너무 쌔다면 이걸로 교체 (부드럽고 얇은 그림자) */
+  
+  padding: 400px;
+}
+
+.grid-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px; /* gap-6 */
+  align-items: start;
+  
+}
+
+/* 좌측 메인 영역 */
+.left-section {
+  width: 100%;
+}
+
+.section-title {
+  font-family: 'Pretendard';
+  font-size: 1.55rem; /* text-xl */
+  font-weight: 700; /* font-bold */
+  color: #1f2937; /* text-gray-800 */
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+/* 입력창과 결과창을 가로/세로 배치하는 컨테이너 */
+.flex-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem; /* gap-4 */
+}
+
+/* 카드 공통 스타일 (입력 및 결과 박스) */
+.card-box {
+  flex: 1 1 0%; /* flex-1 */
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 1rem; /* rounded-2xl */
+  padding: 1.5rem; /* p-6 */
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); /* shadow-sm */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 460px;
+}
+
+/* 상단 타이틀 영역 */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* gap-2 */
+  margin-bottom: 1rem; /* mb-4 / mb-6 */
+}
+
+.step-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem; /* w-5 */
+  height: 1.25rem; /* h-5 */
+  background-color: #2563eb; /* bg-blue-600 */
+  color: #ffffff;
+  border-radius: 9999px; /* rounded-full */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 700; /* font-bold */
+}
+
+.card-title {
+  font-size: 1.125rem; /* text-lg */
+  font-weight: 700; /* font-bold */
+  color: #111827; /* text-gray-900 */
+  font-size: 1.0rem; /* text-sm */
+  padding: 10px;
+}
+
+/* 1. 사고 상황 입력 영역 스타일 */
+.textarea-wrapper {
+  position: relative;
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.textarea-input {
+  width: 100%;
+  height: 12rem; /* h-48 */
+  padding: 1rem; /* p-4 */
+  background-color: #f9fafb; /* bg-gray-50 */
+  border: 1px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 0.75rem; /* rounded-xl */
+  resize: none;
+  font-size: 0.875rem; /* text-sm */
+  color: #374151; /* text-gray-700 */
+}
+
+.textarea-input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-color: #3b82f6; /* focus:border-blue-500 */
+}
+
+.char-counter {
+  position: absolute;
+  bottom: 0.75rem; /* bottom-3 */
+  right: 1rem; /* right-4 */
+  font-size: 0.75rem; /* text-xs */
+  color: #9ca3af; /* text-gray-400 */
+}
+
+.select-input {
+  width: 100%;
+  padding: 0.75rem; /* p-3 */
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 0.75rem; /* rounded-xl */
+  font-size: 0.875rem; /* text-sm */
+  color: #4b5563; /* text-gray-600 */
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.select-input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-color: #3b82f6; /* focus:border-blue-500 */
+}
+
+.submit-button {
+  width: 100%;
+  padding-top: 0.875rem;
+  padding-bottom: 0.875rem; /* py-3.5 */
+  background-color: #1e3a8a; /* bg-blue-900 */
+  color: #ffffff;
+  font-weight: 700; /* font-bold */
+  border-radius: 0.75rem; /* rounded-xl */
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: auto;
+}
+
+.submit-button:hover {
+  background-color: #172554; /* hover:bg-blue-950 */
+}
+
+/* 중간 화살표 */
+.arrow-divider {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #d1d5db; /* text-gray-300 */
+  font-weight: 700; /* font-bold */
+  font-size: 1.25rem; /* text-xl */
+  padding-left: 0.5rem;
+  padding-right: 0.5rem; /* px-2 */
+  align-self: center;
+}
+
+/* 2. AI 분석 결과 영역 스타일 */
+.chart-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; /* gap-6 */
+  margin-bottom: 1.5rem; /* mb-6 */
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem; /* py-2 */
+}
+
+.result-box {
+  text-align: center;
+}
+
+.ratio-percent {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 800; /* font-extrabold */
+}
+
+.ratio-percent.blue { color: #2563eb; } /* text-blue-600 */
+.ratio-percent.red { color: #ef4444; }  /* text-red-500 */
+
+.vehicle-info {
+  font-size: 0.75rem; /* text-xs */
+  color: #6b7280; /* text-gray-500 */
+  margin-top: 0.25rem; /* mt-1 */
+}
+
+/* 도넛 그래프 UI */
+.donut-chart {
+  position: relative;
+  width: 6rem; /* w-24 */
+  height: 6rem; /* h-24 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 15px solid #3b82f6; /* border-blue-500 */
+  border-right-color: #ef4444; /* border-r-red-500 */
+  transform: rotate(45deg);
+}
+
+.donut-hole {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ffffff;
+  border-radius: 9999px;
+  margin: -1px;
+}
+
+/* 분석 요약 박스 */
+.summary-box {
+  background-color: #f9fafb; /* bg-gray-50 */
+  border-radius: 0.75rem; /* rounded-xl */
+  padding: 1rem; /* p-4 */
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.summary-title {
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 700; /* font-bold */
+  color: #111827; /* text-gray-900 */
+  margin-bottom: 0.25rem; /* mb-1 */
+}
+
+.summary-text {
+  font-size: 0.75rem; /* text-xs */
+  color: #4b5563; /* text-gray-600 */
+  line-height: 1.625; /* leading-relaxed */
+}
+
+/* 우측 섹션 디자인 */
+.right-section {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.guide-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.guide-list {
+  list-style: none;
+  padding: 0;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.guide-list li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.guide-list li:last-child {
+  margin-bottom: 0; /* 마지막 요소는 여백 제외 */
+}
+
+/* 숫자 번호 스타일 */
+.guide-num {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #1d4ed8; /* 포인트 블루 색상 */
+  background-color: #eff6ff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  margin-right: 14px;
+}
+
+/* 가이드 본문 스타일 */
+.guide-content h4 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  color: #1e293b;
+  font-weight: 600;
+  padding-top: 7px;
+}
+
+/* .guide-content p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.4;
+} */
+
+
+/* [반응형 미디어 쿼리 - PC화면 대응] */
+
+/* LG 브레이크포인트 (1024px 이상) - flex 가로 정렬 및 화살표 표시 */
+@media (min-width: 1024px) {
+  .flex-layout {
+    flex-direction: row;
+    gap: 0.5rem; /* lg:gap-2 */
+  }
+  .arrow-divider {
+    display: flex;
+  }
+}
+
+/* XL 브레이크포인트 (1280px 이상) - 10개 컬럼 중 7개 차지 */
+@media (min-width: 1280px) {
+  .grid-layout {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+  .left-section {
+    grid-column: span 7 / span 7; /* xl:col-span-7 */
+  }
+}

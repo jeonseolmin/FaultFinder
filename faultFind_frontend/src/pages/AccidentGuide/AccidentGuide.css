@@ -1,6 +1,7 @@
 body {
   min-width: 1200px;
   overflow-x: auto;
+  
 }
 
 /* 전체 컨테이너 */
@@ -10,11 +11,12 @@ body {
   padding: 20px;
   font-family: 'Pretendard', 'Malgun Gothic', sans-serif;
   color: #333;
+  background-color: #F8FAFC;
 }
 
 /* 상단 히어로(타이틀) 섹션 */
 .guide-hero {
-  background: linear-gradient(to right, #f4f8ff 40%, transparent 100%), 
+  background: linear-gradient(to right, #D9EAFD 40%, transparent 100%), 
               url('https://images.unsplash.com/photo-1562184552-302faad9e1cb?auto=format&fit=crop&w=1200&q=80') right/cover no-repeat;
   padding: 50px 40px;
   border-radius: 12px;
@@ -78,14 +80,15 @@ body {
   border-radius: 8px;
   gap: 20px;
 }
-
+/* 전체 아이콘 크기 */
 .step-icon svg, .check-icon svg, .b-item span svg {
   font-size: 28px; 
 }
-.step-text h4 { font-size: 15px; margin: 0 0 4px 0; color: #222; }
-.step-text p { font-size: 13px; margin: 0; color: #666; }
+/* 사고 발생 시 행동요령 font 조절 */
+.step-text h4 { font-size: 14px; margin: 0 0 4px 0; color: #222; }
+.step-text p { font-size: 12px; margin: 0; color: #666; }
 
-/* 중앙: 긴급 연락망 */
+/* 긴급 연락망 */
 .contact-list {
   display: flex;
   flex-direction: column;
@@ -97,12 +100,13 @@ body {
   padding: 8px;
   border: 1px solid #edf2f7;
   border-radius: 8px;
-  gap: 13px;
+  gap: 8px;
 }
+/* 긴급연락망 font 조절 */
 .contact-info { flex: 1; }
-.contact-info h4 { font-size: 15px; margin: 0 0 4px 0; }
-.contact-info p { font-size: 13px; color: #666; margin: 0; }
-.contact-number { font-size: 15px; font-weight: 700; color: #1a2b4c; }
+.contact-info h4 { font-size: 14px; margin: 0 0 4px 0; }
+.contact-info p { font-size: 12px; color: #666; margin: 0; }
+.contact-number { font-size: 13px; font-weight: 700; color: #1a2b4c; }
 
 .emergency-banner {
   background: #1a2b4c;
@@ -118,7 +122,7 @@ body {
   gap: 8px;
 }
 
-/* 오른쪽: 체크리스트 */
+/*  체크리스트 */
 .checklist {
   display: flex;
   flex-direction: column;
@@ -140,8 +144,9 @@ body {
   display: flex;
   flex-shrink: 0;
 }
+/* 체크리스트 font 조절 */
 .check-text h4 { font-size: 14px; margin: 0 0 4px 0; }
-.check-text p { font-size: 13px; color: #666; margin: 0; }
+.check-text p { font-size: 12px; color: #666; margin: 0; }
 
 /* 하단 배너 (추가 안내) */
 .guide-bottom-banner {
@@ -151,34 +156,40 @@ body {
   border-radius: 12px;
   padding: 30px;
   align-items: center;
+  
 }
 .banner-title {
-  width: 150px;
+  width: 120px;
   text-align: center;
-  border-right: 1px solid #cbd5e1;
+  border-right: 3px solid #cbd5e1;
   padding-right: 20px;
   margin-right: 20px;
-  color: #1a56db;
+  color: #050505;
+  font-family: 'Pretendard';
   font-weight: 700;
+  font-size: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 1px;
 }
 .banner-items {
   display: flex;
   flex: 1;
   justify-content: space-between;
+  font-family: 'Pretendard';
+  
 }
 .b-item {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 5px;
+  
 }
 
 /* 🌟 하단 배너 아이콘 색상 추가 */
 .b-item span {
-  color: #1a56db;
+  color: #171718;
   display: flex;
 }
 .b-item h4 { font-size: 14px; margin: 0 0 4px 0; }

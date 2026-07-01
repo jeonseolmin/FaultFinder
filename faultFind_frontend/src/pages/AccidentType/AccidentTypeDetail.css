@@ -1,9 +1,28 @@
+.type-detail-container{
+  margin-left: 40px;
+  padding-left: 20px;
+}
+/* 제목 영역: 네비게이션 바 및 상단 라인에서 살짝 아래로 내리기 */
+.detail-header{
+  margin-top: 30px;
+  margin-bottom: 35px;  /* 아래쪽 본문 내용과의 간격 */
+}
+
+/* 제목 텍스트 자체의 스타일 (선택 사항) */
+.detail-header h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin: 0; /* h2 자체의 기본 마진을 초기화해서 통제하기 쉽게 */
+}
+
 /* 태그 버튼 (Pill Button) 스타일 */
 .tag-filter-container {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 24px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .tag-btn {

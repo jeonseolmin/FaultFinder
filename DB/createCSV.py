@@ -21,6 +21,20 @@ SECTION_HEADERS = [
     '참고 판례',
 ]
 
+NOISE_PATTERNS = [
+    '제1장. 자동차와 보행자의 사고',
+    '제2장. 자동차와 자동차(이륜차 포함)의 사고',
+    '제3장. 자동차와 자전거(농기계 포함)의 사고',
+    '목차',
+]
+
+
+
+def remove_noise(text: str) -> str:
+    text = clean(text)
+    for pattern in NOISE_PATTERNS:
+        text = text.replace(pattern, '')
+    return clean(text)
 
 def category_for_code(code: str) -> str:
     if code.startswith('보'):
@@ -192,18 +206,14 @@ def split_sections(block_lines):
         'accident_situation': '',
         'base_fault_explanation': '',
         'modifier_explanation': '',
-        'usage_note': '',
         'legal_reference': '',
-        'precedent': '',
     }
 
     header_to_key = {
         '사고 상황': 'accident_situation',
         '기본 과실비율 해설': 'base_fault_explanation',
         '수정요소(인과관계를 감안한 과실비율 조정) 해설': 'modifier_explanation',
-        '활용시 참고 사항': 'usage_note',
         '관련 법규': 'legal_reference',
-        '참고 판례': 'precedent',
     }
 
     current_key = None
@@ -219,7 +229,7 @@ def split_sections(block_lines):
             result[current_key] += line + '\n'
 
     for key in result:
-        result[key] = clean(result[key])
+        result[key] = remove_noise(result[key])
 
     return result
 
@@ -277,7 +287,10 @@ def main():
 
             details.append({
                 'case_code': code,
-                **section_data
+                'accident_situation': '',
+                'base_fault_explanation': '',
+                'modifier_explanation': '',
+                'legal_reference': '',
             })
 
             seen.add(code)
@@ -310,9 +323,7 @@ def main():
                 'accident_situation': '',
                 'base_fault_explanation': '',
                 'modifier_explanation': '',
-                'usage_note': '',
                 'legal_reference': '',
-                'precedent': ''
             })
 
     cases.sort(key=lambda r: (r['pdf_page_start'], r['case_code']))
@@ -341,9 +352,7 @@ def main():
                 'accident_situation',
                 'base_fault_explanation',
                 'modifier_explanation',
-                'usage_note',
                 'legal_reference',
-                'precedent',
             ]
         )
         writer.writeheader()

@@ -1,7 +1,6 @@
 import pandas as pd
 import psycopg2
 import chardet
-import pyinstaller
 
 file_path = "data/fault_modifiers_raw.csv"
 with open(file_path, "rb") as f:
@@ -33,6 +32,29 @@ cur = conn.cursor()
 # 1. accident_cases 저장
 df_cases = pd.read_csv("data/accident_cases_raw.csv", encoding="CP949")
 
+NOISE_PATTERNS = [
+    "제1장. 자동차와 보행자의 사고",
+    "제2장. 자동차와 자동차(이륜차 포함)의 사고",
+    "제3장. 자동차와 자전거(농기계 포함)의 사고",
+    "자동차사고 과실비율 인정기준",
+    "목차",
+]
+
+def safe(value):
+    if pd.isna(value):
+        return None
+
+    value = str(value).strip()
+
+    if value == "" or value.lower() == "nan":
+        return None
+
+    for noise in NOISE_PATTERNS:
+        value = value.replace(noise, "")
+
+    value = " ".join(value.split()).strip()
+
+    return value if value else None
 
 for _, row in df_cases.iterrows():
     cur.execute("""
@@ -85,7 +107,8 @@ for _, row in df_modifiers.iterrows():
 
 
 # 3. accident_case_details 저장
-df_details = pd.read_csv("data/accident_case_details_raw.csv", encoding="UTF-8-SIG")
+df_details = pd.read_csv("data/accident_case_details.csv", encoding="UTF-8-SIG")
+df_details = df_details.where(pd.notnull(df_details), None)
 
 for _, row in df_details.iterrows():
     cur.execute("""
@@ -94,32 +117,25 @@ for _, row in df_details.iterrows():
             accident_situation,
             base_fault_explanation,
             modifier_explanation,
-            usage_note,
-            legal_reference,
-            precedent
+            legal_reference
         )
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s)
         ON CONFLICT (case_code) DO UPDATE SET
             accident_situation = EXCLUDED.accident_situation,
             base_fault_explanation = EXCLUDED.base_fault_explanation,
             modifier_explanation = EXCLUDED.modifier_explanation,
-            usage_note = EXCLUDED.usage_note,
-            legal_reference = EXCLUDED.legal_reference,
-            precedent = EXCLUDED.precedent
+            legal_reference = EXCLUDED.legal_reference
     """, (
         row["case_code"],
-        row["accident_situation"],
-        row["base_fault_explanation"],
-        row["modifier_explanation"],
-        row["usage_note"],
-        row["legal_reference"],
-        row["precedent"]
+        safe(row["accident_situation"]),
+        safe(row["base_fault_explanation"]),
+        safe(row["modifier_explanation"]),
+        safe(row["legal_reference"]),
     ))
 
-
 conn.commit()
-
 cur.close()
 conn.close()
+
 
 print("CSV 데이터 PostgreSQL 저장 완료")

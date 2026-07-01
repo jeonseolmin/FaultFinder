@@ -28,4 +28,7 @@ public class User extends BaseEntity {
 
     @Column(name = "provider_id")
     private String providerId;
+
+    @Column(nullable = false)
+    private boolean isSuspended = false; // 기본값은 false (정상 활동 중)
 }

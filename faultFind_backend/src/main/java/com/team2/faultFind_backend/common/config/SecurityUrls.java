@@ -9,6 +9,8 @@ public class SecurityUrls {
 
             "/api/signup",
 
+            "/api/users/find-password",
+
             "/api/accident-guides",
             "/api/accident-guides/**",
 
@@ -41,7 +43,10 @@ public class SecurityUrls {
             "/api/answer",
             "/api/answer/**",
 
-            "/api/posts/**"
+            "/api/posts/**",
+
+            "/api/reports",
+            "/api/reports/**"
     };
 
     private SecurityUrls() {
