@@ -26,18 +26,30 @@ export default function LoginForm() {
             password: password 
         });
         
-        // 로그인 성공 처리 (토큰 저장, 메인 페이지 이동 등)
+        const token = response.data.token || response.data;
+
+        localStorage.setItem("token", token);
+
+        if (login) {
+            login(token); 
+        }
+
+        navigate("/"); 
         
     } catch (error) {
-        // 백엔드(IllegalArgumentException)가 던진 에러 메시지를 우선적으로 찾아서 띄움
-        // (스프링 부트의 글로벌 에러 응답 형식에 따라 .message 또는 본문을 꺼내옵니다)
-        const errorMessage = error.response?.data?.message 
-                             || error.response?.data 
-                             || "로그인 중 오류가 발생했습니다.";
-
+        let errorMessage = "로그인 중 오류가 발생했습니다.";
+        
+        if (error.response?.data) {
+            if (typeof error.response.data === 'string') {
+                errorMessage = error.response.data;
+            } else if (error.response.data.message) {
+                errorMessage = error.response.data.message;
+            }
+        }
+        
         alert(errorMessage); 
     }
-};
+  };
   const handleGoogleLogin = () => {
     window.location.href = "/oauth2/authorization/google";
   };
