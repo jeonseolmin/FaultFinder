@@ -49,6 +49,7 @@ spring:
   application:
     name: fault_find_backend
 
+
   datasource:
     driver-class-name: org.postgresql.Driver
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/fault_find_db}
@@ -67,8 +68,10 @@ spring:
     exclude:
       - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
-
-
 logging:
   level:
     org.hibernate.orm.jdbc.bind: trace
+
+
+app:
+    frontend-url: ${FRONTEND_URL:https://faultfinder.link}
