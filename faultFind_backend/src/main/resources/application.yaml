@@ -75,3 +75,9 @@ logging:
 
 app:
     frontend-url: ${FRONTEND_URL:https://faultfinder.link}
+
+    spring:
+      servlet:
+        multipart:
+          max-file-size: 10MB
+          max-request-size: 50MB
