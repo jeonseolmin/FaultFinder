@@ -24,9 +24,6 @@ services:
 
     env_file:
       - .env
-      
-    environment:
-      SPRING_PROFILES_ACTIVE: prod
 
     build:
       context: ./faultFind_backend
@@ -43,6 +40,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fault_find_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_PROFILES_ACTIVE: prod
 
   frontend:
 
@@ -59,6 +57,22 @@ services:
       - "443:443"
     volumes:
       - /etc/ssl/cloudflare:/etc/ssl/cloudflare:ro
+  ai-server:
+    build:
+      context: ./ai_server
+
+    container_name: ai-server
+
+    restart: unless-stopped
+
+    env_file:
+      - ./ai_server/.env
+
+    depends_on:
+      - postgres
+
+    ports:
+      - "8000:8000"
 
 volumes:
   postgres_data:
