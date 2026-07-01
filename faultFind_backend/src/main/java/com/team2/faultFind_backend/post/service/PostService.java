@@ -76,6 +76,7 @@ public class PostService {
 
                 // 파일 기록(PostFile) 객체 생성
                 PostFile postFile = PostFile.builder()
+                        .post(post)
                         .originalFileName(originalFilename)
                         .savedFileName(savedFilename)
                         .fileUrl("/api/uploads/" + savedFilename)

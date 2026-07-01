@@ -266,10 +266,10 @@ export default function CommunityDetailPage() {
     }
 
     try {
-        await axios.put(`/api/community/${id}`, submitData, {
+        await axiosInstance.put(`/api/community/${id}`, submitData, {
             headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": localStorage.getItem("accessToken") || localStorage.getItem("token")
+                // 415 에러를 막기 위해 파일 전송 형식임을 명시합니다.
+                "Content-Type": "multipart/form-data" 
             }
         });
         
