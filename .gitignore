@@ -245,4 +245,11 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
+DB/*.csv
+DB/imports/
+
+
+.env
+.env.local
+.env.production
 # End of https://www.toptal.com/developers/gitignore/api/windows,intellij,react,java,git
