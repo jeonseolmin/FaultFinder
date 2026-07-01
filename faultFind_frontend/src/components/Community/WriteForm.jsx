@@ -93,7 +93,7 @@ export default function WriteForm() {
     }
 
     try {
-      // ✨ 4. 헤더에 multipart/form-data 설정 추가
+      // 4. 헤더에 multipart/form-data 설정 추가
       const response = await axiosInstance.post("/api/community", submitData);
 
       alert(response.data);
@@ -190,8 +190,14 @@ export default function WriteForm() {
           ></textarea>
         </div>
 
-        <div>
-          <input type="file" onChange={handleFileChange} />
+        <div className="write-form-group">
+          <label>첨부 파일</label>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="write-input"
+            style={{ padding: "10px 0", border: "none" }}
+          />
 
           {/* 썸네일 이미지가 있으면 화면에 보여줌 */}
           {previewUrl && (
@@ -203,7 +209,7 @@ export default function WriteForm() {
                   color: "#6b7280",
                 }}
               >
-               미리보기
+                미리보기
               </p>
               <img
                 src={previewUrl}
@@ -217,17 +223,6 @@ export default function WriteForm() {
               />
             </div>
           )}
-        </div>
-
-        {/* 5. 파일 업로드 input 요소 추가 */}
-        <div className="write-form-group">
-          <label>첨부 파일</label>
-          <input
-            type="file"
-            onChange={handleFileChange}
-            className="write-input"
-            style={{ padding: "10px 0", border: "none" }}
-          />
         </div>
 
         <div className="write-actions">
