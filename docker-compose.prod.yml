@@ -24,6 +24,9 @@ services:
 
     env_file:
       - .env
+      
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
 
     build:
       context: ./faultFind_backend
@@ -40,8 +43,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fault_find_db
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 1234
-      SPRING_PROFILES_ACTIVE: prod
-      
+
   frontend:
 
     build:
