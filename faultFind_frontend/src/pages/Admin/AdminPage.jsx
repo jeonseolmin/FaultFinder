@@ -64,25 +64,26 @@ export default function AdminPage() {
   }, [navigate, userPage, postPage, reportPage]);
 
   const handleDeleteUser = async (id) => {
-    if (!window.confirm("정말 이 유저를 강제 탈퇴시키겠습니까?")) return;
+    if (!window.confirm("정말 이 유저를 임시 탈퇴시키겠습니까?")) return;
 
     try {
-      await axiosInstance.delete(`/api/admin/users/${id}`);
-      alert("탈퇴 처리되었습니다.");
+        await axiosInstance.put(`/api/admin/users/withdraw/${id}`);
+        alert("탈퇴 처리되었습니다.");
 
-      setData((prev) => ({
-        ...prev,
-        users: {
-          ...prev.users,
-          content: prev.users.content.filter((user) => user.id !== id),
-          totalElements: prev.users.totalElements - 1,
-        },
-      }));
+        setData((prev) => ({
+            ...prev,
+            users: {
+                ...prev.users,
+                content: prev.users.content.map((user) => 
+                    user.id === id ? { ...user, role: "ROLE_WITHDRAWN" } : user
+                ),
+            },
+        }));
     } catch (error) {
-      console.error(error);
-      alert("삭제 실패");
+        console.error("탈퇴 처리 실패:", error);
+        alert("탈퇴 처리 중 오류가 발생했습니다.");
     }
-  };
+};
 
   const handleSuspendUser = async (user) => {
     const actionText = user.suspended ? "정지 해제" : "활동 정지";

@@ -28,17 +28,33 @@ public class UserService {
 
     // 회원가입 서비스
     public void signUp(UserRequest userRequest) {
-        // 이메일 중복 확인
-        boolean isExist = userRepository.existsByEmail(userRequest.getEmail());
-        if (isExist) {
-            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+        // 1. 이메일로 기존 유저가 있는지 먼저 조회합니다.
+        Optional<User> existingUserOpt = userRepository.findByEmail(userRequest.getEmail());
+
+        if (existingUserOpt.isPresent()) {
+            User existingUser = existingUserOpt.get();
+
+            // 만약 임시 탈퇴된 유저라면? 기존 로우(Row)를 재활용하여 가입 허용!
+            if (existingUser.getRole() == UserRole.ROLE_WITHDRAWN) {
+                existingUser.setUserName(userRequest.getUserName());
+                existingUser.setPassword(bCryptPasswordEncoder.encode(userRequest.getPassword()));
+                existingUser.setRole(UserRole.ROLE_USER); // 다시 일반 유저로 복구!
+                existingUser.setSuspended(false);         // 혹시 정지 상태였다면 정지도 해제
+
+                // @Transactional이 걸려있으므로 코드가 끝나면 자동으로 DB가 새 정보로 업데이트됩니다.
+                return;
+            } else {
+                // 정상 활동 중인 유저가 이미 있다면 중복 에러 처리
+                throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+            }
         }
-        // 특정 이메일이거나 특정 도메인을 쓰면 관리자로 가입
+
+        // 2. 아예 처음 가입하는 신규 유저라면 기존 방식대로 새로 생성
         UserRole role = UserRole.ROLE_USER;
         if (userRequest.getEmail().equals("admin@test.com") || userRequest.getEmail().endsWith("@roadlaw.com")) {
             role = UserRole.ROLE_ADMIN;
         }
-        // 새로운 유저면 엔티티 만들고 저장
+
         User data = User.builder()
                 .email(userRequest.getEmail())
                 .userName(userRequest.getUserName())
@@ -48,6 +64,7 @@ public class UserService {
                 .providerId(null)
                 .isSuspended(false)
                 .build();
+
         userRepository.save(data);
     }
 
@@ -57,10 +74,17 @@ public class UserService {
                 .findByEmail(loginRequest.getEmail())
                 .orElse(null);
 
+        // 아예 가입한 적이 없는 사람인 경우
         if(user == null){
             return null;
         }
 
+        // 임시 탈퇴 상태인 경우 로그인 차단 및 안내 메시지 송출
+        if(user.getRole() == UserRole.ROLE_WITHDRAWN) {
+            throw new IllegalArgumentException("관리자에 의해 임시 탈퇴 처리된 계정입니다. 새롭게 회원가입을 진행해주세요.");
+        }
+
+        // 정상 유저라면 비밀번호 검사 진행
         boolean matches = bCryptPasswordEncoder.matches(
                 loginRequest.getPassword(),
                 user.getPassword()
@@ -144,7 +168,9 @@ public class UserService {
     }
 
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(()->new IllegalArgumentException("회원이 없습니다."));
+        user.setRole(UserRole.ROLE_WITHDRAWN);
     }
 
     public UserResponse findById(Long id) {

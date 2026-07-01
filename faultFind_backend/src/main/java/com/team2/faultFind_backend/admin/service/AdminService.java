@@ -49,7 +49,10 @@ public class AdminService {
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+
+        user.setRole(UserRole.ROLE_WITHDRAWN);
     }
 
     public boolean toggleSuspend(Long id) {

@@ -46,10 +46,10 @@ public class AdminController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/users/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+    @PutMapping("/users/withdraw/{id}") // 주소를 명확하게 고정
+    public ResponseEntity<String> withdrawUser(@PathVariable Long id) {
         adminService.deleteUser(id);
-        return ResponseEntity.ok("유저가 강제 탈퇴되었습니다.");
+        return ResponseEntity.ok("유저가 임시 탈퇴 처리되었습니다.");
     }
 
     @PutMapping("/users/{id}/suspend")
