@@ -78,7 +78,7 @@ public class PostService {
                 PostFile postFile = PostFile.builder()
                         .originalFileName(originalFilename)
                         .savedFileName(savedFilename)
-                        .fileUrl("/uploads/" + savedFilename)
+                        .fileUrl("/api/uploads/" + savedFilename)
                         .fileSize(file.getSize())
                         .build();
 

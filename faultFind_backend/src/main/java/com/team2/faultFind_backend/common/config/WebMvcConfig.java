@@ -17,7 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
             resourceLocation = "file:/home/ubuntu/uploads/";
         }
 
-        registry.addResourceHandler("/uploads/**")
+        registry.addResourceHandler("/api/uploads/**")
                 .addResourceLocations(resourceLocation);
     }
 }
