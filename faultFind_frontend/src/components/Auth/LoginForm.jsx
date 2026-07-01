@@ -19,25 +19,25 @@ export default function LoginForm() {
 
   // 로컬 로그인 핸들러
   const handleLogin = async (e) => {
-    e.preventDefault(); 
-    
+    e.preventDefault();
     try {
-      const result = await axiosInstance.post("/api/auth/login", {
-        email: email,
-        password: password,
-      });
-
-      const token = result.data;
-
-      await login(token);
-      console.log(localStorage.getItem("accessToken"));
-      navigate("/");
+        const response = await axiosInstance.post("/api/auth/login", { 
+            email: email, 
+            password: password 
+        });
+        
+        // 로그인 성공 처리 (토큰 저장, 메인 페이지 이동 등)
+        
     } catch (error) {
-      console.log(error);
-      alert("로그인 실패");
-    }
-  };
+        // 백엔드(IllegalArgumentException)가 던진 에러 메시지를 우선적으로 찾아서 띄움
+        // (스프링 부트의 글로벌 에러 응답 형식에 따라 .message 또는 본문을 꺼내옵니다)
+        const errorMessage = error.response?.data?.message 
+                             || error.response?.data 
+                             || "로그인 중 오류가 발생했습니다.";
 
+        alert(errorMessage); 
+    }
+};
   const handleGoogleLogin = () => {
     window.location.href = "/oauth2/authorization/google";
   };
