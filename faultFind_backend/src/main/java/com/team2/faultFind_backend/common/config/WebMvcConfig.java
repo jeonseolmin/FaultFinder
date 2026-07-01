@@ -8,7 +8,16 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/uploads/**")
-                .addResourceLocations("file:/home/ubuntu/uploads/");
+        String os = System.getProperty("os.name").toLowerCase();
+        String resourceLocation;
+
+        if (os.contains("win")) {
+            resourceLocation = "file:///C:/uploads/";
+        } else {
+            resourceLocation = "file:/home/ubuntu/uploads/";
+        }
+
+        registry.addResourceHandler("/api/uploads/**")
+                .addResourceLocations(resourceLocation);
     }
 }

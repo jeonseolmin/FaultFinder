@@ -77,11 +77,8 @@ export default function WriteForm() {
 
     try {
       // ✨ 4. 헤더에 multipart/form-data 설정 추가
-      const response = await axiosInstance.post("/api/community", submitData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axiosInstance.post("/api/community", submitData);
+      
       alert(response.data); 
       navigate("/community");
     } catch (error) {
