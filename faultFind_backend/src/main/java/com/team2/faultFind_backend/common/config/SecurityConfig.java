@@ -79,6 +79,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/uploads/**").permitAll()
 
                         // 여기에 직접 오픈할 GET 주소들을 한 줄로 박아버립니다.
                         .requestMatchers(HttpMethod.GET, "/api/community", "/api/community/**", "/api/posts/**").permitAll()
@@ -148,7 +149,9 @@ public class SecurityConfig {
                             List.of(
                                     "http://localhost:3000",
                                     "http://54.79.10.188",
-                                    "http://54.79.10.188:*"
+                                    "http://54.79.10.188:*",
+                                    "https://faultfinder.link",
+                                    "https://www.faultfinder.link"
                             )
                     );
 
