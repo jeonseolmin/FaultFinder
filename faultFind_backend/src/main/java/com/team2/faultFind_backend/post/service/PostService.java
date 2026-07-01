@@ -120,7 +120,8 @@ public class PostService {
     }
 
     // 5. 게시글 수정
-    public void updatePost(Long id, PostRequest postRequest, String email) {
+    @Transactional
+    public void updatePost(Long id, PostRequest postRequest, MultipartFile file, String email) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 
@@ -128,9 +129,45 @@ public class PostService {
             throw new RuntimeException("글을 수정할 권한이 없습니다.");
         }
 
+        // 1. 기본 텍스트 정보 업데이트
         post.setTitle(postRequest.getTitle());
         post.setContent(postRequest.getContent());
         post.setCategory(postRequest.getCategory());
+
+        // 2. 새로운 파일이 업로드되었다면? (기존 파일 교체)
+        if (file != null && !file.isEmpty()) {
+            try {
+                // 기존에 있던 파일 기록을 싹 비워줍니다.
+                // (Post 엔티티의 files 리스트에 orphanRemoval = true가 걸려있어서 DB에서도 지워집니다)
+                post.getFiles().clear();
+
+                String os = System.getProperty("os.name").toLowerCase();
+                String uploadDir = os.contains("win") ? "C:/uploads/" : "/home/ubuntu/uploads/";
+
+                File dir = new File(uploadDir);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+
+                String originalFilename = file.getOriginalFilename();
+                String savedFilename = UUID.randomUUID() + "_" + originalFilename;
+                File targetFile = new File(uploadDir + savedFilename);
+                file.transferTo(targetFile);
+
+                PostFile postFile = PostFile.builder()
+                        .originalFileName(originalFilename)
+                        .savedFileName(savedFilename)
+                        .fileUrl("/api/uploads/" + savedFilename)
+                        .fileSize(file.getSize())
+                        .build();
+
+                post.addFile(postFile);
+                // -------------------------------------------------------------------------
+
+            } catch (Exception e) {
+                throw new RuntimeException("파일 수정(업로드) 실패", e);
+            }
+        }
     }
 
     // 6. 게시글 삭제

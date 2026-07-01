@@ -78,8 +78,14 @@ public class PostController {
 
     // 5. 게시글 수정
     @PutMapping("/{id}")
-    public ResponseEntity<String> updatePost(@PathVariable Long id, @RequestBody PostRequest postRequest, Authentication authentication) {
-        postService.updatePost(id, postRequest, authentication.getName());
+    public ResponseEntity<String> updatePost(
+            @PathVariable Long id,
+            @ModelAttribute PostRequest postRequest,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            Authentication authentication) {
+
+        postService.updatePost(id, postRequest, file, authentication.getName());
+
         return ResponseEntity.ok("게시글이 성공적으로 수정되었습니다.");
     }
 
