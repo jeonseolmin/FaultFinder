@@ -14,24 +14,28 @@ export default function WriteForm() {
   });
 
   const [isAdmin, setIsAdmin] = useState(false);
-  
+
   // 1. 첨부파일 상태 추가
-  const [file, setFile] = useState(null); 
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   // 컴포넌트 렌더링 시 토큰을 해독하여 관리자 권한 확인
   useEffect(() => {
-    const token = localStorage.getItem("token") || localStorage.getItem("accessToken") || localStorage.getItem("Authorization");
-    
+    const token =
+      localStorage.getItem("token") ||
+      localStorage.getItem("accessToken") ||
+      localStorage.getItem("Authorization");
+
     if (token) {
       try {
         // JWT 토큰은 세 부분으로 나뉘며, 두 번째 부분(Payload)에 권한 정보가 있습니다.
-        const payloadBase64 = token.split('.')[1];
+        const payloadBase64 = token.split(".")[1];
         const decodedJson = atob(payloadBase64);
         const decodedData = JSON.parse(decodedJson);
 
         // 스프링 시큐리티 설정에 따라 키 값이 'auth' 또는 'role'일 수 있습니다.
-        const userRole = decodedData.auth || decodedData.role; 
-        
+        const userRole = decodedData.auth || decodedData.role;
+
         if (userRole === "ROLE_ADMIN") {
           setIsAdmin(true);
         }
@@ -43,20 +47,33 @@ export default function WriteForm() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     setFormData({
       ...formData,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
   // 2. 첨부파일 변경 핸들러 추가
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+
+      // 선택한 파일이 이미지인지 확인 (image/png, image/jpeg 등)
+      if (selectedFile.type.startsWith("image/")) {
+        // 브라우저가 임시로 사진 주소를 만들어서 썸네일로 띄워줌
+        const imageUrl = URL.createObjectURL(selectedFile);
+        setPreviewUrl(imageUrl);
+      } else {
+        // 이미지가 아니면 썸네일 초기화
+        setPreviewUrl(null);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
 
     if (!formData.title.trim() || !formData.content.trim()) {
       alert("제목과 내용을 모두 입력해주세요!");
@@ -78,8 +95,8 @@ export default function WriteForm() {
     try {
       // ✨ 4. 헤더에 multipart/form-data 설정 추가
       const response = await axiosInstance.post("/api/community", submitData);
-      
-      alert(response.data); 
+
+      alert(response.data);
       navigate("/community");
     } catch (error) {
       console.error("글 등록 실패:", error);
@@ -110,17 +127,40 @@ export default function WriteForm() {
 
         {/* 토큰 해독 결과 isAdmin이 true일 때만 렌더링 */}
         {isAdmin && (
-          <div className="write-form-group" style={{ backgroundColor: '#f0f4f8', padding: '15px', borderRadius: '8px', border: '1px solid #d1d5db', marginBottom: '20px' }}>
-            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', margin: 0 }}>
-              <input 
-                type="checkbox" 
+          <div
+            className="write-form-group"
+            style={{
+              backgroundColor: "#f0f4f8",
+              padding: "15px",
+              borderRadius: "8px",
+              border: "1px solid #d1d5db",
+              marginBottom: "20px",
+            }}
+          >
+            <label
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                margin: 0,
+              }}
+            >
+              <input
+                type="checkbox"
                 name="notice"
                 className="write-notice-checkbox"
                 checked={formData.notice}
-                onChange={handleChange} 
-                style={{ width: '20px', height: '20px', marginRight: '10px', cursor: 'pointer' }}
+                onChange={handleChange}
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  marginRight: "10px",
+                  cursor: "pointer",
+                }}
               />
-              <span style={{ fontSize: '1em', fontWeight: '700', color: '#1e3a8a' }}>
+              <span
+                style={{ fontSize: "1em", fontWeight: "700", color: "#1e3a8a" }}
+              >
                 📢 이 게시글을 공지사항으로 등록하기
               </span>
             </label>
@@ -132,7 +172,7 @@ export default function WriteForm() {
           <input
             type="text"
             className="write-input"
-            name="title" 
+            name="title"
             value={formData.title}
             onChange={handleChange}
             placeholder="제목을 입력하세요"
@@ -143,11 +183,40 @@ export default function WriteForm() {
           <label>내용</label>
           <textarea
             className="write-textarea"
-            name="content" 
+            name="content"
             value={formData.content}
             onChange={handleChange}
             placeholder="자유롭게 의견과 경험을 나누어 주세요."
           ></textarea>
+        </div>
+
+        <div>
+          <input type="file" onChange={handleFileChange} />
+
+          {/* 썸네일 이미지가 있으면 화면에 보여줌 */}
+          {previewUrl && (
+            <div style={{ marginTop: "15px" }}>
+              <p
+                style={{
+                  margin: "0 0 5px 0",
+                  fontSize: "14px",
+                  color: "#6b7280",
+                }}
+              >
+               미리보기
+              </p>
+              <img
+                src={previewUrl}
+                alt="미리보기"
+                style={{
+                  width: "200px",
+                  height: "auto",
+                  borderRadius: "8px",
+                  border: "1px solid #e5e7eb",
+                }}
+              />
+            </div>
+          )}
         </div>
 
         {/* 5. 파일 업로드 input 요소 추가 */}
@@ -157,7 +226,7 @@ export default function WriteForm() {
             type="file"
             onChange={handleFileChange}
             className="write-input"
-            style={{ padding: '10px 0', border: 'none' }}
+            style={{ padding: "10px 0", border: "none" }}
           />
         </div>
 
