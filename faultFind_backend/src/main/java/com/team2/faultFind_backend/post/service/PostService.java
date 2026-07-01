@@ -51,7 +51,15 @@ public class PostService {
         // 첨부 파일이 넘어왔다면 처리합니다.
         if (file != null && !file.isEmpty()) {
             try {
-                String uploadDir = "/home/ubuntu/uploads/"; // 서버 저장 경로
+                // OS(운영체제) 확인 후 저장 경로 자동 설정
+                String os = System.getProperty("os.name").toLowerCase();
+                String uploadDir;
+
+                if (os.contains("win")) {
+                    uploadDir = "C:/uploads/"; // 윈도우 환경 (로컬 테스트용)
+                } else {
+                    uploadDir = "/home/ubuntu/uploads/"; // 리눅스 환경 (EC2 배포용)
+                }
 
                 // 폴더가 없으면 자동으로 생성해주는 안전 장치
                 File dir = new File(uploadDir);
