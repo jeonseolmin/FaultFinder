@@ -26,11 +26,15 @@ export default function LoginForm() {
             password: password 
         });
         
-        // 로그인 성공 처리 (토큰 저장, 메인 페이지 이동 등)
+        const token = response.data; 
+
+        // 로컬 스토리지에 토큰 저장하기
+        localStorage.setItem("token", token);
+
+        // 메인 페이지로 이동하기
+        navigate("/"); 
         
     } catch (error) {
-        // 백엔드(IllegalArgumentException)가 던진 에러 메시지를 우선적으로 찾아서 띄움
-        // (스프링 부트의 글로벌 에러 응답 형식에 따라 .message 또는 본문을 꺼내옵니다)
         const errorMessage = error.response?.data?.message 
                              || error.response?.data 
                              || "로그인 중 오류가 발생했습니다.";
