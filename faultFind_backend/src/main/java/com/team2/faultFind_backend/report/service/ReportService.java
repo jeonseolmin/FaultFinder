@@ -38,6 +38,7 @@ public class ReportService {
                 .category(requestDto.getCategory())
                 .reason(requestDto.getReason())
                 .build();
+        System.out.println("🚨 [2. DB 저장 직전] 카테고리: " + requestDto.getCategory());
 
         reportRepository.save(report);
 
