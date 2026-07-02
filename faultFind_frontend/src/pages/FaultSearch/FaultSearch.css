@@ -859,16 +859,19 @@
   font-weight: 900;
   color: #111827;
 }
-
-.ratio-bar {
+.ratio-bar{
   position: relative;
-  display: flex;
-  height: 126px;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #f1f5f9;
 }
 
+.ratio-bar::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  width:2px;
+  height:100%;
+  background:rgba(255,255,255,.25);
+}
 .ratio-a-area,
 .ratio-b-area {
   display: flex;
@@ -903,23 +906,7 @@
   font-weight: 900;
 }
 
-.ratio-center-text {
-  width: fit-content;
-  margin: -78px auto 48px;
-  position: relative;
-  z-index: 2;
-  padding: 14px 34px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.18);
-  color: #0f172a;
-  font-size: 18px;
-  font-weight: 900;
-}
 
-.ratio-center-text strong {
-  font-size: 28px;
-}
 
 .party-info-row {
   display: grid;

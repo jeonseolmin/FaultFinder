@@ -150,13 +150,6 @@ function FaultSearchPage() {
                       </div>
                     </div>
 
-                    <div className="ratio-center-text">
-                      A : B&nbsp;&nbsp;
-                      <strong>
-                        {ratioA} : {ratioB}
-                      </strong>
-                    </div>
-
                     <div className="party-info-row">
                       <div className="party-info a">
                         <div className="party-circle">A</div>
