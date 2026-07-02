@@ -67,3 +67,7 @@ logging:
 
 app:
   frontend-url: http://localhost:3000
+
+ai:
+  server:
+    url: http://localhost:8000
