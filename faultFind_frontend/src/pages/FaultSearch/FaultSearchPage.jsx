@@ -63,18 +63,16 @@ function FaultSearchPage() {
     const match = chunkText.match(partyRegex);
     const parsed = match?.[1]?.trim();
 
-    if (parsed && parsed !== "A" && parsed !== "B") {
-      return parsed;
-    }
+    if (title) {
+      const parts = title.split("대");
 
-    if (title.includes(" 대 ")) {
-      const [aTitle, bTitle] = title.split(" 대 ");
+      if (parts.length === 2) {
+        if (party === "A") {
+          return parts[0].trim() + " 차량";
+        }
 
-      if (party === "A") {
-        return `${aTitle.trim()} 차량`;
+        return parts[1].trim() + " 차량";
       }
-
-      return `${bTitle.trim()} 차량`;
     }
 
     return `${party} 측`;
