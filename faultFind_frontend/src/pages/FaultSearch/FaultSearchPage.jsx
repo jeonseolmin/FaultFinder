@@ -88,18 +88,6 @@ function FaultSearchPage() {
                 </div>
 
                 <div className="input-controls">
-                  <select
-                      value={accidentType}
-                      onChange={(e) => setAccidentType(e.target.value)}
-                      className="accident-select"
-                  >
-                    <option value="">사고 유형 선택 (선택)</option>
-                    <option value="car_to_car">차량 대 차량</option>
-                    <option value="car_to_human">차량 대 보행자</option>
-                    <option value="car_to_motorcycle">차량 대 이륜차</option>
-                    <option value="car_to_bicycle">차량 대 자전거</option>
-                  </select>
-
                   <button
                       type="button"
                       className="btn-analyze"
@@ -132,22 +120,27 @@ function FaultSearchPage() {
                   <div className="wide-ratio-card">
                     <h3>예상 과실비율</h3>
 
-                    <div className="ratio-bar">
-                      <div
-                          className="ratio-a-area"
-                          style={{ width: `${ratioA}%` }}
-                      >
+                    <div className="ratio-label-row">
+                      <div className="ratio-label-a">
                         <span>A 측</span>
                         <strong>{ratioA}%</strong>
                       </div>
 
-                      <div
-                          className="ratio-b-area"
-                          style={{ width: `${ratioB}%` }}
-                      >
+                      <div className="ratio-label-b">
                         <span>B 측</span>
                         <strong>{ratioB}%</strong>
                       </div>
+                    </div>
+
+                    <div className="ratio-bar-clean">
+                      <div
+                          className="ratio-fill-a"
+                          style={{ flexGrow: Math.max(ratioA, 3) }}
+                      />
+                      <div
+                          className="ratio-fill-b"
+                          style={{ flexGrow: Math.max(ratioB, 3) }}
+                      />
                     </div>
 
                     <div className="party-info-row">
