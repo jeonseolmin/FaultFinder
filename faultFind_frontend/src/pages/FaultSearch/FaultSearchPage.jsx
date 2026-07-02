@@ -26,9 +26,6 @@ function FaultSearchPage() {
     return match?.[1]?.trim() || `${party}측`;
   };
 
-  const partyAName = mainOfficial?.party_a_name || "A";
-  const partyBName = mainOfficial?.party_b_name || "B";
-
   const handleAnalyzeClick = async () => {
     if (!situationText.trim()) {
       alert("사고 상황을 입력해주세요.");
@@ -58,6 +55,32 @@ function FaultSearchPage() {
     }
   };
 
+  const getPartyLabel = (official, party) => {
+    const chunkText = official?.chunk_text || "";
+    const title = official?.title || "";
+
+    const partyRegex = new RegExp(`당사자 ${party}:\\s*(.+)`);
+    const match = chunkText.match(partyRegex);
+    const parsed = match?.[1]?.trim();
+
+    if (parsed && parsed !== "A" && parsed !== "B") {
+      return parsed;
+    }
+
+    if (title.includes(" 대 ")) {
+      const [aTitle, bTitle] = title.split(" 대 ");
+
+      if (party === "A") {
+        return `${aTitle.trim()} 차량`;
+      }
+
+      return `${bTitle.trim()} 차량`;
+    }
+
+    return `${party} 측`;
+  };
+  const partyAName = getPartyLabel(mainOfficial, "A");
+  const partyBName = getPartyLabel(mainOfficial, "B");
   return (
       <div className="community-page">
         <main className="main-container">
