@@ -68,7 +68,7 @@ public class MyPageController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/api/mypage/withdraw")
+    @PutMapping("/withdraw")
     public ResponseEntity<String> withdrawSelf(Authentication authentication) {
         // JWT 토큰 필터를 거쳐서 들어온 현재 로그인 유저의 이메일
         String email = authentication.getName();
