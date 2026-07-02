@@ -17,8 +17,6 @@ public class ReportController {
     @PostMapping
     public ResponseEntity<?> submitReport(@RequestBody ReportRequestDto requestDto, Authentication authentication) {
         try {
-            System.out.println("🚨 [1. 컨트롤러 도착] 카테고리: " + requestDto.getCategory());
-            System.out.println("🚨 [1. 컨트롤러 도착] 사유: " + requestDto.getReason());
             // 1. 시큐리티 출입증에서 현재 로그인한 사람의 이메일(또는 ID) 꺼내기
             String reporterEmail = authentication.getName();
 
