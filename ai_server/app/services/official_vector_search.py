@@ -10,6 +10,8 @@ def search_official_case_chunks(query_embedding: list[float], limit: int = 3):
             chunk_text,
             base_fault_a,
             base_fault_b,
+            party_a_name,
+            party_b_name,
             embedding <=> %s::vector AS distance
         FROM accident_case_chunks
         WHERE embedding IS NOT NULL
@@ -30,7 +32,9 @@ def search_official_case_chunks(query_embedding: list[float], limit: int = 3):
             "chunk_text": row[3],
             "base_fault_a": row[4],
             "base_fault_b": row[5],
-            "distance": float(row[6]),
+            "party_a_name": row[6],
+            "party_b_name": row[7],
+            "distance": float(row[8]),
         }
         for row in rows
     ]

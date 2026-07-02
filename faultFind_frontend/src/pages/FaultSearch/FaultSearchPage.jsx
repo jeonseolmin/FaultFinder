@@ -9,6 +9,7 @@ function FaultSearchPage() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState(null);
 
+
   const charCount = situationText.length;
 
   const mainOfficial = result?.official_chunks?.[0];
@@ -25,8 +26,8 @@ function FaultSearchPage() {
     return match?.[1]?.trim() || `${party}측`;
   };
 
-  const partyAName = extractPartyName(mainOfficial?.chunk_text, "A");
-  const partyBName = extractPartyName(mainOfficial?.chunk_text, "B");
+  const partyAName = mainOfficial?.party_a_name || "A";
+  const partyBName = mainOfficial?.party_b_name || "B";
 
   const handleAnalyzeClick = async () => {
     if (!situationText.trim()) {
