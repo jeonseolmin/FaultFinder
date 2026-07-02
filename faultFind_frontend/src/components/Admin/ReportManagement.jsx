@@ -21,8 +21,8 @@ export default function ReportManagement({
           <tr>
             <th>신고 ID</th>
             <th>신고자</th>
-            <th>신고구분</th>
-            <th>대상 번호</th>
+            <th>구분</th>
+            <th>번호</th>
             <th>신고 유형</th>
             <th>신고 사유</th>
             <th>일시</th>
