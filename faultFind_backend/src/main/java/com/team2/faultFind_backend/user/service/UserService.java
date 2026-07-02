@@ -181,4 +181,11 @@ public class UserService {
 
     public void save(UserResponse user) {
     }
+
+    public void withdrawSelf(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입된 회원이 아닙니다."));
+
+        user.setRole(UserRole.ROLE_WITHDRAWN);
+    }
 }

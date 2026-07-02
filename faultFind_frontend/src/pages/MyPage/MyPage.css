@@ -109,7 +109,7 @@
   color: #1d4ed8;
 }
 
-/* 관리자 이동 버튼 */
+/* --- 사이드바 하단 버튼 영역 (관리자 & 탈퇴) --- */
 .admin-section {
   margin-top: auto; /* 사이드바 맨 아래로 밀어냄 */
   padding-top: 20px;
@@ -131,6 +131,35 @@
 
 .btn-admin-enter:hover {
   background-color: #111827;
+}
+
+.withdraw-section {
+  margin-top: 10px; /* 관리자 버튼이 없을 때를 대비한 여백 */
+  padding-top: 10px;
+}
+
+/* 만약 관리자 버튼이 없어서 탈퇴 버튼이 첫 번째 하단 요소가 될 경우 위로 밀어냄 */
+.mypage-nav + .withdraw-section {
+  margin-top: auto;
+  border-top: 1px dashed #d1d5db;
+  padding-top: 20px;
+}
+
+.btn-withdraw-self {
+  width: 100%;
+  padding: 16px;
+  background-color: #ef4444; /* 기존 btn-change-pw와 동일한 경고 색상 */
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-withdraw-self:hover {
+  background-color: #dc2626;
 }
 
 /* --- 메인 콘텐츠 영역 --- */
@@ -281,7 +310,6 @@
   background-color: #dc2626;
 }
 
-
 /* ===========================
    Pagination
 =========================== */
@@ -298,18 +326,13 @@
   min-width: 38px;
   height: 38px;
   padding: 0 14px;
-
   border: 1px solid #dcdfe6;
   border-radius: 8px;
-
   background: #fff;
   color: #555;
-
   font-size: 14px;
   font-weight: 500;
-
   cursor: pointer;
-
   transition: all .2s ease;
 }
 
