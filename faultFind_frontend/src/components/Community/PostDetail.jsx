@@ -61,7 +61,7 @@ export default function PostDetail({
             </div>
 
             <div className="detail-content-body">
-                <p>{post.content}</p>
+                <p className="content-display">{post.content}</p>
             </div>
             
             {post.files && post.files.length > 0 && (
