@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import axiosInstance from "../../api/axiosInstance.js";
 import PostDetail from "../../components/Community/PostDetail.jsx";
 import CommentSection from "../../components/Community/CommentSection.jsx";
@@ -36,18 +35,19 @@ export default function CommunityDetailPage() {
     setReportReason("");
     setShowReportModal(true);
   };
+
   const handleCommentDelete = async (commentId) => {
     if (!window.confirm("댓글을 삭제하시겠습니까?")) return;
 
     try {
       await axiosInstance.delete(`/api/community/comments/${commentId}`);
-
       await fetchComments();
     } catch (error) {
       console.error(error);
       alert("댓글 삭제 실패");
     }
   };
+
   const handleCommentUpdate = async (commentId, content) => {
     if (!content.trim()) {
       alert("댓글 내용을 입력해주세요.");
@@ -58,7 +58,6 @@ export default function CommunityDetailPage() {
       await axiosInstance.put(`/api/community/comments/${commentId}`, {
         content,
       });
-
       await fetchComments();
     } catch (error) {
       console.error(error);
@@ -67,12 +66,6 @@ export default function CommunityDetailPage() {
   };
 
   const handleReportSubmit = async () => {
-    if (!reportReason.trim()) {
-      alert("신고 사유를 입력해주세요.");
-      return;
-    }
-
-    const handleReportSubmit = async () => {
     if (!reportReason.trim()) {
       alert("신고 사유를 입력해주세요.");
       return;
@@ -121,6 +114,7 @@ export default function CommunityDetailPage() {
   };
 
   const currentUsername = getLoginUser();
+
   const fetchComments = async () => {
     try {
       const response = await axiosInstance.get(`/api/community/${id}/comments`);
@@ -129,6 +123,7 @@ export default function CommunityDetailPage() {
       console.error("댓글 불러오기 실패", error);
     }
   };
+
   const fetchPostDetail = async () => {
     try {
       setLoading(true);
@@ -218,6 +213,7 @@ export default function CommunityDetailPage() {
       alert("수정 권한이 없거나 오류가 발생했습니다.");
     }
   };
+
   const handleReplySubmit = async (parentId, content) => {
     if (!currentUsername) {
       alert("로그인 후 이용할 수 있는 기능입니다.");
@@ -234,7 +230,6 @@ export default function CommunityDetailPage() {
         content,
         parentId,
       });
-
       await fetchComments();
     } catch (error) {
       console.error("답글 등록 실패:", error);
@@ -280,7 +275,6 @@ export default function CommunityDetailPage() {
     try {
         await axiosInstance.put(`/api/community/${id}`, submitData, {
             headers: {
-                // 415 에러를 막기 위해 파일 전송 형식임을 명시합니다.
                 "Content-Type": "multipart/form-data" 
             }
         });
@@ -367,5 +361,4 @@ export default function CommunityDetailPage() {
       />
     </div>
   );
-}
 }

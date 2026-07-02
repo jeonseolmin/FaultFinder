@@ -4,8 +4,10 @@ import com.team2.faultFind_backend.report.entity.ReportCategory; // ✨ 새로 �
 import com.team2.faultFind_backend.report.entity.ReportTargetType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ReportRequestDto {
     private ReportTargetType targetType; // POST 또는 COMMENT

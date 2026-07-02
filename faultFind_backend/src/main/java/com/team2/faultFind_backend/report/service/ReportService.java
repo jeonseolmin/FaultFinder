@@ -35,6 +35,7 @@ public class ReportService {
                 .reporterEmail(reporterEmail)
                 .targetType(requestDto.getTargetType())
                 .targetId(requestDto.getTargetId())
+                .category(requestDto.getCategory())
                 .reason(requestDto.getReason())
                 .build();
 

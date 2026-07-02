@@ -22,7 +22,7 @@ export default function ReportManagement({
             <th>신고 ID</th>
             <th>신고자</th>
             <th>구분</th>
-            <th>대상 번호</th>
+            <th>번호</th>
             <th>신고 유형</th>
             <th>신고 사유</th>
             <th>일시</th>
@@ -34,28 +34,15 @@ export default function ReportManagement({
           {reports.map((report) => (
             <tr key={report.id}>
               <td>{report.id}</td>
-              <td>{report.reporterEmail}</td>
+              <td title={report.reporterEmail}>{report.reporterEmail}</td>
 
               <td>
-                <span
-                  className={`report-type ${
-                    report.targetType === "POST"
-                      ? "report-type-post"
-                      : "report-type-comment"
-                  }`}
-                >
+                <span className={`report-type ${report.targetType === "POST" ? "report-type-post" : "report-type-comment"}`}>
                   {report.targetType === "POST" ? "게시글" : "댓글"}
                 </span>
               </td>
 
-              <td
-                className="post-link"
-                onClick={() =>
-                  report.targetType === "POST" &&
-                  navigate(`/community/${report.targetId}`)
-                }
-                style={{ cursor: report.targetType === "POST" ? "pointer" : "default" }}
-              >
+              <td className="post-link" onClick={() => report.targetType === "POST" && navigate(`/community/${report.targetId}`)}>
                 #{report.targetId}번
               </td>
 
@@ -65,20 +52,17 @@ export default function ReportManagement({
                 </span>
               </td>
 
-              <td className="report-reason">{report.reason}</td>
+              <td className="report-reason" title={report.reason}>
+                {report.reason}
+              </td>
 
               <td className="report-date">
-                {report.createdAt
-                  ? report.createdAt.substring(0, 19).replace("T", " ")
-                  : ""}
+                {report.createdAt ? report.createdAt.substring(0, 10) : ""}
               </td>
 
               <td>
-                <button
-                  className="btn-admin btn-danger"
-                  onClick={() => onDeleteReportedTarget(report)}
-                >
-                  처리 (삭제)
+                <button className="btn-admin btn-danger" onClick={() => onDeleteReportedTarget(report)}>
+                  삭제
                 </button>
               </td>
             </tr>
