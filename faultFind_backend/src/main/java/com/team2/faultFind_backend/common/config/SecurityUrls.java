@@ -8,6 +8,7 @@ public class SecurityUrls {
             "/api/auth/login",
 
             "/api/signup",
+            "/faultfinder/ai/**",
 
             "/api/users/find-password",
 

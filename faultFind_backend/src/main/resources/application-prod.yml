@@ -67,3 +67,7 @@ logging:
 
 app:
   frontend-url: ${FRONTEND_URL:https://faultfinder.link}
+
+ai:
+  server:
+    url: http://ai-server:8000

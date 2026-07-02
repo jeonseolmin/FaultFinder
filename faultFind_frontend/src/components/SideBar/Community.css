@@ -741,3 +741,11 @@ body {
 .pagination button:last-child {
   min-width: 60px;
 }
+
+/* 내용 출력 영역 스타일 */
+.content-display {
+  white-space: pre-wrap;    /* 엔터(줄바꿈)와 공백을 그대로 유지 */
+  word-break: break-word;   /* 긴 단어(영어 등)가 있으면 강제로 줄바꿈 */
+  line-height: 1.6;         /* 가독성을 위해 줄 간격 확보 */
+  margin: 0;                /* 기본 마진 제거 */
+}
