@@ -130,6 +130,20 @@ export default function AccidentTypeDetailPage() {
                   {/* 카드의 아랫부분 (펼쳐졌을 때만 렌더링됨) */}
                   {expandedId === scenario.caseCode && (
                     <div className="scenario-body">
+                      
+                      {/* 🌟 동적 이미지 추가 영역 */}
+    <div className="scenario-image-container" style={{ textAlign: 'center', marginBottom: '15px' }}>
+      <img 
+        src={`/src/images/AccidentTypeCase/${scenario.caseCode}.jpg`} 
+        alt={`${scenario.caseCode} 사고 상황도`}
+        style={{ maxWidth: '100%', height: 'auto', borderRadius: '8px', border: '1px solid #e2e8f0' }}
+        onError={(e) => {
+          // 혹시 DB의 caseCode와 매칭되는 파일이 폴더에 없으면 엑박 뜨지 않고 영역을 숨깁니다.
+          e.target.style.display = 'none'; 
+        }}
+      />
+    </div>
+
                       <div className="party-info">
                         <p><strong>A차량 (혹은 보행자):</strong> {scenario.partyAName}</p>
                         <p><strong>B차량:</strong> {scenario.partyBName}</p>

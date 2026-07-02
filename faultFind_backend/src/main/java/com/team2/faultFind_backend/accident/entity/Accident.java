@@ -1,6 +1,5 @@
 package com.team2.faultFind_backend.accident.entity;
 
-
 import com.team2.faultFind_backend.accidentdetail.entity.AccidentDetails;
 import com.team2.faultFind_backend.fault.entity.Fault;
 import jakarta.persistence.*;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Getter
 @Entity
-@Table (name = "accident_cases")
+@Table(name = "accident_cases")
 @NoArgsConstructor
 public class Accident {
 
@@ -22,6 +21,16 @@ public class Accident {
 
     @Column(nullable = false)
     private String category;
+
+    // 🌟 새로운 계층형 컬럼 3종 추가 (DB 컬럼명 스네이크 케이스 매핑)
+    @Column(name = "main_title")
+    private String mainTitle;
+
+    @Column(name = "sub_title")
+    private String subTitle;
+
+    @Column(name = "section_title")
+    private String sectionTitle;
 
     @Column(nullable = false)
     private String title;
@@ -45,9 +54,13 @@ public class Accident {
     private AccidentDetails detail;
 
     @Builder
-    public Accident(String category, String caseCode, String title, String partyAName, String partyBName, int baseFaultA, int baseFaultB) {
+    public Accident(String category, String caseCode, String mainTitle, String subTitle, String sectionTitle,
+                    String title, String partyAName, String partyBName, int baseFaultA, int baseFaultB) {
         this.category = category;
         this.caseCode = caseCode;
+        this.mainTitle = mainTitle;
+        this.subTitle = subTitle;
+        this.sectionTitle = sectionTitle;
         this.title = title;
         this.partyAName = partyAName;
         this.partyBName = partyBName;
