@@ -134,6 +134,28 @@ export default function MyPage() {
     }
   };
 
+  const handleWithdrawSelf = async () => {
+    if (!window.confirm("정말 탈퇴하시겠습니까? 탈퇴 시 계정은 즉시 임시 탈퇴 상태로 전환됩니다.")) {
+      return;
+    }
+
+    try {
+      await axiosInstance.put("/api/mypage/withdraw");
+      
+      alert("회원 탈퇴가 완료되었습니다. 이용해 주셔서 감사합니다.");
+      
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("token");
+      localStorage.removeItem("Authorization");
+      localStorage.removeItem("email");
+      
+      window.location.href = "/";
+    } catch (error) {
+      console.error("탈퇴 에러:", error);
+      alert("탈퇴 처리 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    }
+  };
+
   if (loading) return <div className="mypage-loading">로딩 중...</div>;
   if (!data.user) return null;
   const posts = data.posts?.content ?? [];
@@ -157,7 +179,6 @@ export default function MyPage() {
                 onClick={() => setActiveTab("posts")}
             >
               내가 쓴 글{" "}
-
             </button>
 
             <button
@@ -187,6 +208,15 @@ export default function MyPage() {
                 </button>
               </div>
           )}
+
+          <div className="withdraw-section">
+            <button
+                className="btn-withdraw-self"
+                onClick={handleWithdrawSelf}
+            >
+              회원 탈퇴
+            </button>
+          </div>
         </aside>
 
         <main className="mypage-content">

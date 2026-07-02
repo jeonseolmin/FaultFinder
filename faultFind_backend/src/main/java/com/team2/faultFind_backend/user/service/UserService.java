@@ -81,7 +81,7 @@ public class UserService {
 
         // 임시 탈퇴 상태인 경우 로그인 차단 및 안내 메시지 송출
         if(user.getRole() == UserRole.ROLE_WITHDRAWN) {
-            throw new IllegalArgumentException("관리자에 의해 임시 탈퇴 처리된 계정입니다. 새롭게 회원가입을 진행해주세요.");
+            throw new IllegalArgumentException("임시 탈퇴 처리된 계정입니다. 새롭게 회원가입을 진행해주세요.");
         }
 
         // 정상 유저라면 비밀번호 검사 진행
@@ -180,5 +180,12 @@ public class UserService {
     }
 
     public void save(UserResponse user) {
+    }
+
+    public void withdrawSelf(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("가입된 회원이 아닙니다."));
+
+        user.setRole(UserRole.ROLE_WITHDRAWN);
     }
 }
