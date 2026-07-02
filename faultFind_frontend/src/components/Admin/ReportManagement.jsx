@@ -21,7 +21,7 @@ export default function ReportManagement({
           <tr>
             <th>신고 ID</th>
             <th>신고자</th>
-            <th>구분</th>
+            <th>신고구분</th>
             <th>대상 번호</th>
             <th>신고 유형</th>
             <th>신고 사유</th>
@@ -78,7 +78,7 @@ export default function ReportManagement({
                   className="btn-admin btn-danger"
                   onClick={() => onDeleteReportedTarget(report)}
                 >
-                  처리 (삭제)
+                  삭제
                 </button>
               </td>
             </tr>
