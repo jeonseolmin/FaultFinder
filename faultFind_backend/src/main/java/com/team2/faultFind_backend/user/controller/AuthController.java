@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -35,11 +37,12 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request){
         String token = userService.login(request);
         System.out.println("token = " + token);
+
         if(token == null){
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
-                    .body("로그인 실패");
+                    .body(Map.of("message", "로그인 실패"));
         }
-        return ResponseEntity.ok(token);
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }

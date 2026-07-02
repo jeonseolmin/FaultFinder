@@ -175,9 +175,35 @@
 }
 
 /* 신고 테이블 전용 색상 */
-.report-table thead tr {
-  background-color: #fef2f2;
-  border-bottom: 2px solid #fecaca;
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* 각 열의 너비 비율 설정 */
+.report-table th:nth-child(1) { width: 8%; }  /* 신고 ID */
+.report-table th:nth-child(2) { width: 18%; } /* 신고자 */
+.report-table th:nth-child(3) { width: 10%; } /* 신고구분 */
+.report-table th:nth-child(4) { width: 10%; } /* 대상번호 */
+.report-table th:nth-child(5) { width: 12%; } /* 신고유형 */
+.report-table th:nth-child(6) { width: 22%; } /* 신고사유 */
+.report-table th:nth-child(7) { width: 12%; } /* 일시 */
+.report-table th:nth-child(8) { width: 8%; }  /* 관리 */
+
+/* 내용이 칸을 넘어가면 말줄임표 처리 */
+.report-table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 16px 8px;
+}
+
+/* 신고 사유 칸만 특별히 넓게 보이고 줄바꿈 허용 */
+.report-table td.report-reason {
+  white-space: normal;
+  text-align: left;
+  padding: 16px 15px;
 }
 
 .report-table th {
@@ -200,6 +226,7 @@
   font-size: 0.85rem;
   font-weight: 600;
   transition: opacity 0.2s;
+  white-space: nowrap;
 }
 
 .btn-admin:hover { opacity: 0.8; }

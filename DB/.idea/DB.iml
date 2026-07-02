@@ -8,5 +8,6 @@
     </content>
     <orderEntry type="jdk" jdkName="Python 3.14 (DB)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ai_server" />
   </component>
 </module>

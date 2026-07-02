@@ -1,7 +1,6 @@
 package com.team2.faultFind_backend.calculator.service;
 
-import com.team2.faultFind_backend.accident.dto.AccidentResponse;
-import com.team2.faultFind_backend.accident.entity.Accident;
+import com.team2.faultFind_backend.accident.dto.AccidentResponse.TitleDto; // 🌟 1. 정확한 TitleDto 임포트
 import com.team2.faultFind_backend.accident.service.AccidentService;
 import com.team2.faultFind_backend.calculator.dto.FaultResultDto;
 import com.team2.faultFind_backend.fault.entity.Fault;
@@ -17,7 +16,6 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class FaultCalculationService {
 
-    // 각 패키지의 서비스를 주입받아 사용합니다. (낮은 결합도 유지)
     private final AccidentService accidentService;
     private final FaultService faultService;
 
@@ -28,8 +26,8 @@ public class FaultCalculationService {
      */
     public FaultResultDto calculate(String caseCode, List<Long> selectedModifierIds) {
 
-        // 1. 기본 사고 정보 및 기본 과실 비율 가져오기
-        AccidentResponse accident = accidentService.getAccidentByCaseCode(caseCode);
+        // 1. 기본 사고 정보 및 기본 과실 비율 가져오기 (반환 타입을 TitleDto로 변경)
+        TitleDto accident = accidentService.getAccidentByCaseCode(caseCode);
         int finalFaultA = accident.getBaseFaultA();
 
         // 2. 선택된 가감산 요소들이 있다면 가져와서 합산하기

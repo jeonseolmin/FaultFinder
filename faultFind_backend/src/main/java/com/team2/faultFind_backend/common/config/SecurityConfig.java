@@ -79,6 +79,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers("/api/uploads/**").permitAll()
 
                         // 여기에 직접 오픈할 GET 주소들을 한 줄로 박아버립니다.
                         .requestMatchers(HttpMethod.GET, "/api/community", "/api/community/**", "/api/posts/**").permitAll()
@@ -138,23 +139,35 @@ public class SecurityConfig {
 
         // cors 설정
         http
+                .csrf((auth) -> auth.disable());
+
+        http
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(
-                            List.of("http://localhost:3000")
+
+                    config.setAllowedOriginPatterns(
+                            List.of(
+                                    "http://localhost:3000",
+                                    "http://54.79.10.188",
+                                    "http://54.79.10.188:*",
+                                    "https://faultfinder.link",
+                                    "https://www.faultfinder.link"
+                            )
                     );
+
                     config.setAllowedMethods(
-                            List.of("*")
+                            List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")
                     );
-                    config.setAllowedHeaders(
-                            List.of("*")
-                    );
-                    config.setExposedHeaders(
-                            List.of("Authorization")
-                    );
+
+                    config.setAllowedHeaders(List.of("*"));
+                    config.setExposedHeaders(List.of("Authorization"));
                     config.setAllowCredentials(true);
+
                     return config;
                 }));
+
+        http
+                .formLogin((auth) -> auth.disable());
 
         return http.build();
     }

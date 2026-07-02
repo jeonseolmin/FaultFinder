@@ -12,16 +12,14 @@ import com.team2.faultFind_backend.user.dto.MyPageResponseDto;
 import com.team2.faultFind_backend.user.dto.UserResponse;
 import com.team2.faultFind_backend.user.entity.User;
 import com.team2.faultFind_backend.user.repository.UserRepository;
+import com.team2.faultFind_backend.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +33,7 @@ public class MyPageController {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final UserService userService;
 
     @GetMapping("/info")
     public ResponseEntity<MyPageResponseDto> getMyPageData(
@@ -67,5 +66,14 @@ public class MyPageController {
                 .build();
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/withdraw")
+    public ResponseEntity<String> withdrawSelf(Authentication authentication) {
+        // JWT 토큰 필터를 거쳐서 들어온 현재 로그인 유저의 이메일
+        String email = authentication.getName();
+
+        userService.withdrawSelf(email);
+        return ResponseEntity.ok("회원 탈퇴가 완료되었습니다.");
     }
 }

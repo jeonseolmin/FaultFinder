@@ -19,41 +19,47 @@ export default function LoginForm() {
 
   // 로컬 로그인 핸들러
   const handleLogin = async (e) => {
-    e.preventDefault(); 
-    
+    e.preventDefault();
     try {
-      const result = await axiosInstance.post("/api/auth/login", {
-        email: email,
-        password: password,
-      });
+        const response = await axiosInstance.post("/api/auth/login", { 
+            email: email, 
+            password: password 
+        });
+        
+        const token = response.data.token || response.data;
 
-      const token = result.data;
+        localStorage.setItem("token", token);
 
-      await login(token);
-      console.log(localStorage.getItem("accessToken"));
-      navigate("/");
+        if (login) {
+            login(token); 
+        }
+
+        navigate("/"); 
+        
     } catch (error) {
-      console.log(error);
-      alert("로그인 실패");
+        let errorMessage = "로그인 중 오류가 발생했습니다.";
+        
+        if (error.response?.data) {
+            if (typeof error.response.data === 'string') {
+                errorMessage = error.response.data;
+            } else if (error.response.data.message) {
+                errorMessage = error.response.data.message;
+            }
+        }
+        
+        alert(errorMessage); 
     }
   };
-
-  // 구글 로그인 핸들러
   const handleGoogleLogin = () => {
-    window.location.href = 
-    "http://localhost:8080/oauth2/authorization/google";
+    window.location.href = "/oauth2/authorization/google";
   };
 
-  // 카카오 로그인 핸들러
   const handleKakaoLogin = () => {
-    window.location.href = 
-    "http://localhost:8080/oauth2/authorization/kakao";
+    window.location.href = "/oauth2/authorization/kakao";
   };
 
-  // 네이버 로그인 핸들러
   const handleNaverLogin = () => {
-  window.location.href =
-    "http://localhost:8080/oauth2/authorization/naver";
+    window.location.href = "/oauth2/authorization/naver";
   };
 
   // ***********
