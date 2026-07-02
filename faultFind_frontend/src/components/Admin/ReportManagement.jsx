@@ -1,5 +1,12 @@
 import Pagination from "../../Common/Pagination.jsx";
 
+const categoryMap = {
+  SPAM: "도배",
+  PROFANITY: "욕설/비방",
+  PROMOTION: "광고/홍보",
+  OTHER: "기타",
+};
+
 export default function ReportManagement({
   reports,
   pageData,
@@ -16,6 +23,7 @@ export default function ReportManagement({
             <th>신고자</th>
             <th>구분</th>
             <th>대상 번호</th>
+            <th>신고 유형</th>
             <th>신고 사유</th>
             <th>일시</th>
             <th>관리</th>
@@ -46,8 +54,15 @@ export default function ReportManagement({
                   report.targetType === "POST" &&
                   navigate(`/community/${report.targetId}`)
                 }
+                style={{ cursor: report.targetType === "POST" ? "pointer" : "default" }}
               >
                 #{report.targetId}번
+              </td>
+
+              <td>
+                <span style={{ fontWeight: 'bold', color: '#dc2626' }}>
+                  {categoryMap[report.category] || "미지정"}
+                </span>
               </td>
 
               <td className="report-reason">{report.reason}</td>
@@ -71,7 +86,7 @@ export default function ReportManagement({
 
           {reports.length === 0 && (
             <tr>
-              <td colSpan="7" className="empty-message">
+              <td colSpan="8" className="empty-message">
                 접수된 신고 내역이 없습니다.
               </td>
             </tr>

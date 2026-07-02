@@ -27,6 +27,7 @@ export default function CommunityDetailPage() {
     targetId: null,
   });
   const [reportReason, setReportReason] = useState("");
+  const [reportCategory, setReportCategory] = useState("SPAM");
   const [isLiked, setIsLiked] = useState(false);
   const [userStatus, setUserStatus] = useState({ isSuspended: false });
 
@@ -71,15 +72,26 @@ export default function CommunityDetailPage() {
       return;
     }
 
+    const handleReportSubmit = async () => {
+    if (!reportReason.trim()) {
+      alert("신고 사유를 입력해주세요.");
+      return;
+    }
+
     try {
       const response = await axiosInstance.post("/api/reports", {
         targetType: reportConfig.targetType,
         targetId: reportConfig.targetId,
+        category: reportCategory,
         reason: reportReason,
       });
 
       alert(response.data);
       setShowReportModal(false);
+      
+      setReportReason(""); 
+      setReportCategory("SPAM"); 
+      
     } catch (error) {
       if (error.response && error.response.status === 400) {
         alert(error.response.data);
@@ -346,6 +358,8 @@ export default function CommunityDetailPage() {
 
       <ReportModal
         show={showReportModal}
+        category={reportCategory}
+        setCategory={setReportCategory}
         reason={reportReason}
         setReason={setReportReason}
         onClose={() => setShowReportModal(false)}
@@ -353,4 +367,5 @@ export default function CommunityDetailPage() {
       />
     </div>
   );
+}
 }
