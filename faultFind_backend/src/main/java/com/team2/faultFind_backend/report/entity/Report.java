@@ -27,7 +27,6 @@ public class Report {
     private Long targetId;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private ReportCategory category;
 
     @Column(nullable = false, length = 500)
